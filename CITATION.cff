@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+title: >-
+  Beyond IID Data: A Proxy-Based Computational Study of Quantum Oracle Sketching
+  Robustness under Structured Non-IID Streaming
+message: >-
+  If you use this software, the synthetic generators, the (tau, r) diagnostic
+  framework, or the real-stream sanity-check pipeline, please cite the
+  manuscript as listed below.
+type: software
+authors:
+  - given-names: AbdelMoniem
+    family-names: Helmy
+    email: abdelmoniem.hafez@cu.edu.eg
+    affiliation: >-
+      Department of Information Systems and Technology, Faculty of Graduate
+      Studies for Statistical Research, Cairo University, Egypt
+  - given-names: Muhammad
+    family-names: Mahmoud
+    email: m.mahmoud@mau.edu.eg
+    affiliation: >-
+      Information Systems Department, Faculty of Computers and Artificial
+      Intelligence, Matrouh University, Egypt
+repository-code: >-
+  https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin
+abstract: >-
+  Reference Python implementation accompanying a proxy-based computational
+  sensitivity study of quantum oracle sketching under structured non-IID data
+  streams. Implements five synthetic non-IID stream generators (IID, Markov
+  switching, seasonal drift, burst repetition, long-range dependence), three
+  classical memory-bounded baselines (online SGD, averaged SGD, Count-Min hash
+  classifier), heuristic quantum accuracy proxies derived from the
+  effective-sample model, a real-stream sanity-check pipeline applied to two
+  Numenta Anomaly Benchmark datasets (NYC Taxi and Machine Temperature), and a
+  proxy-sensitivity ablation suite covering alternative tau estimators, forward
+  window sizes, stream lengths, and target functions. The (tau, r) sensitivity
+  landscape is the central diagnostic artefact.
+keywords:
+  - quantum computing
+  - oracle sketching
+  - streaming algorithms
+  - non-IID data
+  - correlation sensitivity analysis
+  - proxy sensitivity mapping
+  - Numenta Anomaly Benchmark
+license: MIT
+version: 1.0.0
+date-released: '2026-04-28'

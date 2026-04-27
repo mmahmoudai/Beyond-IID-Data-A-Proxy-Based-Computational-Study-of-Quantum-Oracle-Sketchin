@@ -1,0 +1,107 @@
+{
+  "datasets": [
+    {
+      "name": "NYC Taxi",
+      "T": 10320,
+      "n": 6,
+      "tau_emp": 6.0,
+      "r_emp": 2.7693203883495148,
+      "T_eff": 621.0910110783901,
+      "proxy_accuracy": 0.8842398726066552,
+      "classical": {
+        "OnlineSGD": {
+          "mean": 0.6696511627906976,
+          "ci95_half": 0.005694142172398672,
+          "min": 0.645639534883721,
+          "max": 0.6772286821705427
+        },
+        "AveragedSGD": {
+          "mean": 0.6731007751937984,
+          "ci95_half": 0.0036550086725109193,
+          "min": 0.6583333333333333,
+          "max": 0.6778100775193798
+        },
+        "CountMin": {
+          "mean": 0.8646996124031009,
+          "ci95_half": 0.016084540502580808,
+          "min": 0.8221899224806202,
+          "max": 0.8875
+        }
+      },
+      "base_rate": 0.2000968992248062,
+      "majority_baseline": 0.7999031007751938,
+      "threshold_sensitivity": {
+        "q=0.70": {
+          "threshold": 19068.3,
+          "positive_rate": 0.3
+        },
+        "q=0.80": {
+          "threshold": 20834.800000000003,
+          "positive_rate": 0.2
+        },
+        "q=0.90": {
+          "threshold": 23595.0,
+          "positive_rate": 0.1000968992248062
+        }
+      }
+    },
+    {
+      "name": "Machine Temperature",
+      "T": 22695,
+      "n": 6,
+      "tau_emp": 32.0,
+      "r_emp": 13.54734288864388,
+      "T_eff": 52.35113304724174,
+      "proxy_accuracy": 0.5,
+      "classical": {
+        "OnlineSGD": {
+          "mean": 0.7235999118748622,
+          "ci95_half": 0.0013916894921154092,
+          "min": 0.7176911213923772,
+          "max": 0.7257105089226702
+        },
+        "AveragedSGD": {
+          "mean": 0.7348931482705442,
+          "ci95_half": 0.0016840689208858096,
+          "min": 0.7310420797532496,
+          "max": 0.739369905265477
+        },
+        "CountMin": {
+          "mean": 0.8008195637805683,
+          "ci95_half": 0.001370432280672738,
+          "min": 0.7974003084379819,
+          "max": 0.8028200044062569
+        }
+      },
+      "base_rate": 0.20004406256884777,
+      "majority_baseline": 0.7999559374311522,
+      "threshold_sensitivity": {
+        "q=0.70": {
+          "threshold": 92.831400962,
+          "positive_rate": 0.3000220312844239
+        },
+        "q=0.80": {
+          "threshold": 95.53778903599999,
+          "positive_rate": 0.2
+        },
+        "q=0.90": {
+          "threshold": 99.03836353199999,
+          "positive_rate": 0.10002203128442388
+        }
+      }
+    }
+  ],
+  "binarisation": {
+    "n_bits": 6,
+    "features": [
+      "hour-bucket-bit-0",
+      "hour-bucket-bit-1",
+      "hour-bucket-bit-2",
+      "weekend",
+      "trend-bit",
+      "lag1-trend-bit"
+    ],
+    "target": "next-bin value >= 80th percentile",
+    "forward_window_W": 20
+  }
+}

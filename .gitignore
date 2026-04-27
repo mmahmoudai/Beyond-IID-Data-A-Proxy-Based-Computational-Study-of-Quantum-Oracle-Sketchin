@@ -1,0 +1,76 @@
+# LaTeX build artefacts
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.idx
+*.ind
+*.ilg
+*.glo
+*.gls
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.spl
+*.nav
+*.snm
+*.vrb
+*.dvi
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+.env
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local Claude Code config
+.claude/
+
+# Internal review and reports — not part of the public release
+review/
+reports/
+templates/
+three_quantum_paper_topics.md
+
+# Internal supervisor / peer-review system docs
+docs/
+
+# Old/intermediate paper versions kept locally only
+paper/main.tex
+paper/main.aux
+paper/main.log
+paper/main.out
+paper/main.spl
+paper/main.pdf
+paper/highlights.txt
+paper/DOI_VERIFICATION_REPORT.md
+paper/README.md

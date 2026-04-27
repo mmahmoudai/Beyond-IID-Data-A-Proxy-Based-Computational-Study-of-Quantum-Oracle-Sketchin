@@ -1,0 +1,22 @@
+% Ablation A: alternative tau estimators
+% Format: regime  &  est  &  tau  &  T_eff  &  proxy
+IID  &  1/e (default)  &  2.00  &  1571  &  0.954\\
+IID  &  1/2-crossing  &  2.00  &  1571  &  0.954\\
+IID  &  integrated ACF  &  1.00  &  3141  &  0.977\\
+IID  &  AR(1) effective  &  1.00  &  3141  &  0.977\\
+Markov 0.7  &  1/e (default)  &  4.00  &  498  &  0.856\\
+Markov 0.7  &  1/2-crossing  &  3.00  &  664  &  0.892\\
+Markov 0.7  &  integrated ACF  &  3.40  &  587  &  0.877\\
+Markov 0.7  &  AR(1) effective  &  2.79  &  713  &  0.899\\
+Seasonal  &  1/e (default)  &  2.00  &  1236  &  0.942\\
+Seasonal  &  1/2-crossing  &  2.00  &  1236  &  0.942\\
+Seasonal  &  integrated ACF  &  3.66  &  675  &  0.893\\
+Seasonal  &  AR(1) effective  &  1.00  &  2472  &  0.971\\
+Burst  &  1/e (default)  &  7.00  &  98  &  0.500\\
+Burst  &  1/2-crossing  &  5.00  &  138  &  0.500\\
+Burst  &  integrated ACF  &  5.52  &  125  &  0.500\\
+Burst  &  AR(1) effective  &  3.30  &  208  &  0.655\\
+Long-memory  &  1/e (default)  &  2.00  &  1549  &  0.954\\
+Long-memory  &  1/2-crossing  &  2.00  &  1549  &  0.954\\
+Long-memory  &  integrated ACF  &  1.00  &  3099  &  0.977\\
+Long-memory  &  AR(1) effective  &  1.00  &  3099  &  0.977\\

@@ -98,8 +98,6 @@ Our principal contributions are:
 
 Sections~\ref{sec:related}--\ref{sec:prelim} review related work and introduce the proxy model; Section~\ref{sec:theory} specifies the correlation proxies; Section~\ref{sec:experiments} describes the experimental setup; Section~\ref{sec:results} presents nine experiments (seven on synthetic streams, a two-dataset real-stream sanity check, and an ablation suite); Section~\ref{sec:discussion} discusses implications and limitations; Section~\ref{sec:conclusion} concludes.
 
-\paragraph{Revision summary.} This version extends the prior proxy-only treatment with: (i) a real-stream sanity check on two NAB datasets that places one in the proxy-favourable region and one outside it (Section~\ref{sec:real_stream}); (ii) four ablation families covering alternative $\tau$ estimators, forward-window sizes $W$, stream lengths $T$, and target functions (Section~\ref{sec:ablations}); (iii) explicit interpretation of the paired Wilcoxon test as a proxy-baseline crossover-stability check rather than algorithm-versus-algorithm significance (Section~\ref{sec:sweep}); (iv) a code repository with pinned dependencies and end-to-end reproduction recipes; and (v) strengthened proxy-status statements throughout, with no remaining own-voice claim of empirical quantum advantage.
-
 
 %=====================================================================
 \section{Related Work}
@@ -578,25 +576,6 @@ The $(\tau, r)$ sensitivity landscape is the paper's central operational artifac
 
 \paragraph{Real-stream sanity check and ablations.} Section~\ref{sec:real_stream} applies the proxy framework end-to-end to two NAB datasets (NYC Taxi and Machine Temperature), confirming that the empirical $\tau$ and $r$ estimators apply unchanged to real streams and that the proxy framework places NYC Taxi in the favourable region of the landscape (proxy tracked by Count-Min within $\approx 2$ percentage points; SGD task-limited) and Machine Temperature in the unfavourable region (saturated proxy exceeded by all classical baselines). Section~\ref{sec:ablations} verifies that the qualitative landscape ordering is robust to alternative $\tau$ estimators, forward-window size $W$, and target-function choice, while absolute proxy values depend on the constants $C$, $\delta$, and the stream length $T$.
 
-\paragraph{Recommendations executed.} Table~\ref{tab:recs_executed} summarises the major-revision items addressed in this version, the form of the response, and the remaining limitation in each row.
-
-\begin{table}[t]
-\centering
-\caption{Summary of revision-cycle recommendations executed in this version.}
-\label{tab:recs_executed}
-\begin{tabular}{@{}p{3.6cm}p{4.4cm}p{4.4cm}@{}}
-\toprule
-Previous concern & Response in this version & Remaining limitation \\
-\midrule
-Lack of real data & NYC Taxi and Machine Temperature NAB case studies (Section~\ref{sec:real_stream}) & Only two real streams; no financial or network-traffic data \\
-Ad hoc proxies & Section~\ref{sec:ablations} ablations across four $\tau$ estimators, $W$, $T$, and target functions & No formal theorem-equivalence proof \\
-Statistical ambiguity & Wilcoxon paragraph clarifies what is paired and what the $p$-value tests (Section~\ref{sec:sweep}) & Proxy is deterministic; tests describe baseline-vs-proxy stability only \\
-Reproducibility & Code directory, pinned \texttt{requirements.txt}, end-to-end reproduction recipe, and Zenodo-DOI-archived release \texttt{10.5281/zenodo.19831893} & GitHub repository will keep evolving; the cited DOI snapshot is the canonical reproducibility artefact \\
-Fairness of comparison & Proxy/status disclaimers strengthened across abstract, scope, and §6.5 & Classical task is still simple linear classification, not the hard task class \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 
 %=====================================================================
 % References
@@ -608,7 +587,7 @@ The authors declare that they have no known competing financial interests or per
 This research did not receive any specific grant from funding agencies in the public, commercial, or not-for-profit sectors.
 
 \section*{Data and code availability}
-The synthetic experiments use only reproducible random-number generators with explicit seeds (10 seeds per stochastic experiment, indices $0$--$9$); each stream family, proxy expression, and baseline algorithm is fully specified in Sections~\ref{sec:prelim}--\ref{sec:experiments} and Table~\ref{tab:repro}. The two real datasets---NYC Taxi pickup counts (\texttt{nyc\_taxi.csv}) and machine-temperature sensor readings (\texttt{machine\_temperature\_system\_failure.csv})---are publicly available under MIT licence at the Numenta Anomaly Benchmark repository (\url{https://github.com/numenta/NAB/tree/master/data/realKnownCause}) \citep{ahmad2017numenta}. A reference Python implementation of all generators, baselines, proxy formulas, real-stream loader, and ablation harness is provided in the accompanying \texttt{code/} directory of the supplementary materials, together with a \texttt{requirements.txt} pinning compatible package versions (Python~3.10+, NumPy~$\geq$1.24, SciPy~$\geq$1.10, scikit-learn~$\geq$1.3, Matplotlib~$\geq$3.7, Seaborn~$\geq$0.13, Pandas~$\geq$2.0). Running \texttt{python code/run\_experiments.py} regenerates Figures~1--7 and Table~\ref{tab:markov_summary}; \texttt{python code/real\_streams.py} regenerates Figure~\ref{fig:real_stream} and Table~\ref{tab:real_stream}; \texttt{python code/ablations.py} regenerates Figure~\ref{fig:ablations} and Table~\ref{tab:ablations}. A versioned public archive of the code is available at \url{https://doi.org/10.5281/zenodo.19831893} (DOI: \texttt{10.5281/zenodo.19831893}) and mirrored at \url{https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin}.
+The synthetic experiments use only reproducible random-number generators with explicit seeds (10 seeds per stochastic experiment, indices $0$--$9$); each stream family, proxy expression, and baseline algorithm is fully specified in Sections~\ref{sec:prelim}--\ref{sec:experiments} and Table~\ref{tab:repro}. The two real datasets---NYC Taxi pickup counts (\texttt{nyc\_taxi.csv}) and machine-temperature sensor readings (\texttt{machine\_temperature\_system\_failure.csv})---are publicly available under MIT licence at the Numenta Anomaly Benchmark repository (\url{https://github.com/numenta/NAB/tree/master/data/realKnownCause}) \citep{ahmad2017numenta}. A reference Python implementation of all generators, baselines, proxy formulas, real-stream loader, and ablation harness is provided in the accompanying \texttt{code/} directory of the supplementary materials, together with a \texttt{requirements.txt} pinning compatible package versions (Python~3.10+, NumPy~$\geq$1.24, SciPy~$\geq$1.10, scikit-learn~$\geq$1.3, Matplotlib~$\geq$3.7, Seaborn~$\geq$0.13, Pandas~$\geq$2.0). Running \texttt{python code/run\_experiments.py} regenerates Figures~1--7 and Table~\ref{tab:markov_summary}; \texttt{python code/real\_streams.py} regenerates Figure~\ref{fig:real_stream} and Table~\ref{tab:real_stream}; \texttt{python code/ablations.py} regenerates Figure~\ref{fig:ablations} and Table~\ref{tab:ablations}. A versioned public archive of the code is deposited at Zenodo under DOI \href{https://doi.org/10.5281/zenodo.19831893}{\texttt{10.5281/zenodo.19831893}} and mirrored on GitHub.\footnote{\url{https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin}}
 
 \section*{CRediT authorship contribution statement}
 \textbf{AbdelMoniem Helmy:} Conceptualization, Methodology, Supervision, Writing -- Review \& Editing. \textbf{Muhammad Mahmoud:} Methodology, Software, Formal Analysis, Investigation, Visualization, Writing -- Original Draft.

@@ -22,6 +22,11 @@ authors:
       Intelligence, Matrouh University, Egypt
 repository-code: >-
   https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin
+doi: 10.5281/zenodo.19831893
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.19831893
+    description: Zenodo archive of the v1.0.0 reproducibility package
 abstract: >-
   Reference Python implementation accompanying a proxy-based computational
   sensitivity study of quantum oracle sketching under structured non-IID data

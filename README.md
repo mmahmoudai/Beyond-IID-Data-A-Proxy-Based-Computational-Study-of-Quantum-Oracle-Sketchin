@@ -1,5 +1,6 @@
 # Beyond IID Data: A Proxy-Based Computational Study of Quantum Oracle Sketching Robustness under Structured Non-IID Streaming
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19831893.svg)](https://doi.org/10.5281/zenodo.19831893)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![Reproducible](https://img.shields.io/badge/reproducible-yes-brightgreen.svg)](#reproducing-every-figure-and-table)
@@ -210,7 +211,24 @@ framework, or the real-stream sanity-check pipeline, please cite:
 ```
 
 A versioned Zenodo DOI for the code archive is minted on each tagged
-release; see the *Releases* tab of this repository.
+release. The current release is archived at:
+
+> **DOI:** [10.5281/zenodo.19831893](https://doi.org/10.5281/zenodo.19831893)
+
+Cite the code archive as:
+
+```bibtex
+@software{helmy2026beyondiid_code,
+  title   = {Beyond IID Data: A Proxy-Based Computational Study of Quantum
+             Oracle Sketching Robustness under Structured Non-IID Streaming
+             (reproducibility package)},
+  author  = {Helmy, AbdelMoniem and Mahmoud, Muhammad},
+  year    = {2026},
+  doi     = {10.5281/zenodo.19831893},
+  url     = {https://doi.org/10.5281/zenodo.19831893},
+  version = {1.0.0}
+}
+```
 
 ---
 
@@ -220,9 +238,9 @@ This repository follows semantic versioning aligned with the manuscript
 revision cycle. Tag a release (`vX.Y.Z`) to trigger a Zenodo DOI mint via
 the Zenodo–GitHub integration; the metadata in `.zenodo.json` is used.
 
-| Version | Manuscript status |
-|---|---|
-| `v1.0.0` | First public release accompanying the v7 submission-ready manuscript |
+| Version | DOI | Manuscript status |
+|---|---|---|
+| `v1.0.0` | [10.5281/zenodo.19831893](https://doi.org/10.5281/zenodo.19831893) | First public release accompanying the v8 submission-ready manuscript |
 
 ---
 

@@ -1,2 +1,13 @@
+% Compact landscape table (acc + majority)
 NYC Taxi  &  10,320  &  6.0  &  2.77  &  621  &  0.884  &  0.670  &  0.673  &  0.865  &  0.800\\
 Machine Temperature  &  22,695  &  32.0  &  13.55  &  52  &  0.500  &  0.724  &  0.735  &  0.801  &  0.800\\
+
+% Imbalance-aware metrics: per-baseline acc / bal-acc / F1 + majority
+NYC Taxi & majority & 0.800 & 0.500 & 0.000\\
+NYC Taxi & OnlineSGD & 0.670 & 0.535 & 0.273\\
+NYC Taxi & AveragedSGD & 0.673 & 0.498 & 0.199\\
+NYC Taxi & CountMin & 0.865 & 0.777 & 0.644\\
+Machine Temperature & majority & 0.800 & 0.500 & 0.000\\
+Machine Temperature & OnlineSGD & 0.724 & 0.550 & 0.269\\
+Machine Temperature & AveragedSGD & 0.735 & 0.538 & 0.234\\
+Machine Temperature & CountMin & 0.801 & 0.560 & 0.228\\

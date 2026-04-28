@@ -38,7 +38,7 @@ curl -L -o data/raw/nyc_taxi.csv \
 # Figures 1-7 + Table 3 (Markov sweep)
 python code/run_experiments.py
 
-# Figure 8 (real-stream validation, Section 6.8)
+# Figure 8 (real-stream sanity check, Section 6.8)
 python code/real_streams.py
 
 # Figure 9 + Table 4 (proxy-sensitivity ablations, Section 6.9)

@@ -140,6 +140,20 @@ def load_machine_temp():
 
 
 # ---------------------------------------------------------------------------
+def _balanced_accuracy_and_f1(tp, fp, tn, fn):
+    """Compute balanced accuracy and F1 of the positive class from confusion counts."""
+    tpr = tp / max(tp + fn, 1)  # recall on positives
+    tnr = tn / max(tn + fp, 1)  # recall on negatives
+    bal_acc = 0.5 * (tpr + tnr)
+    precision = tp / max(tp + fp, 1)
+    recall = tpr
+    if precision + recall > 0:
+        f1 = 2 * precision * recall / (precision + recall)
+    else:
+        f1 = 0.0
+    return float(bal_acc), float(f1)
+
+
 def run_baselines(X, y, seed=0, hash_dim=64, lr=0.01):
     T = len(X)
     rng = np.random.RandomState(seed)
@@ -151,26 +165,46 @@ def run_baselines(X, y, seed=0, hash_dim=64, lr=0.01):
     asgd = AveragedSGDClassifier(hash_dim=hash_dim, lr=lr, seed=seed)
     cm = HashTableApproximator(M=hash_dim, seed=seed)
 
-    n_correct = {'OnlineSGD': 0, 'AveragedSGD': 0, 'CountMin': 0}
-    rolling = {k: np.zeros(T) for k in n_correct}
+    methods = ['OnlineSGD', 'AveragedSGD', 'CountMin']
+    n_correct = {k: 0 for k in methods}
+    confusion = {k: {'tp': 0, 'fp': 0, 'tn': 0, 'fn': 0} for k in methods}
+    rolling = {k: np.zeros(T) for k in methods}
+
+    def _update_confusion(name, pred, yt):
+        c = confusion[name]
+        if pred == 1 and yt == 1:
+            c['tp'] += 1
+        elif pred == 1 and yt == 0:
+            c['fp'] += 1
+        elif pred == 0 and yt == 0:
+            c['tn'] += 1
+        else:
+            c['fn'] += 1
 
     for t in range(T):
         x = Xp[t]
-        yt = yp[t]
+        yt = int(yp[t])
         for name, model in [('OnlineSGD', sgd), ('AveragedSGD', asgd)]:
             pred = 1 if model.predict(x) >= 0.5 else 0
             if pred == yt:
                 n_correct[name] += 1
+            _update_confusion(name, pred, yt)
             model.update(x, float(yt))
             rolling[name][t] = n_correct[name] / (t + 1)
         pred = 1 if cm.query(x) >= 0.5 else 0
         if pred == yt:
             n_correct['CountMin'] += 1
+        _update_confusion('CountMin', pred, yt)
         cm.update(x, float(yt))
         rolling['CountMin'][t] = n_correct['CountMin'] / (t + 1)
 
-    final = {k: rolling[k][-1] for k in rolling}
-    return rolling, final
+    final_acc = {k: rolling[k][-1] for k in rolling}
+    final_balf1 = {}
+    for k in methods:
+        c = confusion[k]
+        bal_acc, f1 = _balanced_accuracy_and_f1(c['tp'], c['fp'], c['tn'], c['fn'])
+        final_balf1[k] = {'bal_acc': bal_acc, 'f1': f1}
+    return rolling, final_acc, final_balf1
 
 
 def compute_proxy(T_eff, n=N_BITS, C=2.0, delta=0.05):
@@ -200,29 +234,62 @@ def process_dataset(name, X, y, values, ts):
     proxy_acc = compute_proxy(T_eff, n=n)
     print(f'  tau={tau_emp:.2f}  r={r_emp:.3f}  T_eff={T_eff:.1f}  proxy={proxy_acc:.3f}')
 
-    finals = {'OnlineSGD': [], 'AveragedSGD': [], 'CountMin': []}
-    rolling_runs = {k: [] for k in finals}
+    methods = ['OnlineSGD', 'AveragedSGD', 'CountMin']
+    finals_acc = {k: [] for k in methods}
+    finals_bal = {k: [] for k in methods}
+    finals_f1 = {k: [] for k in methods}
+    rolling_runs = {k: [] for k in methods}
     for s in SEEDS:
-        rolling, final = run_baselines(X, y, seed=s)
-        for k in final:
-            finals[k].append(final[k])
+        rolling, final_acc, final_balf1 = run_baselines(X, y, seed=s)
+        for k in methods:
+            finals_acc[k].append(final_acc[k])
+            finals_bal[k].append(final_balf1[k]['bal_acc'])
+            finals_f1[k].append(final_balf1[k]['f1'])
             rolling_runs[k].append(rolling[k])
 
+    def _summary_stats(arr):
+        a = np.array(arr)
+        ci = 1.96 * a.std(ddof=1) / np.sqrt(len(a)) if len(a) > 1 else 0.0
+        return {'mean': float(a.mean()), 'ci95_half': float(ci),
+                'min': float(a.min()), 'max': float(a.max())}
+
     summary = {}
-    for k in finals:
-        arr = np.array(finals[k])
-        ci = 1.96 * arr.std(ddof=1) / np.sqrt(len(arr))
-        summary[k] = {'mean': float(arr.mean()), 'ci95_half': float(ci),
-                      'min': float(arr.min()), 'max': float(arr.max())}
-        print(f'  {k:12s}: {arr.mean():.3f} +- {ci:.3f}')
+    for k in methods:
+        summary[k] = {
+            'accuracy': _summary_stats(finals_acc[k]),
+            'balanced_accuracy': _summary_stats(finals_bal[k]),
+            'f1': _summary_stats(finals_f1[k]),
+            # legacy keys for figure code
+            'mean': float(np.mean(finals_acc[k])),
+            'ci95_half': float(1.96 * np.array(finals_acc[k]).std(ddof=1) /
+                               np.sqrt(len(finals_acc[k]))),
+        }
+        a = summary[k]
+        print(f'  {k:12s}: acc={a["accuracy"]["mean"]:.3f} +- {a["accuracy"]["ci95_half"]:.3f}'
+              f'   bal-acc={a["balanced_accuracy"]["mean"]:.3f}'
+              f'   F1={a["f1"]["mean"]:.3f}')
+
+    pos_rate = float(y.mean())
+    majority_acc = max(pos_rate, 1 - pos_rate)
+    # Majority predicts the always-majority class (always 0 here, since 80% are 0):
+    majority_pred = 0 if pos_rate < 0.5 else 1
+    if majority_pred == 0:
+        # all predicted negative: TP=0, FP=0, TN=all_neg, FN=all_pos
+        majority_bal = 0.5
+        majority_f1 = 0.0
+    else:
+        majority_bal = 0.5
+        majority_f1 = 2 * pos_rate / (pos_rate + 1)
 
     return {
         'name': name, 'T': int(T), 'n': int(n),
         'tau_emp': float(tau_emp), 'r_emp': float(r_emp),
         'T_eff': float(T_eff), 'proxy_accuracy': float(proxy_acc),
         'classical': summary,
-        'base_rate': float(y.mean()),
-        'majority_baseline': float(max(y.mean(), 1 - y.mean())),
+        'base_rate': pos_rate,
+        'majority_baseline': float(majority_acc),
+        'majority_balanced_accuracy': float(majority_bal),
+        'majority_f1': float(majority_f1),
         'threshold_sensitivity': threshold_sensitivity(values),
     }, rolling_runs, values, ts
 
@@ -257,16 +324,34 @@ def main():
     # LaTeX-ready table rows
     txt_path = os.path.join(RESULTS_DIR, 'real_stream_summary.txt')
     with open(txt_path, 'w') as fp:
+        # Compact landscape table: Dataset | T | tau | r | T_eff | proxy | acc | majority
+        fp.write('% Compact landscape table (acc + majority)\n')
         for d in out['datasets']:
             fp.write(
                 f"{d['name']}  &  {d['T']:,}  &  {d['tau_emp']:.1f}  &  "
                 f"{d['r_emp']:.2f}  &  {d['T_eff']:.0f}  &  "
                 f"{d['proxy_accuracy']:.3f}  &  "
-                f"{d['classical']['OnlineSGD']['mean']:.3f}  &  "
-                f"{d['classical']['AveragedSGD']['mean']:.3f}  &  "
-                f"{d['classical']['CountMin']['mean']:.3f}  &  "
+                f"{d['classical']['OnlineSGD']['accuracy']['mean']:.3f}  &  "
+                f"{d['classical']['AveragedSGD']['accuracy']['mean']:.3f}  &  "
+                f"{d['classical']['CountMin']['accuracy']['mean']:.3f}  &  "
                 f"{d['majority_baseline']:.3f}\\\\\n"
             )
+        fp.write('\n% Imbalance-aware metrics: per-baseline acc / bal-acc / F1 + majority\n')
+        for d in out['datasets']:
+            cl = d['classical']
+            fp.write(
+                f"{d['name']} & majority & "
+                f"{d['majority_baseline']:.3f} & "
+                f"{d['majority_balanced_accuracy']:.3f} & "
+                f"{d['majority_f1']:.3f}\\\\\n"
+            )
+            for m in ['OnlineSGD', 'AveragedSGD', 'CountMin']:
+                fp.write(
+                    f"{d['name']} & {m} & "
+                    f"{cl[m]['accuracy']['mean']:.3f} & "
+                    f"{cl[m]['balanced_accuracy']['mean']:.3f} & "
+                    f"{cl[m]['f1']['mean']:.3f}\\\\\n"
+                )
     print(f'Wrote {txt_path}')
 
     # ----------------------------------------------------------------------

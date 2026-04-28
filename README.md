@@ -115,7 +115,7 @@ Every numerical result in the paper is regenerable from a single command:
 | Figure 5 — Markov correlation-strength sweep | `code/run_experiments.py` | 10 seeds, paired Wilcoxon |
 | Figure 6 — Dimension scaling | `code/run_experiments.py` | $n \leq 14$ |
 | Figure 7 — Rolling accuracy dynamics | `code/run_experiments.py` | 10 seeds |
-| Figure 8 — Real-stream validation (2 NAB datasets) | `code/real_streams.py` | 10 seeds |
+| Figure 8 — Real-stream sanity check (2 NAB datasets) | `code/real_streams.py` | 10 seeds |
 | Figure 9 — Proxy-sensitivity ablations | `code/ablations.py` | 4 ablation families |
 | Table 3 — Markov sweep summary | `code/run_experiments.py` | Wilcoxon $p$-values |
 | Table 4 — Real-stream sanity check | `code/real_streams.py` | 2 NAB datasets |

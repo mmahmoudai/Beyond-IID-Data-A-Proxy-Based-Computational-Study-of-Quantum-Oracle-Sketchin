@@ -10,7 +10,7 @@ This document accompanies the submission and summarises the revision work perfor
 
 This version of the manuscript extends earlier proxy-only treatments with:
 
-1. **Real-stream sanity check on two NAB datasets** (Section 6.8). NYC Taxi falls in the proxy-favourable region of the landscape (Count-Min tracks the proxy within ≈ 2 percentage points; SGD baselines are task-limited). Machine Temperature falls in the unfavourable region where the proxy saturates and is exceeded by all classical baselines. Both datasets were chosen *before* examining the results; honest reporting of the negative case (Machine Temperature) is included as a genuine data point.
+1. **Real-stream sanity check on two NAB datasets** (Section 6.8) reported with **imbalance-aware metrics** (balanced accuracy and F₁ alongside accuracy). NYC Taxi falls in the proxy-favourable region (Count-Min reaches accuracy 0.865, balanced accuracy 0.777, F₁ 0.644 — materially above the majority baseline on every metric). Machine Temperature falls in the unfavourable region where the proxy saturates; all classical baselines exceed the saturated proxy on accuracy alone, but balanced accuracy ≤ 0.56 and F₁ < 0.30 reveal that the gap is mostly majority-class memorisation. Both datasets were chosen *before* examining the results, and the per-stream high-activity threshold is explicitly framed as a rare-event classification proxy distinct from the original NAB anomaly label.
 
 2. **Four ablation families** (Section 6.9): alternative τ estimators (1/e default, 1/2-crossing, integrated ACF, AR(1) effective), forward-window sizes W ∈ {10, 20, 50}, stream lengths T ∈ {1024, 2048, 4096, 8192}, and target functions (linear, parity, threshold). The qualitative regime ordering is preserved across all alternative τ estimators (proxy values shift by at most 0.04).
 
@@ -28,7 +28,7 @@ The following table summarises major-revision recommendations from prior review 
 
 | Previous concern | Response in this version | Remaining limitation |
 |---|---|---|
-| Lack of real data | NYC Taxi and Machine Temperature NAB case studies (Section 6.8) | Only two real streams; no financial or network-traffic data |
+| Lack of real data | NYC Taxi and Machine Temperature NAB case studies (Section 6.8) with accuracy + balanced accuracy + F₁ | Only two real streams; no financial or network-traffic data |
 | Ad hoc proxies | Section 6.9 ablations across four τ estimators, W, T, and target functions | No formal theorem-equivalence proof |
 | Statistical ambiguity | Wilcoxon paragraph clarifies what is paired and what the p-value tests (Section 6.5) | Proxy is deterministic; tests describe baseline-vs-proxy stability only |
 | Reproducibility | Code directory, pinned `requirements.txt`, end-to-end reproduction recipe, and Zenodo-DOI-archived release `10.5281/zenodo.19831893` | GitHub repository will keep evolving; the cited DOI snapshot is the canonical reproducibility artefact |

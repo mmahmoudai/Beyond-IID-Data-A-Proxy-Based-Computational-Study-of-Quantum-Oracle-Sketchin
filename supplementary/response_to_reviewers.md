@@ -46,7 +46,7 @@ Reproducing every figure and table:
 
 ```bash
 python code/run_experiments.py     # Figures 1-7 + Table 3
-python code/real_streams.py        # Figure 8 + Table 4 (real-stream sanity check)
+python code/real_streams.py        # Figure 8 + Tables 4-5 (real-stream sanity check)
 python code/ablations.py           # Figure 9 + Table 6 (sensitivity ablations)
 ```
 

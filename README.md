@@ -118,7 +118,8 @@ Every numerical result in the paper is regenerable from a single command:
 | Figure 8 — Real-stream sanity check (2 NAB datasets) | `code/real_streams.py` | 10 seeds |
 | Figure 9 — Proxy-sensitivity ablations | `code/ablations.py` | 4 ablation families |
 | Table 3 — Markov sweep summary | `code/run_experiments.py` | Wilcoxon $p$-values |
-| Table 4 — Real-stream sanity check | `code/real_streams.py` | 2 NAB datasets |
+| Table 4 — Real-stream sanity check (landscape coordinates) | `code/real_streams.py` | 2 NAB datasets |
+| Table 5 — Imbalance-aware metrics (acc / bal-acc / F$_1$) | `code/real_streams.py` | 2 NAB datasets, 10 seeds |
 | Table 6 — Alternative $\tau$ estimators | `code/ablations.py` | 5 regimes × 4 estimators |
 
 Random seeds: every stochastic experiment uses indices 0–9. The third decimal

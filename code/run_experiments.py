@@ -306,7 +306,7 @@ def experiment_3():
     ax.set_title('(a) Effective sample count')
 
     ax = axes[1]
-    im = ax.pcolormesh(r_r, tau_r, eps_grid, cmap='RdYlGn_r', shading='auto',
+    im = ax.pcolormesh(r_r, tau_r, eps_grid, cmap='viridis_r', shading='auto',
                        vmin=0, vmax=1)
     plt.colorbar(im, ax=ax, label='Oracle error proxy $\\epsilon$')
     _mark_regimes(ax, T, dark=True)
@@ -316,12 +316,13 @@ def experiment_3():
 
     ax = axes[2]
     acc_grid = np.clip(1 - eps_grid**2, 0.5, 1.0)
-    im = ax.pcolormesh(r_r, tau_r, acc_grid, cmap='RdYlGn', shading='auto',
+    im = ax.pcolormesh(r_r, tau_r, acc_grid, cmap='viridis', shading='auto',
                        vmin=0.5, vmax=1.0)
     plt.colorbar(im, ax=ax, label='Accuracy proxy')
-    ax.contour(r_r, tau_r, acc_grid, levels=[0.7, 0.8, 0.9],
-               colors=['black'], linewidths=[1.5, 1.5, 1.5],
-               linestyles=['--', '-', '--'])
+    cs = ax.contour(r_r, tau_r, acc_grid, levels=[0.7, 0.8, 0.9],
+                    colors=['black'], linewidths=[1.5, 1.5, 1.5],
+                    linestyles=['--', '-', '--'])
+    ax.clabel(cs, fmt='%.1f', fontsize=8, inline=True)
     _mark_regimes(ax, T)
     ax.set_xscale('log'); ax.set_yscale('log')
     ax.set_xlabel('Repetition number $r$'); ax.set_ylabel('Refreshing time $\\tau$')
@@ -342,12 +343,14 @@ def _mark_regimes(ax, T, dark=False):
         'Burst': (burst_effective_r(10, 0.3), 1.0),
         'Long-memory': (1.0, long_memory_effective_tau(0.8, T)),
     }
+    import matplotlib.patheffects as pe
     ec = 'black' if dark else 'white'
     for nm, (rv, tv) in pts.items():
         ax.plot(rv, tv, 'o', color=COLORS[nm], markersize=10,
                 markeredgecolor=ec, markeredgewidth=1.5, zorder=5)
-        ax.annotate(nm, (rv, tv), fontsize=7, fontweight='bold',
-                    color=ec, xytext=(5, 5), textcoords='offset points')
+        ax.annotate(nm, (rv, tv), fontsize=7, fontweight='bold', color='black',
+                    xytext=(5, 5), textcoords='offset points',
+                    path_effects=[pe.withStroke(linewidth=2, foreground='white')])
 
 
 # ===========================================================================
@@ -688,8 +691,6 @@ def experiment_7():
 
     axes[5].set_visible(False)
 
-    plt.suptitle('Rolling classification accuracy over time (mean across seeds, 95% CI)',
-                 fontsize=15, y=1.01)
     plt.tight_layout()
     p = os.path.join(FIGURES_DIR, 'fig7_rolling_accuracy.pdf')
     plt.savefig(p); plt.savefig(p.replace('.pdf', '.png')); plt.close()

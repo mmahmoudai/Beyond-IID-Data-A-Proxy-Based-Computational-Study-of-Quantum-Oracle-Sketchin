@@ -366,7 +366,7 @@ def main():
     sub = slice(0, 2 * 24 * 14)
     ax.plot(ts1.iloc[sub], v1[sub], lw=0.6, color='steelblue')
     ax.set_xlabel('timestamp (first 14 days)')
-    ax.set_ylabel('pickup count / 30 min')
+    ax.set_ylabel('Pickup count / 30 min')
     ax.set_title('(a) NYC Taxi (NAB)')
     ax.tick_params(axis='x', rotation=30, labelsize=8)
 
@@ -374,7 +374,7 @@ def main():
     sub = slice(0, 12 * 24 * 14)
     ax.plot(ts2.iloc[sub], v2[sub], lw=0.5, color='darkorange')
     ax.set_xlabel('timestamp (first 14 days)')
-    ax.set_ylabel('temperature reading')
+    ax.set_ylabel('Temperature reading')
     ax.set_title('(b) Machine Temperature (NAB)')
     ax.tick_params(axis='x', rotation=30, labelsize=8)
 
@@ -400,26 +400,31 @@ def main():
                label=f'NYC proxy={proxy1:.2f}', alpha=0.7)
     ax.axhline(proxy2, color='darkorange', ls='--', lw=1.0,
                label=f'MT proxy={proxy2:.2f}', alpha=0.7)
-    ax.axhline(out1['majority_baseline'], color='steelblue', ls=':', lw=1.0, alpha=0.5)
-    ax.axhline(out2['majority_baseline'], color='darkorange', ls=':', lw=1.0, alpha=0.5)
+    ax.axhline(out1['majority_baseline'], color='steelblue', ls=':', lw=1.0, alpha=0.5,
+               label='NYC majority')
+    ax.axhline(out2['majority_baseline'], color='darkorange', ls=':', lw=1.0, alpha=0.5,
+               label='MT majority')
     ax.set_xticks(xs)
     ax.set_xticklabels(methods)
-    ax.set_ylabel('final cumulative accuracy')
+    ax.set_ylabel('Final cumulative accuracy')
     ax.set_ylim(0.4, 1.0)
     ax.set_title('(c) Empirical baselines vs proxy (both streams)')
-    ax.legend(fontsize=7, loc='lower right', ncol=2)
+    ax.legend(fontsize=6.5, loc='lower right', ncol=2)
 
-    # (d) (tau, r) landscape with both real points
+    # (d) (tau, r) landscape with both real points.
+    # Log-log axes (consistent with Fig. 3); the grid spans the full plotted
+    # range so the heatmap fills the panel, including the Machine Temp point.
+    import matplotlib.patheffects as pe
     ax = fig.add_subplot(gs[1, 1])
-    tau_grid = np.linspace(1, 60, 80)
-    r_grid = np.linspace(1, 4, 80)
+    tau_grid = np.geomspace(1, 60, 120)
+    r_grid = np.geomspace(1, 18, 120)
     Tg, Rg = np.meshgrid(tau_grid, r_grid)
     T_ref = max(out1['T'], out2['T'])
     Teff_grid = T_ref / (Tg * Rg)
     eps2 = np.minimum(1.0, (2.0 ** 2) * N_BITS * np.log(1.0 / 0.05) / Teff_grid)
     acc_grid = np.maximum(0.5, 1.0 - eps2)
     cm = ax.contourf(Tg, Rg, acc_grid, levels=12, cmap='viridis')
-    plt.colorbar(cm, ax=ax, label='proxy accuracy')
+    plt.colorbar(cm, ax=ax, label='Accuracy proxy')
 
     synth = {
         'IID':         (1.0, 1.00),
@@ -428,25 +433,41 @@ def main():
         'Burst':       (3.0, 1.50),
         'Long-memory': (50.0, 1.10),
     }
+    label_off = {
+        'IID':         (5, 6, 'left'),
+        'Markov':      (5, 8, 'left'),
+        'Seasonal':    (5, -13, 'left'),
+        'Burst':       (5, 6, 'left'),
+        'Long-memory': (-6, 8, 'right'),
+    }
     for name, (tt, rr) in synth.items():
-        ax.scatter(tt, rr, marker='x', s=70, c='white', linewidths=2)
+        dx, dy, ha = label_off[name]
+        ax.scatter(tt, rr, marker='X', s=85, c='black',
+                   edgecolors='white', linewidths=0.8, zorder=4)
         ax.annotate(name, (tt, rr), textcoords='offset points',
-                    xytext=(5, 5), fontsize=7, color='white')
+                    xytext=(dx, dy), fontsize=7, ha=ha, color='black',
+                    path_effects=[pe.withStroke(linewidth=2, foreground='white')])
 
     ax.scatter(out1['tau_emp'], out1['r_emp'], marker='*', s=240, c='steelblue',
                edgecolors='white', linewidths=1.4, zorder=5, label='NYC Taxi')
     ax.annotate('NYC Taxi', (out1['tau_emp'], out1['r_emp']),
-                textcoords='offset points', xytext=(8, -10),
-                fontsize=9, color='steelblue', fontweight='bold')
+                textcoords='offset points', xytext=(8, -4),
+                fontsize=9, color='steelblue', fontweight='bold',
+                path_effects=[pe.withStroke(linewidth=2, foreground='white')])
     ax.scatter(out2['tau_emp'], out2['r_emp'], marker='*', s=240, c='darkorange',
                edgecolors='white', linewidths=1.4, zorder=5, label='Machine Temp')
     ax.annotate('Machine Temp', (out2['tau_emp'], out2['r_emp']),
-                textcoords='offset points', xytext=(8, 8),
-                fontsize=9, color='darkorange', fontweight='bold')
-    ax.set_xlabel(r'refreshing time $\tau$')
-    ax.set_ylabel(r'repetition number $r$')
+                textcoords='offset points', xytext=(-9, -3),
+                fontsize=9, color='darkorange', fontweight='bold', ha='right',
+                path_effects=[pe.withStroke(linewidth=2, foreground='white')])
+    ax.set_xscale('log')
+    ax.set_yscale('log')
+    ax.set_xlim(1, 60)
+    ax.set_ylim(1, 18)
+    ax.set_xlabel(r'Refreshing time $\tau$')
+    ax.set_ylabel(r'Repetition number $r$')
     ax.set_title('(d) Real-stream placement on landscape')
-    ax.legend(loc='upper right', fontsize=8)
+    ax.legend(loc='upper left', fontsize=8)
 
     out_pdf = os.path.join(FIGURES_DIR, 'fig8_real_stream_validation.pdf')
     out_png = os.path.join(FIGURES_DIR, 'fig8_real_stream_validation.png')

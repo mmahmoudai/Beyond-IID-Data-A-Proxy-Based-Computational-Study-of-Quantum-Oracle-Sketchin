@@ -313,7 +313,6 @@ def main():
     ax.set_xticklabels(regimes, rotation=15, fontsize=8)
     ax.set_ylabel(r'estimated $\tau$')
     ax.set_title('(a) Alternative $\\tau$ estimators on synthetic streams')
-    ax.set_yscale('log')
     ax.legend(fontsize=7, loc='upper left')
 
     # (b) proxy-accuracy under each tau estimator
@@ -355,7 +354,7 @@ def main():
     ax.set_ylabel('SGD accuracy')
     ax.set_ylim(0.4, 1.0)
     ax.set_title('(d) SGD accuracy across target functions')
-    ax.legend(fontsize=7, loc='lower right')
+    ax.legend(fontsize=7, loc='upper right')
 
     plt.tight_layout()
     out_pdf = os.path.join(FIGURES_DIR, 'fig9_ablations.pdf')

@@ -35,13 +35,13 @@
 
 \graphicspath{{../../figures/}}
 
-\journal{Neurocomputing}
+\journal{Journal of Computational Science}
 
 \begin{document}
 
 \begin{frontmatter}
 
-\title{Memory-Bounded Online Learning under Structured Non-IID Streams: A Proxy-Based Sensitivity Study with Quantum and Classical Baselines}
+\title{Beyond IID Data: Proxy-Based Computational Modelling of Quantum Oracle Sketching Robustness for Structured Non-IID Streams}
 
 % ORCID iDs (author-provided; enter them in the submission portal as well)
 %   Mohammed Farsi:     0009-0001-2574-6533
@@ -70,11 +70,11 @@
   country={Egypt}}
 
 \begin{abstract}
-Quantum oracle sketching achieves exponential memory advantages over classical streaming for tasks such as classification and dimension reduction, and its theoretical framework extends to non\nobreakdash-IID data; however, the behaviour of these robustness guarantees under structured correlation patterns relevant to practice remains unexplored, and no prior work has systematically mapped how specific correlation families---Markov dependence, seasonal drift, burst repetition, long-range dependence---affect the estimated performance of quantum oracle sketching relative to classical streaming baselines. To close this gap we introduce operational correlation proxies---a refreshing time $\tau$ and a repetition number $r$---inspired by the correlated-data framework of Zhao et al.\ (2026) and use them to conduct a proxy-based computational study across five structured synthetic non\nobreakdash-IID regimes. For each regime we specify analytic proxy expressions for $\tau$ and $r$, compare them against 10-seed empirical measurements on generated streams, run three classical memory-bounded streaming baselines (online SGD, averaged SGD, and a Count-Min-style hash classifier), and compute heuristic quantum performance proxies, reporting all stochastic results as 10-seed means with 95\% confidence bands and paired Wilcoxon significance tests for the main comparisons. When the empirical refreshing time is used the proxy model predicts a favourable region under mild-to-moderate correlation, while stronger correlation reduces the proxy-estimated separation; where analytic proxies overestimate the empirical refreshing time the gap reaches up to roughly $125\times$ for long-memory data, indicating that tighter family-specific characterisations could substantially enlarge the predicted advantage region, whereas in the IID and burst regimes the empirical values instead exceed the analytic proxy, reflecting finite-sample autocorrelation fluctuations and, for burst, forward-window counting effects at the chosen window length. A sensitivity landscape in $(\tau, r)$ space visualises contours of the quantum accuracy proxy across correlation conditions and serves as the paper's central operational artefact. This is a modelling study using heuristic proxies primarily on synthetic data, augmented with two real-stream case studies (NYC Taxi and Machine Temperature, both from the Numenta Anomaly Benchmark) reported with imbalance-aware balanced accuracy and $F_1$ alongside accuracy, and four sensitivity ablations; it does not implement or simulate any quantum algorithm and does not validate the full oracle-sketching theory, and broader real-stream validation across financial, network-traffic, and additional sensor domains remains future work.
+Quantum oracle sketching achieves exponential memory advantages over classical streaming, and its theoretical framework extends to correlated, non\nobreakdash-IID data, yet the practical behavior of these robustness guarantees under structured correlation families remains uncharted. We introduce operational proxies---refreshing time $\tau$ and repetition number $r$---inspired by the correlated-data framework of Zhao et al.\ (2026) and conduct a proxy-based computational study across five structured synthetic non\nobreakdash-IID regimes: IID, Markov switching, seasonal drift, burst repetition, and long-range dependence. Three classical memory-bounded baselines (online SGD, averaged SGD, Count-Min hash classifier) are compared with heuristic quantum accuracy proxies; all stochastic results are reported as 10-seed means with 95\% confidence bands and paired Wilcoxon significance tests. Analytic proxies overestimate the empirical refreshing time by up to $125\times$ for long-memory data and $\approx 8\times$ for Markov data; using empirical $\tau$, the proxy model predicts a favourable region under mild-to-moderate correlation, while stronger correlation reduces the proxy-estimated separation until the proxy-model crossover occurs near $\rho \approx 0.88$ (classical significantly exceeds the proxy at that point, $p = 0.037$). A $(\tau, r)$ sensitivity landscape serves as the central operational artifact. The framework is also applied to two real NAB streams (NYC Taxi and Machine Temperature) as a sanity check that places each stream on opposite sides of the proxy-favourable region using the same estimators, with imbalance-aware metrics (balanced accuracy and $F_1$) reported alongside accuracy to expose majority-class memorisation; four ablations additionally vary the $\tau$ estimator, the forward window $W$, the stream length $T$, and the target function. The scope is a proxy-based computational study primarily on synthetic data---quantum curves are heuristic proxies and all classical baselines are empirical, with no implemented quantum algorithm---and circuit simulation, primary-source theorem reproduction, and broader real-stream validation across financial, network-traffic, and additional sensor domains remain explicit follow-on targets.
 \end{abstract}
 
 \begin{keyword}
-online learning \sep streaming classifiers \sep non\nobreakdash-IID data \sep concept drift \sep correlation sensitivity analysis \sep memory-bounded learning \sep quantum oracle sketching
+computational modelling \sep proxy-based simulation \sep quantum computing \sep oracle sketching \sep streaming algorithms \sep non\nobreakdash-IID data
 \end{keyword}
 
 \end{frontmatter}
@@ -92,7 +92,7 @@ A particularly notable feature of this framework is its treatment of non\nobreak
 
 Four questions motivate our study: (RQ1) How tight are the generic robustness guarantees for specific structured families? (RQ2) How informative are $\tau$ and $r$ as accuracy predictors? (RQ3) Under what correlation conditions does the proxy-estimated favourable separation persist, degrade, or potentially improve? (RQ4) How do empirically measured $(\tau, r)$ relate to the analytic proxy predictions?
 
-\paragraph{Scope} The scope is a \textbf{proxy-based computational sensitivity study of memory-bounded online learning under structured non\nobreakdash-IID streams}: operational correlation proxies inspired by this framework are used to map where proxy-estimated performance is most favourable under the modelling assumptions across structured synthetic non\nobreakdash-IID conditions, with a two\nobreakdash-dataset real-stream sanity check (Section~\ref{sec:real_stream}). Quantum performance curves are heuristic proxies and no quantum algorithm is implemented; circuit simulation, primary-source theorem reproduction, and broader real-stream validation remain explicit follow-on targets (Section~\ref{sec:future_work}).
+\paragraph{Scope} The scope is a \textbf{proxy-based computational modelling study}: analytic correlation proxies inspired by this framework are combined with multi-seed stochastic simulation to map where proxy-estimated performance is most favourable under the modelling assumptions across structured synthetic non\nobreakdash-IID conditions, with a two\nobreakdash-dataset real-stream sanity check (Section~\ref{sec:real_stream}). Quantum performance curves are heuristic proxies and no quantum algorithm is implemented; circuit simulation, primary-source theorem reproduction, and broader real-stream validation remain explicit follow-on targets (Section~\ref{sec:future_work}).
 
 We study five non\nobreakdash-IID regimes (IID, Markov switching, seasonal drift, burst repetition, long-range dependence), specifying analytic proxy expressions for $\tau$ and $r$, measuring their empirical counterparts on generated streams, comparing three classical baselines, and mapping results onto a $(\tau, r)$ sensitivity landscape with 10-seed means, 95\% CI bands, and paired Wilcoxon tests.
 
@@ -120,7 +120,7 @@ Sections~\ref{sec:related}--\ref{sec:prelim} review related work and introduce t
 
 Classical data streaming has been studied extensively since the seminal work of \citet{alon1999space} on frequency moments \citep{muthukrishnan2005data}. Key developments relevant to this paper include the Count-Min Sketch of \citet{cormode2005improved} for frequency estimation, the Frequent Directions algorithm of \citet{ghashami2016frequent} for streaming low-rank approximation, and the sketching-as-linear-algebra framework of \citet{woodruff2014sketching}. On the learning side, \citet{shalev2012online} provides the standard reference for online convex optimisation; \citet{polyak1992averaging} introduced Polyak--Ruppert averaging, which we use as a second classical baseline; and \citet{weinberger2009featurehashing} established the feature-hashing technique underlying our bounded-memory classifier.
 
-The behaviour of streaming algorithms under structured temporal correlation has received comparatively less attention. Concept drift is surveyed by \citet{gama2014driftsurvey} and \citet{ditzler2015nonstationary}; ADWIN \citep{bifet2007adwin} is the canonical adaptive-window solution. Broader online-learning treatments appear in MOA \citep{bifet2010moa}, \citet{hoi2021online}, and \citet{gama2010knowledge}; the most recent systematic drift review is \citet{arora2024driftreview}; adaptive random forests \citep{gomes2017adaptiverf} serve as the drift-aware classical reference. Recent work on non-stationary streaming includes elastic online deep-learning pipelines \citep{su2024elasticonline}, bi-dynamic-distribution learning \citep{yan2024bidynamic}, and feature-based drift analyses \citep{hinder2024featuredrift}. Non-stationary online optimisation is analysed in \citet{besbes2015non} and \citet{ben2010agnostic}; Count-Min refinements appear in \citet{benmazziane2022countmin} and \citet{cormode2011synopses}; foundational self-similarity measurements are in \citet{park2000selfsimilar}.
+The behaviour of streaming algorithms under structured temporal correlation has received comparatively less attention. Concept drift is surveyed by \citet{gama2014driftsurvey} and \citet{ditzler2015nonstationary}; ADWIN \citep{bifet2007adwin} is the canonical adaptive-window solution. Broader online-learning treatments appear in MOA \citep{bifet2010moa}, \citet{hoi2021online}, and \citet{gama2010knowledge}; the most recent systematic drift review is \citet{arora2024driftreview}; adaptive random forests \citep{gomes2017adaptiverf} serve as the drift-aware classical reference. Recent work on non-stationary streaming includes elastic online deep-learning pipelines \citep{su2024elasticonline}, bi-dynamic-distribution learning \citep{yan2024bidynamic}, and evolving-prototype classifiers for imbalanced streams \citep{wu2024evolvingprototypes}. Non-stationary online optimisation is analysed in \citet{besbes2015non} and \citet{ben2010agnostic}; Count-Min refinements appear in \citet{benmazziane2022countmin} and \citet{cormode2011synopses}; foundational self-similarity measurements are in \citet{park2000selfsimilar}.
 
 \subsection{Quantum Advantages for Data Processing}
 
@@ -422,7 +422,7 @@ Figure~\ref{fig:scaling} illustrates the exponential scaling of the quantum-vs-c
     \label{fig:scaling}
 \end{figure}
 
-Panel~(a) shows that at $n = 14$ ($N = 16{,}384$) the representative classical memory reference exceeds 128 while the quantum requirement is only 14 qubits --- an exponential gap that widens with $n$ (the $\Omega(\sqrt{N})$ floor is a worst-case reference, not an empirical floor; see Section~\ref{sec:heuristic_model}). Panel~(b) shows that classical SGD accuracy is approximately stable across $n \in [6, 14]$, while the quantum IID proxy is consistently near $1.0$. This flatness is a property of the task-level $\sqrt{n/\Teff}$ rate; under the exact framework's oracle-construction cost, which grows linearly in $N = 2^n$, the fixed horizon $T = 10^4$ is already comparable to $N$ at $n = 14$, so the flat trend should not be read as construction feasibility at higher dimensions (Section~\ref{sec:heuristic_model}). The quantum Markov proxy \emph{decreases} with dimension because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly with $n$; family-specific proxy refinements are therefore most useful at higher dimensions.
+Panel~(a) shows that at $n = 14$ ($N = 16{,}384$) the representative classical memory reference exceeds 128 while the quantum requirement is only 14 qubits — an exponential gap that widens with $n$ (the $\Omega(\sqrt{N})$ floor is a worst-case reference, not an empirical floor; see Section~\ref{sec:heuristic_model}). Panel~(b) shows that classical SGD accuracy is approximately stable across $n \in [6, 14]$, while the quantum IID proxy is consistently near $1.0$. This flatness is a property of the task-level $\sqrt{n/\Teff}$ rate; under the exact framework's oracle-construction cost, which grows linearly in $N = 2^n$, the fixed horizon $T = 10^4$ is already comparable to $N$ at $n = 14$, so the flat trend should not be read as construction feasibility at higher dimensions (Section~\ref{sec:heuristic_model}). The quantum Markov proxy \emph{decreases} with dimension because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly with $n$; family-specific proxy refinements are therefore most useful at higher dimensions.
 
 \subsection{Experiment 7: Rolling Accuracy Dynamics}
 
@@ -795,12 +795,6 @@ Havl\'i\v{c}ek, V., C\'orcoles, A.D., Temme, K., Harrow, A.W., Kandala, A., Chow
 \newblock \emph{Nature} 567~(7747), 209--212.
 \newblock \url{https://doi.org/10.1038/s41586-019-0980-2}.
 
-\bibitem[Hinder et~al.(2024)]{hinder2024featuredrift}
-Hinder, F., Vaquet, V., Hammer, B., 2024.
-\newblock Feature-based analyses of concept drift.
-\newblock \emph{Neurocomputing} 600, 127968.
-\newblock \url{https://doi.org/10.1016/j.neucom.2024.127968}.
-
 \bibitem[Hoi et~al.(2021)]{hoi2021online}
 Hoi, S.C.H., Sahoo, D., Lu, J., Zhao, P., 2021.
 \newblock Online learning: a comprehensive survey.
@@ -938,6 +932,12 @@ Woodruff, D.P., 2014.
 \newblock Sketching as a tool for numerical linear algebra.
 \newblock \emph{Foundations and Trends in Theoretical Computer Science} 10~(1--2), 1--157.
 \newblock \url{https://doi.org/10.1561/0400000060}.
+
+\bibitem[Wu et~al.(2024)]{wu2024evolvingprototypes}
+Wu, Z., Wang, H., Guo, J., Yang, Q., Shao, J., 2024.
+\newblock Learning evolving prototypes for imbalanced data stream classification with limited labels.
+\newblock \emph{Information Sciences} 679, 120979.
+\newblock \url{https://doi.org/10.1016/j.ins.2024.120979}.
 
 \bibitem[Yan et~al.(2024)]{yan2024bidynamic}
 Yan, H., Liu, J., Xiao, J., Niu, S., Dong, S., You, D., Shen, L., 2024.

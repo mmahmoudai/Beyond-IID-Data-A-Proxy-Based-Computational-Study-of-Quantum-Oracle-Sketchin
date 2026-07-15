@@ -43,22 +43,34 @@
 
 \title{Quantum Oracle Sketching Robustness under Structured Non-IID Data Streams: A Proxy-Based Computational Sensitivity Study}
 
-\author[inst1]{AbdelMoniem Helmy\corref{cor1}}
+% ORCID iDs (author-provided; enter them in the submission portal as well)
+%   Mohammed Farsi:     0009-0001-2574-6533
+%   AbdelMoniem Helmy:  0000-0001-5996-6019
+%   Muhammad Mahmoud:   0000-0002-0618-5662
+
+\author[inst1]{Mohammed Farsi}
+\ead{Mafarsi@taibahu.edu.sa}
+
+\author[inst2]{AbdelMoniem Helmy\corref{cor1}}
 \ead{abdelmoniem.hafez@cu.edu.eg}
 \cortext[cor1]{Corresponding author.}
 
-\author[inst2]{Muhammad Mahmoud}
+\author[inst3]{Muhammad Mahmoud}
 \ead{m.mahmoud@mau.edu.eg}
 
-\affiliation[inst1]{organization={Department of Information Systems and Technology, Faculty of Graduate Studies for Statistical Research, Cairo University},
+\affiliation[inst1]{organization={Taibah University},
+  city={Yanbu},
+  country={Saudi Arabia}}
+
+\affiliation[inst2]{organization={Department of Information Systems and Technology, Faculty of Graduate Studies for Statistical Research, Cairo University},
   city={Cairo},
   country={Egypt}}
 
-\affiliation[inst2]{organization={Information Systems Department, Faculty of Computers and Artificial Intelligence, Matrouh University},
+\affiliation[inst3]{organization={Information Systems Department, Faculty of Computers and Artificial Intelligence, Matrouh University},
   country={Egypt}}
 
 \begin{abstract}
-Quantum oracle sketching achieves exponential memory advantages over classical streaming \citep{zhao2026exponential}, and its theoretical framework extends to correlated, non\nobreakdash-IID data, yet the practical behavior of these robustness guarantees under structured correlation families remains uncharted. We introduce operational proxies---refreshing time $\tau$ and repetition number $r$---inspired by the correlated-data framework of Zhao et al.\ (2026) and conduct a proxy-based computational study across five structured synthetic non\nobreakdash-IID regimes: IID, Markov switching, seasonal drift, burst repetition, and long-range dependence. Three classical memory-bounded baselines (online SGD, averaged SGD, Count-Min hash classifier) are compared with heuristic quantum accuracy proxies; all stochastic results are reported as 10-seed means with 95\% confidence bands and paired Wilcoxon significance tests. Analytic proxies overestimate the empirical refreshing time by up to $125\times$ for long-memory data and $\approx 8\times$ for Markov data; using empirical $\tau$, the proxy model predicts a favourable region under mild-to-moderate correlation, while stronger correlation reduces the proxy-estimated separation until the proxy-model crossover occurs near $\rho \approx 0.88$ (classical significantly exceeds the proxy at that point, $p = 0.037$). A $(\tau, r)$ sensitivity landscape serves as the central operational artifact. The framework is also applied to two real NAB streams (NYC Taxi and Machine Temperature) as a sanity check that places each stream on opposite sides of the proxy-favourable region using the same estimators, with imbalance-aware metrics (balanced accuracy and $F_1$) reported alongside accuracy to expose majority-class memorisation; four ablations additionally vary the $\tau$ estimator, the forward window $W$, the stream length $T$, and the target function. The scope is a proxy-based computational study primarily on synthetic data---quantum curves are heuristic proxies and all classical baselines are empirical, with no implemented quantum algorithm---and circuit simulation, primary-source theorem reproduction, and broader real-stream validation across financial, network-traffic, and additional sensor domains remain explicit follow-on targets.
+Quantum oracle sketching achieves exponential memory advantages over classical streaming, and its theoretical framework extends to correlated, non\nobreakdash-IID data, yet the practical behavior of these robustness guarantees under structured correlation families remains uncharted. We introduce operational proxies---refreshing time $\tau$ and repetition number $r$---inspired by the correlated-data framework of Zhao et al.\ (2026) and conduct a proxy-based computational study across five structured synthetic non\nobreakdash-IID regimes: IID, Markov switching, seasonal drift, burst repetition, and long-range dependence. Three classical memory-bounded baselines (online SGD, averaged SGD, Count-Min hash classifier) are compared with heuristic quantum accuracy proxies; all stochastic results are reported as 10-seed means with 95\% confidence bands and paired Wilcoxon significance tests. Analytic proxies overestimate the empirical refreshing time by up to $125\times$ for long-memory data and $\approx 8\times$ for Markov data; using empirical $\tau$, the proxy model predicts a favourable region under mild-to-moderate correlation, while stronger correlation reduces the proxy-estimated separation until the proxy-model crossover occurs near $\rho \approx 0.88$ (classical significantly exceeds the proxy at that point, $p = 0.037$). A $(\tau, r)$ sensitivity landscape serves as the central operational artifact. The framework is also applied to two real NAB streams (NYC Taxi and Machine Temperature) as a sanity check that places each stream on opposite sides of the proxy-favourable region using the same estimators, with imbalance-aware metrics (balanced accuracy and $F_1$) reported alongside accuracy to expose majority-class memorisation; four ablations additionally vary the $\tau$ estimator, the forward window $W$, the stream length $T$, and the target function. The scope is a proxy-based computational study primarily on synthetic data---quantum curves are heuristic proxies and all classical baselines are empirical, with no implemented quantum algorithm---and circuit simulation, primary-source theorem reproduction, and broader real-stream validation across financial, network-traffic, and additional sensor domains remain explicit follow-on targets.
 \end{abstract}
 
 \begin{keyword}
@@ -76,11 +88,11 @@ The exponential growth of data-intensive applications in domains such as sensor 
 
 Recent work by \citet{zhao2026exponential} shows that quantum oracle sketching achieves exponential quantum advantages for classification and dimension reduction on massive classical data, using a polylogarithmic-size quantum computer ($\bigO(n)$ qubits for $n = \log_2 N$). For several concrete problems the classical memory requirement scales polynomially in $N = 2^n$, yielding an exponential gap; the classical hardness results are task-specific \citep{harrow2009hhl, havlicek2019qkernels, schuld2021encoding, biamonte2017qml}. The broader quantum ML landscape includes variational algorithms \citep{cerezo2021variational}, NISQ-era perspectives \citep{preskill2018nisq}, quantum learning theory \citep{schuld2018supervised}, and classical shadow tomography \citep{huang2020shadows}.
 
-A particularly notable feature of this framework is its treatment of non\nobreakdash-IID data. \citet{zhao2026exponential} extend their analysis to correlated, non\nobreakdash-IID data via a structured data-generation model in which the quantum sample complexity increases with the degree of data correlation. However, the practical implications of this robustness under structured, real-world correlation patterns remain unexplored.
+A particularly notable feature of this framework is its treatment of non\nobreakdash-IID data. The framework extends to correlated, non\nobreakdash-IID data via a hierarchical data-generation model in which the quantum sample complexity is multiplied by the \emph{repetition number} of the data-generation process. However, the practical implications of this robustness under structured, real-world correlation patterns remain unexplored.
 
 Four questions motivate our study: (RQ1) How tight are the generic robustness guarantees for specific structured families? (RQ2) How informative are $\tau$ and $r$ as accuracy predictors? (RQ3) Under what correlation conditions does the proxy-estimated favourable separation persist, degrade, or potentially improve? (RQ4) How do empirically measured $(\tau, r)$ relate to the analytic proxy predictions?
 
-\paragraph{Scope} The scope is a \textbf{proxy-based computational study}: operational correlation proxies inspired by the Zhao et al.\ framework are used to map where proxy-estimated performance is most favourable under the modelling assumptions across structured synthetic non\nobreakdash-IID conditions, with a two\nobreakdash-dataset real-stream sanity check (Section~\ref{sec:real_stream}). Quantum performance curves are heuristic proxies and no quantum algorithm is implemented; circuit simulation, primary-source theorem reproduction, and broader real-stream validation remain explicit follow-on targets (Section~\ref{sec:future_work}).
+\paragraph{Scope} The scope is a \textbf{proxy-based computational study}: operational correlation proxies inspired by this framework are used to map where proxy-estimated performance is most favourable under the modelling assumptions across structured synthetic non\nobreakdash-IID conditions, with a two\nobreakdash-dataset real-stream sanity check (Section~\ref{sec:real_stream}). Quantum performance curves are heuristic proxies and no quantum algorithm is implemented; circuit simulation, primary-source theorem reproduction, and broader real-stream validation remain explicit follow-on targets (Section~\ref{sec:future_work}).
 
 We study five non\nobreakdash-IID regimes (IID, Markov switching, seasonal drift, burst repetition, long-range dependence), specifying analytic proxy expressions for $\tau$ and $r$, measuring their empirical counterparts on generated streams, comparing three classical baselines, and mapping results onto a $(\tau, r)$ sensitivity landscape with 10-seed means, 95\% CI bands, and paired Wilcoxon tests.
 
@@ -126,12 +138,12 @@ Quantum algorithms for data processing include quantum SVMs \citep{rebentrost201
 
 \subsection{Quantum Oracle Sketching}
 
-\citet{zhao2026exponential} show that a polylogarithmic-size quantum computer ($\bigO(n)$ qubits for $n$-dimensional data, $N = 2^n$) can perform classification and dimension reduction on massive classical data by processing random samples on the fly via quantum oracle sketching; Boolean function learning is one concrete instantiation. For several concrete tasks, the classical memory requirement scales polynomially in $N$, yielding an exponential memory gap. Their correlated-data extension uses a structured data-generation model that accounts for temporal dependence; we adopt the terms \emph{refreshing time} (decorrelation scale) and \emph{repetition number} (expected duplication) as our operational labels for the key correlation parameters, noting that our definitions (Section~\ref{sec:heuristic_model}) are inspired by but not necessarily identical to the exact quantities in their framework. Classical hardness results are task-specific, not a universal lower bound.
+The originating work \citep{zhao2026exponential} shows that a polylogarithmic-size quantum computer ($\bigO(n)$ qubits for $n$-dimensional data, $N = 2^n$) can perform classification and dimension reduction on massive classical data by processing random samples on the fly via quantum oracle sketching; Boolean function learning is one concrete instantiation. For several concrete tasks, the classical memory requirement scales polynomially in $N$, yielding an exponential memory gap. Their correlated-data extension uses a structured data-generation model that accounts for temporal dependence; we adopt the terms \emph{refreshing time} (decorrelation scale) and \emph{repetition number} (expected duplication) as our operational labels for the key correlation parameters, noting that our definitions (Section~\ref{sec:heuristic_model}) are inspired by but not necessarily identical to the exact quantities in their framework. Classical hardness results are task-specific, not a universal lower bound.
 
 \subsection{Heuristic Effective-Sample Model}
 \label{sec:heuristic_model}
 
-\textbf{Proxy status.} The quantities $\tau$ and $r$ defined below are \emph{paper-defined operational proxies} motivated by, but not formally equivalent to, the correlation parameters discussed in \citet{zhao2026exponential}; equivalence proofs are follow-on work. We introduce a simplified effective-sample proxy that adapts the qualitative structure of the correlated-data discussion in \citet{zhao2026exponential} into a tractable form for computational exploration across diverse correlation families. The choice $C{=}2$, $\delta{=}0.05$ in Eq.~\eqref{eq:oracle_error} rescales accuracy contours uniformly without deforming the qualitative regime ordering: changing $C$ or $\delta$ shifts every contour along the hyperbolic family $\tau r \propto (C^2 \log(1/\delta))^{-1}$, preserving the relative ranking of all regimes. Practitioners interpreting the landscape quantitatively should treat absolute contour values as indicative rather than universal.
+\textbf{Proxy status.} The quantities $\tau$ and $r$ defined below are \emph{paper-defined operational proxies} motivated by, but not formally equivalent to, the correlation parameters of the exact framework; equivalence proofs are follow-on work. We introduce a simplified effective-sample proxy that adapts the qualitative structure of the framework's correlated-data analysis into a tractable form for computational exploration across diverse correlation families. The choice $C{=}2$, $\delta{=}0.05$ in Eq.~\eqref{eq:oracle_error} rescales accuracy contours uniformly without deforming the qualitative regime ordering: changing $C$ or $\delta$ shifts every contour along the hyperbolic family $\tau r \propto (C^2 \log(1/\delta))^{-1}$, preserving the relative ranking of all regimes. Practitioners interpreting the landscape quantitatively should treat absolute contour values as indicative rather than universal.
 
 \begin{definition}[Refreshing Time -- operational proxy]
 We define the \emph{operational refreshing time} $\tau$ of a data stream as the smallest lag at which the normalized autocorrelation drops below $1/e$. This is an empirically measurable quantity that serves as a proxy for the decorrelation rate of the stream.
@@ -153,7 +165,9 @@ and use the following heuristic oracle error proxy:
 \end{equation}
 where $C = 2$ and $\delta = 0.05$ throughout our experiments. Under IID data, $\tau = 1$ and $r = 1$, recovering the standard scaling $\epsilon \sim \sqrt{n/T}$.
 
-For the quantum memory requirement, \citet{zhao2026exponential} prove that $\bigO(n)$ qubits suffice for oracle construction. On the classical side, they also prove task-specific lower bounds that scale polynomially in $N = 2^n$ for certain problems (e.g., regimes where the target function forces classical algorithms to store a polynomial fraction of the truth table). Throughout this paper we use $\Omega(\sqrt{N})$ as a \emph{representative, worst-case} classical memory reference point; it is the bound that motivates the exponential separation in their analysis, \emph{not} an empirically witnessed floor for the online-gradient classical learners studied here. For the 10-dimensional linear classification task used in our experiments, the classical learner is in fact sample-limited rather than memory-limited once $M$ exceeds a small threshold (Section~\ref{sec:acc_vs_memory}). The $\Omega(\sqrt{N})$ curve in our figures therefore illustrates the worst-case asymptotic separation, not the empirical gap on the specific task studied.
+\paragraph{Relation to the exact framework} Two deliberate simplifications distinguish Eqs.~\eqref{eq:teff}--\eqref{eq:oracle_error} from the guarantees of \citet{zhao2026exponential}. First, in the exact framework the correlation overhead enters through the repetition number alone---oracle-construction sample complexity is multiplied by $R$, while the refreshing time only delimits the window over which $R$ is measured---whereas Eq.~\eqref{eq:teff} additionally divides by $\tau$, in the manner of a classical effective-sample-size correction ($\Teff \approx T/\tau_{\mathrm{int}}$). Our $\Teff$ is therefore deliberately \emph{more conservative} than the exact overhead and should be read as a lower bound on effective information content, not as a prediction of the framework's theorems. Second, the $\sqrt{n/\Teff}$ template in Eq.~\eqref{eq:oracle_error} is the statistical generalisation rate for the $n$-dimensional linear classification task studied here (VC dimension $n{+}1$) applied to the effective sample count; it is not the sample cost of the exact oracle-construction procedure, which for a uniform marginal over $N = 2^n$ inputs scales linearly in $N$. Throughout, \emph{oracle error} accordingly denotes the approximation error of our heuristic model's decision rule, not the construction error of the exact sketching procedure; the two views coincide numerically at our operating point ($n = 10$, $T = 10^4$) but scale differently in $n$ (see Experiment~6).
+
+For the quantum memory requirement, the exact framework establishes that $\bigO(n)$ qubits suffice for oracle construction. On the classical side, it establishes task-specific hardness results in which classical machines of size $\bigO(N^{c})$, for any constant $c < 1$, cannot match the quantum performance. Throughout this paper we use $\Omega(\sqrt{N})$ as a \emph{conservative representative} of this polynomial-in-$N$ family, in the spirit of classical streaming space bounds \citep{alon1999space, kallaugher2021streaming}; it is \emph{not} an empirically witnessed floor for the online-gradient classical learners studied here. For the 10-dimensional linear classification task used in our experiments, the classical learner is in fact sample-limited rather than memory-limited once $M$ exceeds a small threshold (Section~\ref{sec:acc_vs_memory}). The $\Omega(\sqrt{N})$ curve in our figures therefore illustrates the worst-case asymptotic separation, not the empirical gap on the specific task studied.
 
 The heuristic classification accuracy proxy used in our experiments is:
 \begin{equation}
@@ -168,7 +182,7 @@ where the floor of $0.5$ represents the random-guess baseline for binary classif
 \label{sec:theory}
 %=====================================================================
 
-We specify heuristic expressions for the operational $\tau$ and $r$ under five concrete correlation regimes. Each is an engineering proxy motivated by the autocorrelation or mixing structure of the regime; tighter proofs of equivalence to the correlation parameters in Zhao et al.\ are follow-on work.
+We specify heuristic expressions for the operational $\tau$ and $r$ under five concrete correlation regimes. Each is an engineering proxy motivated by the autocorrelation or mixing structure of the regime; tighter proofs of equivalence to the exact framework's correlation parameters are follow-on work.
 
 \subsection{Regime 1: IID Baseline}
 
@@ -187,7 +201,7 @@ The mixing time of this product chain is $\Theta(n \log n / (1 - \rho))$. We use
     \tau_{\text{Markov}}(\rho, n) \approx \frac{n}{1 - \rho},
     \label{eq:tau_markov}
 \end{equation}
-which preserves the dominant divergence as $\rho \to 1$ while suppressing logarithmic and model-specific constants. \emph{Provenance:} the $1/(1{-}\rho)$ scaling is theory-motivated (mixing-time asymptotics); the omission of the $\log n$ factor is an engineering simplification; the equivalence to the correlation parameters in \citet{zhao2026exponential} is unvalidated. Since samples from a Markov chain are not repeated exactly, $r_{\text{Markov}} = 1$, giving $\Teff \approx T(1{-}\rho)/n$.
+which preserves the dominant divergence as $\rho \to 1$ while suppressing logarithmic and model-specific constants. \emph{Provenance:} the $1/(1{-}\rho)$ scaling is theory-motivated (mixing-time asymptotics); the omission of the $\log n$ factor is an engineering simplification; the equivalence to the exact framework's correlation parameters is unvalidated. Since samples from a Markov chain are not repeated exactly, $r_{\text{Markov}} = 1$, giving $\Teff \approx T(1{-}\rho)/n$.
 
 \subsection{Regime 3: Seasonal Drift}
 
@@ -250,7 +264,7 @@ Long-memory ($H{=}0.8$) & $T^{2H{-}1} \approx 251$ & 1 & $\approx 40$ & 1.0 (sat
 \label{sec:experiments}
 %=====================================================================
 
-Throughout this section, the comparison is between (1)~empirical bounded-memory classical learners evaluated on a simple linear classification task, and (2)~a theory-inspired heuristic proxy for quantum oracle sketching performance; the empirical classical baselines are not the hard problem instances from \citet{zhao2026exponential}.
+Throughout this section, the comparison is between (1)~empirical bounded-memory classical learners evaluated on a simple linear classification task, and (2)~a theory-inspired heuristic proxy for quantum oracle sketching performance; the empirical classical baselines are not the hard problem instances of the exact framework's lower-bound constructions.
 
 \subsection{Data Generation and Diagnostics}
 
@@ -336,7 +350,7 @@ Figure~\ref{fig:accuracy} shows that all classical baselines converge to $0.88$-
     \label{fig:accuracy_memory}
 \end{figure}
 
-Figure~\ref{fig:accuracy_memory} shows that classical accuracy saturates at $M \geq 16$, confirming that the SGD learner is sample-limited rather than memory-limited at this scale. Under the IID modelling assumptions, the IID proxy curve (${\sim}0.99$) lies above the empirical classical curves on this task---a proxy-side ordering, not an implemented algorithmic comparison; the $\Omega(\sqrt{N})$ memory reference is a task-specific worst-case floor \citep{zhao2026exponential}.
+Figure~\ref{fig:accuracy_memory} shows that classical accuracy saturates at $M \geq 16$, confirming that the SGD learner is sample-limited rather than memory-limited at this scale. Under the IID modelling assumptions, the IID proxy curve (${\sim}0.99$) lies above the empirical classical curves on this task---a proxy-side ordering, not an implemented algorithmic comparison; the $\Omega(\sqrt{N})$ memory reference is a conservative stand-in for the task-specific polynomial-in-$N$ classical bounds (Section~\ref{sec:heuristic_model}).
 
 \subsection{Experiment 3: Sensitivity Landscape in $(\tau, r)$ Space}
 \label{sec:landscape}
@@ -404,11 +418,11 @@ Figure~\ref{fig:scaling} illustrates the exponential scaling of the quantum-vs-c
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{fig6_dimension_scaling.pdf}
-    \caption{Dimension scaling analysis (10-seed mean, 95\% CI bands). \textbf{(a)} Worst-case memory reference: representative classical lower bound $\Omega(\sqrt{N}) = \Omega(2^{n/2})$ vs.\ quantum $\bigO(n)$. The gap is exponential in $n$; this is a worst-case reference, not a witnessed empirical floor. \textbf{(b)} Classification accuracy vs.\ dimension $n$: classical online-SGD accuracy for IID, Markov, and long-memory data (solid lines) compared with quantum accuracy proxies for IID and Markov (dashed). The quantum IID proxy is consistently near $1.0$; the quantum Markov proxy degrades with dimension (because $\tau_{\text{Markov}} = n/(1{-}\rho)$ grows with $n$, reducing $\Teff$), while classical accuracy is approximately stable across the range studied.}
+    \caption{Dimension scaling analysis (10-seed mean, 95\% CI bands). \textbf{(a)} Worst-case memory reference: representative classical lower bound $\Omega(\sqrt{N}) = \Omega(2^{n/2})$ vs.\ quantum $\bigO(n)$. The gap is exponential in $n$; this is a worst-case reference, not a witnessed empirical floor. \textbf{(b)} Classification accuracy vs.\ dimension $n$: classical online-SGD accuracy for IID, Markov, and long-memory data (solid lines) compared with quantum accuracy proxies for IID and Markov (dashed). The quantum IID proxy is consistently near $1.0$ (a task-level generalisation trend, not oracle-construction feasibility; Section~\ref{sec:heuristic_model}); the quantum Markov proxy degrades with dimension (because $\tau_{\text{Markov}} = n/(1{-}\rho)$ grows with $n$, reducing $\Teff$), while classical accuracy is approximately stable across the range studied.}
     \label{fig:scaling}
 \end{figure}
 
-Panel~(a) shows that at $n = 14$ ($N = 16{,}384$) the representative classical memory reference exceeds 128 while the quantum requirement is only 14 qubits — an exponential gap that widens with $n$ (the $\Omega(\sqrt{N})$ floor is a worst-case reference, not an empirical floor; see Section~\ref{sec:heuristic_model}). Panel~(b) shows that classical SGD accuracy is approximately stable across $n \in [6, 14]$, while the quantum IID proxy is consistently near $1.0$. The quantum Markov proxy \emph{decreases} with dimension because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly with $n$; family-specific proxy refinements are therefore most useful at higher dimensions.
+Panel~(a) shows that at $n = 14$ ($N = 16{,}384$) the representative classical memory reference exceeds 128 while the quantum requirement is only 14 qubits — an exponential gap that widens with $n$ (the $\Omega(\sqrt{N})$ floor is a worst-case reference, not an empirical floor; see Section~\ref{sec:heuristic_model}). Panel~(b) shows that classical SGD accuracy is approximately stable across $n \in [6, 14]$, while the quantum IID proxy is consistently near $1.0$. This flatness is a property of the task-level $\sqrt{n/\Teff}$ rate; under the exact framework's oracle-construction cost, which grows linearly in $N = 2^n$, the fixed horizon $T = 10^4$ is already comparable to $N$ at $n = 14$, so the flat trend should not be read as construction feasibility at higher dimensions (Section~\ref{sec:heuristic_model}). The quantum Markov proxy \emph{decreases} with dimension because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly with $n$; family-specific proxy refinements are therefore most useful at higher dimensions.
 
 \subsection{Experiment 7: Rolling Accuracy Dynamics}
 
@@ -477,7 +491,7 @@ Machine Temperature   & majority           & $0.800$ & $0.500$ & $0.000$ \\
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{fig8_real_stream_validation.pdf}
-    \caption{Real-stream sanity check (two NAB datasets). \textbf{(a, b)} Raw series for the first 14 days of each dataset. \textbf{(c)} Final cumulative classical baseline accuracy (10-seed mean $\pm$ 95\% CI) for both streams; dashed lines are the deterministic proxy values, dotted lines are the majority baseline. \textbf{(d)} Both real-stream points (coloured stars) on the $(\tau, r)$ landscape, alongside synthetic-regime markers (white crosses). NYC Taxi falls in a moderately favourable region near the synthetic Markov point; Machine Temperature falls in the unfavourable upper-right region (high $\tau$ and very high $r$) where the proxy saturates. Imbalance-aware metrics for the same runs are reported in Table~\ref{tab:real_stream_metrics}.}
+    \caption{Real-stream sanity check (two NAB datasets). \textbf{(a, b)} Raw series for the first 14 days of each dataset. \textbf{(c)} Final cumulative classical baseline accuracy (10-seed mean $\pm$ 95\% CI) for both streams; dashed lines are the deterministic proxy values, dotted lines are the majority baseline. \textbf{(d)} Both real-stream points (coloured stars) on the $(\tau, r)$ landscape, alongside synthetic-regime markers (black crosses). NYC Taxi falls in a moderately favourable region near the synthetic Markov point; Machine Temperature falls in the unfavourable upper-right region (high $\tau$ and very high $r$) where the proxy saturates. Imbalance-aware metrics for the same runs are reported in Table~\ref{tab:real_stream_metrics}.}
     \label{fig:real_stream}
 \end{figure}
 
@@ -524,7 +538,7 @@ Long-memory & $0.954$ & $0.954$ & $0.977$ & $0.977$ \\
 \begin{figure}[t]
     \centering
     \includegraphics[width=\textwidth]{fig9_ablations.pdf}
-    \caption{Proxy-sensitivity and estimator ablations. \textbf{(a)} Estimated $\tau$ on each regime under four alternative estimators (log scale). \textbf{(b)} Resulting proxy accuracy. \textbf{(c)} Repetition number $r$ versus forward-window size $W$. \textbf{(d)} Online-SGD accuracy across three target functions (linear, parity, threshold), 10-seed mean with 95\% CI. The proxy curve is target-independent.}
+    \caption{Proxy-sensitivity and estimator ablations. \textbf{(a)} Estimated $\tau$ on each regime under four alternative estimators. \textbf{(b)} Resulting proxy accuracy. \textbf{(c)} Repetition number $r$ versus forward-window size $W$. \textbf{(d)} Online-SGD accuracy across three target functions (linear, parity, threshold), 10-seed mean with 95\% CI. The proxy curve is target-independent.}
     \label{fig:ablations}
 \end{figure}
 
@@ -567,17 +581,17 @@ Concept-drifted & seasonal, moderate drift & $0.7$--$0.8$ contour (analytic $\ta
 
 \begin{enumerate}
     \item \textbf{No quantum simulation or implementation.} The study does not simulate quantum circuits and does not implement a quantum oracle sketching algorithm; quantum performance is reported only as heuristic proxies derived from the effective-sample model.
-    \item \textbf{Proxy parameters are not formally equivalent to Zhao et al.\ quantities.} Our $\tau$ and $r$ are paper-defined operational labels (Section~\ref{sec:prelim}); equivalence to the exact correlation parameters in the Zhao et al.\ framework is not proven and is deferred to follow-on work.
+    \item \textbf{Proxy parameters are not formally equivalent to the exact framework's quantities.} Our $\tau$ and $r$ are paper-defined operational labels (Section~\ref{sec:prelim}); equivalence to the exact correlation parameters of \citet{zhao2026exponential} is not proven and is deferred to follow-on work.
     \item \textbf{Classical baselines are practical learners, not lower-bound-hard instances.} Online SGD, averaged SGD, and Count-Min are standard memory-bounded streaming learners on a simple linear classification task; they are not the worst-case task-specific instances that motivate the $\Omega(\sqrt{N})$ classical hardness reference, so the empirical comparison is not an algorithm-versus-algorithm benchmark.
     \item \textbf{Real-stream evidence is a sanity check, not a domain-wide validation.} Two NAB datasets are examined (Section~\ref{sec:real_stream}); broader real-stream validation across financial, network-traffic, and additional sensor domains remains future work.
-    \item \textbf{Modest dimensions.} Computation is tractable only to $n \leq 14$; compelling memory gaps are expected at $n \geq 20$ per the $\Omega(\sqrt{N})$ bound \citep{zhao2026exponential}. The Markov proxy becomes less favourable at higher $n$ because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly, making family-specific refinements especially valuable there.
-    \item \textbf{Task-specific lower bounds.} The $\Omega(\sqrt{N})$ floor is representative, not universal; exact hardness results in Zhao et al.\ are task-specific.
+    \item \textbf{Modest dimensions.} Computation is tractable only to $n \leq 14$; compelling memory gaps are expected at $n \geq 20$ per the polynomial-in-$N$ classical bounds, for which $\Omega(\sqrt{N})$ is our conservative reference (Section~\ref{sec:heuristic_model}). The Markov proxy becomes less favourable at higher $n$ because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly, making family-specific refinements especially valuable there.
+    \item \textbf{Task-specific lower bounds.} The $\Omega(\sqrt{N})$ floor is representative, not universal; exact hardness results in the originating framework are task-specific.
 \end{enumerate}
 
 \subsection{Future Work}
 \label{sec:future_work}
 
-Future work should pursue: (i) tighter, family-specific correlation characterizations that close the proxy--empirical $\tau$ gap; (ii) extending the two-dataset real-stream sanity check in Section~\ref{sec:real_stream} to financial, network-traffic, and additional sensor streams, characterising their $(\tau, r)$ parameters and mapping them onto Fig.~\ref{fig:landscape} with imbalance-aware metrics throughout; (iii) verification of proxy formulas against the exact Zhao et al.\ framework; (iv) extension to multiclass classification and regression; and (v) repetition-aware oracle constructions that exploit burst structure variance-reductively rather than treating duplicates as wasted samples.
+Future work should pursue: (i) tighter, family-specific correlation characterizations that close the proxy--empirical $\tau$ gap; (ii) extending the two-dataset real-stream sanity check in Section~\ref{sec:real_stream} to financial, network-traffic, and additional sensor streams, characterising their $(\tau, r)$ parameters and mapping them onto Fig.~\ref{fig:landscape} with imbalance-aware metrics throughout; (iii) formal verification of the proxy formulas against the exact framework's correlation parameters; (iv) extension to multiclass classification and regression; and (v) repetition-aware oracle constructions that exploit burst structure variance-reductively rather than treating duplicates as wasted samples.
 
 
 %=====================================================================
@@ -616,10 +630,10 @@ This research did not receive any specific grant from funding agencies in the pu
 \paragraph{Code availability} A reference Python implementation of the stream generators, classical baselines, proxy formulas, real-stream loader, and ablation harness is openly available under the MIT licence and archived at Zenodo (DOI~\href{https://doi.org/10.5281/zenodo.19831893}{\texttt{10.5281/zenodo.19831893}}), with an active mirror on GitHub.\footnote{\url{https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin}} The repository contains end-to-end scripts that regenerate every figure and table reported in this paper, together with a pinned dependency list and a reproduction recipe in its \texttt{README}.
 
 \section*{CRediT authorship contribution statement}
-\textbf{AbdelMoniem Helmy:} Conceptualization, Methodology, Supervision, Writing -- Review \& Editing. \textbf{Muhammad Mahmoud:} Methodology, Software, Formal Analysis, Investigation, Visualization, Writing -- Original Draft.
+\textbf{Mohammed Farsi:} Validation, Writing -- Review \& Editing. \textbf{AbdelMoniem Helmy:} Conceptualization, Methodology, Supervision, Writing -- Review \& Editing. \textbf{Muhammad Mahmoud:} Methodology, Software, Formal Analysis, Investigation, Visualization, Writing -- Original Draft.
 
 \section*{Declaration of generative AI and AI-assisted technologies in the writing process}
-During the preparation of this work the authors used a generative AI writing assistant solely for language polishing and formatting suggestions. After using this tool, the authors reviewed and edited the content as needed and take full responsibility for the content of the publication.
+During the preparation of this work the authors used Claude (Anthropic) in order to assist with drafting, language editing, and formatting of the manuscript. After using this tool, the authors reviewed, verified, and edited the content as needed and take full responsibility for the content of the publication.
 
 \bibliographystyle{elsarticle-harv}
 
@@ -764,7 +778,7 @@ Giovannetti, V., Lloyd, S., Maccone, L., 2008.
 \newblock \url{https://doi.org/10.1103/PhysRevLett.100.160501}.
 
 \bibitem[Gomes et~al.(2017)]{gomes2017adaptiverf}
-Gomes, H.M., Bifet, A., Read, J., Barddal, J.P., Enembreck, F., Pfharinger, B., Holmes, G., Abdessalem, T., 2017.
+Gomes, H.M., Bifet, A., Read, J., Barddal, J.P., Enembreck, F., Pfahringer, B., Holmes, G., Abdessalem, T., 2017.
 \newblock Adaptive random forests for evolving data stream classification.
 \newblock \emph{Machine Learning} 106~(9--10), 1469--1495.
 \newblock \url{https://doi.org/10.1007/s10994-017-5642-8}.

@@ -75,3 +75,12 @@ paper/highlights.txt
 paper/DOI_VERIFICATION_REPORT.md
 paper/README.md
 .tmp/
+
+# Local-only archive of superseded paper drafts
+paper/archive/
+
+figures/archive_pre_v5/
+
+# Submission zips and epstopdf build artifacts
+paper/*.zip
+*-eps-converted-to.pdf

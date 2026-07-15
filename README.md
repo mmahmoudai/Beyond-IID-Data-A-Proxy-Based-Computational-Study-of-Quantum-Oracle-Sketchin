@@ -43,6 +43,8 @@ structured non-IID data streams.
 | `paper/information_sciences/` | Canonical LaTeX manuscript variant (Information Sciences journal) |
 | `paper/quantum_information_processing/` | LaTeX variant for Quantum Information Processing |
 | `paper/neurocomputing/` | LaTeX variant for Neurocomputing |
+| `paper/journal_of_computational_science/` | LaTeX variant for Journal of Computational Science |
+| `paper/mdpi_sensors/` | LaTeX variant for Sensors (MDPI) |
 | `results/` | JSON dumps of numerical summaries (real-stream and ablation outputs) |
 | `LICENSE` | MIT licence |
 | `CITATION.cff` | Machine-readable citation metadata |
@@ -170,7 +172,7 @@ manuscript.
 
 ## Manuscript variants
 
-The same body of experiments and figures supports three journal-targeted
+The same body of experiments and figures supports five journal-targeted
 LaTeX variants with differentiated frontmatter (title, abstract, keywords,
 venue-specific citations):
 
@@ -181,6 +183,12 @@ venue-specific citations):
   Robustness under Structured Non-IID Data Streams*
 - `paper/neurocomputing/` — *Memory-Bounded Online Learning under Structured
   Non-IID Streams: A Proxy-Based Sensitivity Study*
+- `paper/journal_of_computational_science/` — *Beyond IID Data: Proxy-Based
+  Computational Modelling of Quantum Oracle Sketching Robustness for
+  Structured Non-IID Streams*
+- `paper/mdpi_sensors/` — *Quantum Oracle Sketching for Non-IID Sensor and
+  Telemetry Streams: A Proxy-Based Computational Study* (official MDPI
+  Sensors template, `Definitions/mdpi.cls` v4.0)
 
 Each variant compiles cleanly with `pdflatex` (MiKTeX or TeX Live):
 

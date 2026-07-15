@@ -1,0 +1,7 @@
+Highlights (Elsevier format; each bullet 85 characters or fewer)
+
+- Proxy study of quantum oracle sketching under five non-IID streaming regimes.
+- Operational proxies tau and r capture decorrelation and repetition structure.
+- Analytic proxies overestimate empirical tau by up to 125x for long-memory.
+- A (tau, r) sensitivity landscape localises the proxy-favorable region.
+- Paired Wilcoxon tests confirm significant crossover around moderate correlation.

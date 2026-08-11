@@ -84,3 +84,5 @@ figures/archive_pre_v5/
 # Submission zips and epstopdf build artifacts
 paper/*.zip
 *-eps-converted-to.pdf
+
+paper/**/*.zip

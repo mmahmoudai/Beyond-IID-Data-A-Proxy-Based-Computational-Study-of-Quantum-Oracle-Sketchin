@@ -1,0 +1,1246 @@
+%% MDPI Sensors variant --- official MDPI class (Definitions/mdpi.cls, v4.0, 20 March 2024).
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL revision/main_as_reviewed.tex   Tue Aug 11 20:45:05 2026
+%DIF ADD main.tex                        Tue Aug 11 20:43:52 2026
+%% documentclass option "submit" adds line numbers for peer review; change to "accept" at acceptance.
+\documentclass[sensors,article,submit,pdftex,moreauthors]{Definitions/mdpi}
+
+% Packages beyond those loaded by the MDPI class
+\usepackage{bm}
+
+% Map the manuscript's theorem-like environments onto the MDPI class's ones
+\newenvironment{definition}[1][]{\begin{Definition}[#1]}{\end{Definition}}
+\newenvironment{theorem}[1][]{\begin{Theorem}[#1]}{\end{Theorem}}
+
+% Custom commands
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\bigO}{\mathcal{O}}
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\polylog}{\mathrm{polylog}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\Teff}{T_{\mathrm{eff}}}
+
+\graphicspath{{./}}
+
+%% ------------ MDPI front matter ------------
+\firstpage{1}
+\makeatletter\setcounter{page}{\@firstpage}\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+\datereceived{ }
+\daterevised{ }
+\dateaccepted{ }
+\datepublished{ }
+\hreflink{https://doi.org/}
+
+%DIF 39-40c39-40
+%DIF < \Title{Quantum Oracle Sketching for Non-IID Sensor and Telemetry Streams: A Proxy-Based Computational Study}
+%DIF < \TitleCitation{Quantum Oracle Sketching for Non-IID Sensor and Telemetry Streams}
+%DIF -------
+\Title{Proxy-Based Diagnostics of Quantum Oracle Sketching Robustness for Non-IID Sensor and Telemetry Streams} %DIF > 
+\TitleCitation{Proxy-Based Diagnostics of Quantum Oracle Sketching for Non-IID Streams} %DIF > 
+%DIF -------
+
+% ORCID iDs (real, author-provided)
+\newcommand{\orcidauthorA}{0009-0001-2574-6533} % Mohammed Farsi
+\newcommand{\orcidauthorB}{0000-0002-0618-5662} % Muhammad Mahmoud
+\newcommand{\orcidauthorC}{0000-0001-5996-6019} % AbdelMoniem Helmy
+
+\Author{Mohammed Farsi $^{1}$\orcidA{}, Muhammad Mahmoud $^{2}$\orcidB{} and AbdelMoniem Helmy $^{1,3,}$*\orcidC{}}
+\AuthorNames{Mohammed Farsi, Muhammad Mahmoud and AbdelMoniem Helmy}
+\AuthorCitation{Farsi, M.; Mahmoud, M.; Helmy, A.}
+
+\address{%
+$^{1}$ \quad Taibah University, Yanbu, Saudi Arabia; Mafarsi@taibahu.edu.sa\\
+$^{2}$ \quad Information Systems Department, Faculty of Computers and Artificial Intelligence, Matrouh University, Matrouh, Egypt; m.mahmoud@mau.edu.eg\\
+$^{3}$ \quad Department of Information Systems and Technology, Faculty of Graduate Studies for Statistical Research, Cairo University, Cairo, Egypt; abdelmoniem.hafez@cu.edu.eg}
+
+\corres{Correspondence: abdelmoniem.hafez@cu.edu.eg}
+
+%DIF 58c58
+%DIF < \abstract{Quantum oracle sketching achieves exponential memory advantages over classical streaming, and its theoretical framework extends to correlated, non-IID data, yet the practical behavior of these robustness guarantees under structured correlation families remains uncharted. We introduce operational proxies---refreshing time $\tau$ and repetition number $r$---inspired by the correlated-data framework of Zhao et al.\ (2026) and conduct a proxy-based computational study across five structured synthetic non-IID regimes: IID, Markov switching, seasonal drift, burst repetition, and long-range dependence. Three classical memory-bounded baselines (online SGD, averaged SGD, Count-Min hash classifier) are compared with heuristic quantum accuracy proxies; all stochastic results are reported as 10-seed means with 95\% confidence bands and paired Wilcoxon significance tests. Analytic proxies overestimate the empirical refreshing time by up to $125\times$ for long-memory data and $\approx 8\times$ for Markov data; using empirical $\tau$, the proxy model predicts a favourable region under mild-to-moderate correlation, while stronger correlation reduces the proxy-estimated separation until the proxy-model crossover occurs near $\rho \approx 0.88$ (classical significantly exceeds the proxy at that point, $p = 0.037$). A $(\tau, r)$ sensitivity landscape serves as the central operational artifact. The framework is also applied to two real NAB streams (NYC Taxi and Machine Temperature) as a sanity check that places each stream on opposite sides of the proxy-favourable region using the same estimators, with imbalance-aware metrics (balanced accuracy and $F_1$) reported alongside accuracy to expose majority-class memorisation; four ablations additionally vary the $\tau$ estimator, the forward window $W$, the stream length $T$, and the target function. The scope is a proxy-based computational study primarily on synthetic data---quantum curves are heuristic proxies and all classical baselines are empirical, with no implemented quantum algorithm---and circuit simulation, primary-source theorem reproduction, and broader real-stream validation across financial, network-traffic, and additional sensor domains remain explicit follow-on targets.}
+%DIF -------
+\abstract{In theory, quantum oracle sketching achieves exponential memory advantages over classical streaming, and its guarantees extend to correlated non-IID data; how these guarantees behave under the structured correlation typical of sensor and telemetry streams, however, remains uncharted. We present a proxy-based diagnostic and hypothesis-generation framework for correlation-sensitive streaming analysis. Operational proxies for the refreshing time $\tau$ and repetition number $r$, inspired by the exact framework, are estimated on five synthetic non-IID regimes (IID, Markov switching, seasonal drift, burst repetition, long-range dependence) and mapped onto a $(\tau, r)$ sensitivity landscape---the paper's central artifact. Three memory-bounded classical baselines (online SGD, averaged SGD, Count-Min) supply empirical reference points; no quantum algorithm is implemented or simulated, and all quantum curves are heuristic proxy estimates. Analytic and empirical refreshing-time estimates diverge by up to $125\times$ under long-range dependence ($\approx 8\times$ for Markov)---the two estimators answer different questions about temporal dependence. Using empirical $\tau$, the proxy model predicts a hypothesized proxy-favourable region under mild-to-moderate Markov correlation that closes as correlation strengthens: the mean curves cross at $\rho^{*} \approx 0.82$ under the operating constants ($C{=}2$, $\delta{=}0.05$; the crossing moves between $\rho^{*} \approx 0.38$ and beyond the sweep range across a $C$--$\delta$ grid, so only the ordinal reading is robust), and by $\rho = 0.88$ the classical baseline exceeds the proxy estimate (Hodges--Lehmann difference $0.046$). Applied unchanged to two real NAB telemetry streams, the same estimators place NYC Taxi inside and Machine Temperature outside the hypothesized favourable region---an ordering that persists across all tested encoder resolutions---with imbalance-aware metrics guarding against majority-class artefacts. Ablations over the $\tau$ estimator, forward window, stream length, target function, and proxy constants preserve the regime ordering within each estimator family.} %DIF > 
+%DIF -------
+
+%DIF < \keyword{sensor data streams; telemetry; streaming algorithms; non-IID data; quantum computing; oracle sketching}
+%DIF -------
+\keyword{sensor data streams; telemetry; streaming algorithms; non-IID data; correlation diagnostics; quantum computing; oracle sketching} %DIF > 
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}} %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF COLORLISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}[1][]{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}[1][]{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+\lstset{extendedchars=\true,inputencoding=utf8}
+
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\begin{document}
+
+
+%=====================================================================
+\section{Introduction}
+\label{sec:intro}
+%=====================================================================
+
+The exponential growth of data-intensive applications in domains such as sensor networks, financial markets, climate monitoring, and telecommunications has created an urgent need for streaming algorithms that process data on the fly with severely constrained memory \citep{muthukrishnan2005data}. Classical streaming algorithms---including sketching methods, online learners, and sliding-window estimators---offer practical solutions but face fundamental memory--accuracy tradeoffs rooted in information-theoretic lower bounds \citep{alon1999space}. A further complication is that real-world streams are rarely IID: Internet traffic exhibits long-range dependence and self-similarity \citep{leland1994ethernet, willinger1997selfsimilarity}, and streaming-ML systems must contend with concept drift and non-stationary input distributions \citep{gama2014driftsurvey, arora2024driftreview, su2024elasticonline, yan2024bidynamic}.
+
+Recent work by \citet{zhao2026exponential} \DIFdelbegin \DIFdel{shows that quantum oracle sketching achieves }\DIFdelend \DIFaddbegin \DIFadd{establishes, at the level of theory, }\DIFaddend exponential quantum advantages for classification and dimension reduction on massive classical data \DIFaddbegin \DIFadd{via quantum oracle sketching}\DIFaddend , using a polylogarithmic-size quantum computer ($\bigO(n)$ qubits for $n = \log_2 N$). For several concrete problems the \DIFaddbegin \DIFadd{proven }\DIFaddend classical memory requirement scales polynomially in $N = 2^n$, yielding an exponential \DIFdelbegin \DIFdel{gap; the }\DIFdelend \DIFaddbegin \DIFadd{theoretical gap; these }\DIFaddend classical hardness results are task-specific \DIFaddbegin \DIFadd{proofs, not empirical measurements }\DIFaddend \citep{harrow2009hhl, havlicek2019qkernels, schuld2021encoding, biamonte2017qml}. The broader quantum ML landscape includes variational algorithms \citep{cerezo2021variational}, NISQ-era perspectives \citep{preskill2018nisq}, quantum learning theory \citep{schuld2018supervised}, and classical shadow tomography \citep{huang2020shadows}.
+
+A particularly notable feature of this framework is its treatment of non\nobreakdash-IID data. The framework extends to correlated, non\nobreakdash-IID data via a hierarchical data-generation model in which the quantum sample complexity is multiplied by the \emph{repetition number} of the data-generation process. However, the practical implications of this robustness under structured, real-world correlation patterns remain unexplored.
+
+Four questions motivate our study: (RQ1) How tight are \DIFdelbegin \DIFdel{the generic robustness guarantees }\DIFdelend \DIFaddbegin \DIFadd{our generic analytic proxies, relative to their empirical counterparts, }\DIFaddend for specific structured families? (RQ2) How informative are $\tau$ and $r$ as \DIFdelbegin \DIFdel{accuracy predictors}\DIFdelend \DIFaddbegin \DIFadd{effective-sample-budget summaries}\DIFaddend ? (RQ3) Under what correlation conditions does the proxy-estimated favourable separation persist, degrade, or potentially improve? (RQ4) How do empirically measured $(\tau, r)$ relate to the analytic proxy predictions?
+
+\paragraph{Scope} The scope is a \textbf{proxy-based computational study} of data-processing viability for sensor-style streams: operational correlation proxies inspired by this framework are used to map where proxy-estimated performance is most favourable under the modelling assumptions across structured synthetic non\nobreakdash-IID conditions of the kinds documented for sensor and telemetry traffic (Markov switching, seasonal cycles, burst repetition, long-range dependence), with a two\nobreakdash-dataset real-stream sanity check on NAB telemetry streams---an urban demand series and a machine-temperature sensor series (Section~\ref{sec:real_stream}). Quantum performance curves are heuristic proxies and no quantum algorithm is implemented; circuit simulation, primary-source theorem reproduction, and broader real-stream validation remain explicit follow-on targets (Section~\ref{sec:future_work}). \DIFaddbegin \DIFadd{The paper is therefore best read as a }\textbf{\DIFadd{diagnostic and hypothesis-generation framework}} \DIFadd{for correlation-sensitive streaming analysis: it produces falsifiable, proxy-level predictions about where quantum oracle sketching is most likely to remain robust, and it neither demonstrates nor claims a realised quantum--classical separation.
+}\DIFaddend 
+
+We study five non\nobreakdash-IID regimes (IID, Markov switching, seasonal drift, burst repetition, long-range dependence), specifying analytic proxy expressions for $\tau$ and $r$, measuring their empirical counterparts on generated streams, comparing three classical baselines, and mapping results onto a $(\tau, r)$ sensitivity landscape with 10-seed means, 95\% CI bands, and paired \DIFdelbegin \DIFdel{Wilcoxon tests}\DIFdelend \DIFaddbegin \DIFadd{comparisons interpreted through effect sizes and interval estimates}\DIFaddend .
+
+Our principal contributions are:
+
+\begin{enumerate}
+    \item \textbf{Operational correlation proxies} for five structured non\nobreakdash-IID regimes, explicitly labeled as engineering approximations rather than theorems.
+
+    \item \textbf{Empirical-vs-proxy gap analysis} showing that, where analytic proxies overestimate empirical refreshing time, the gap ranges from roughly $8\times$ (Markov) to $125\times$ (long-memory); in the IID and burst regimes the empirical values instead exceed the analytic proxy, reflecting finite\nobreakdash-sample autocorrelation fluctuations and, for burst, forward\nobreakdash-window counting effects at the chosen window length. These directional gaps indicate where tighter family-specific characterisations are most needed.
+
+    \item \textbf{A $(\tau, r)$ sensitivity landscape} that maps the quantum accuracy proxy as a function of correlation parameters, identifying regions where the proxy accuracy is highest\DIFdelbegin \DIFdel{and which can serve as a diagnostic map for proxy-side sensitivity analysis}\DIFdelend \DIFaddbegin \DIFadd{; this landscape is the paper's central diagnostic and hypothesis-generation artifact}\DIFaddend .
+
+    \item \textbf{Regime-dependent robustness \DIFdelbegin \DIFdel{trends}\DIFdelend \DIFaddbegin \DIFadd{hypotheses}\DIFaddend :} the proxy model \DIFdelbegin \DIFdel{suggests a favourable }\DIFdelend \DIFaddbegin \DIFadd{predicts a hypothesized proxy-favourable }\DIFaddend region under mild to moderate correlation that narrows predictably as correlation strengthens. \DIFaddbegin \DIFadd{These are proxy-level hypotheses intended for future algorithm-level validation, not demonstrated quantum performance.
+}\DIFaddend \end{enumerate}
+
+Sections~\ref{sec:related}--\ref{sec:prelim} review related work and introduce the proxy model; Section~\ref{sec:theory} specifies the correlation proxies; Section~\ref{sec:experiments} describes the experimental setup; Section~\ref{sec:results} presents nine experiments (seven on synthetic streams, a two\nobreakdash-dataset real-stream sanity check, and an ablation suite); Section~\ref{sec:discussion} discusses implications\DIFdelbegin \DIFdel{and limitations}\DIFdelend \DIFaddbegin \DIFadd{, the analytic--empirical divergence, and the scope of the diagnostic}\DIFaddend ; Section~\DIFaddbegin \DIFadd{\ref{sec:threats} systematises threats to validity; Section~\ref{sec:future_work} outlines future work; Section~}\DIFaddend \ref{sec:conclusion} concludes.
+
+
+%=====================================================================
+\section{Related Work}
+\label{sec:related}
+%=====================================================================
+
+\subsection{Classical Streaming Algorithms}
+
+Classical data streaming has been studied extensively since the seminal work of \citet{alon1999space} on frequency moments \citep{muthukrishnan2005data}. Key developments relevant to this paper include the Count-Min Sketch of \citet{cormode2005improved} for frequency estimation, the Frequent Directions algorithm of \citet{ghashami2016frequent} for streaming low-rank approximation, and the sketching-as-linear-algebra framework of \citet{woodruff2014sketching}. On the learning side, \citet{shalev2012online} provides the standard reference for online convex optimisation; \citet{polyak1992averaging} introduced Polyak--Ruppert averaging, which we use as a second classical baseline; and \citet{weinberger2009featurehashing} established the feature-hashing technique underlying our bounded-memory classifier.
+
+The behaviour of streaming algorithms under structured temporal correlation has received comparatively less attention. Concept drift is surveyed by \citet{gama2014driftsurvey} and \citet{ditzler2015nonstationary}; ADWIN \citep{bifet2007adwin} is the canonical adaptive-window solution. Broader online-learning treatments appear in MOA \citep{bifet2010moa}, \citet{hoi2021online}, and \citet{gama2010knowledge}; the most recent systematic drift review is \citet{arora2024driftreview}; adaptive random forests \citep{gomes2017adaptiverf} serve as the drift-aware classical reference. Recent work on non-stationary streaming includes elastic online deep-learning pipelines \citep{su2024elasticonline}, bi-dynamic-distribution learning \citep{yan2024bidynamic}, and evolving-prototype classifiers for imbalanced streams \citep{wu2024evolvingprototypes}. Non-stationary online optimisation is analysed in \citet{besbes2015non} and \citet{ben2010agnostic}; Count-Min refinements appear in \citet{benmazziane2022countmin} and \citet{cormode2011synopses}; foundational self-similarity measurements are in \citet{park2000selfsimilar}.
+
+\subsection{Quantum Advantages for Data Processing}
+
+Quantum algorithms for data processing include quantum SVMs \citep{rebentrost2014quantum}, quantum PCA \citep{lloyd2014quantum}, the quantum singular value transformation \citep{gilyen2019qsvt} with block-encoding subroutines \citep{chakraborty2019blockencodings}. Critical perspectives on access-model dependencies appear in \citet{aaronson2015readthefineprint} and \citet{tang2019quantum}; qRAM feasibility is discussed in \citet{giovannetti2008quantum}; surveys include \citet{chen2024qmlsurvey} and \citet{schuld2018supervised}. Quantum advantages depend critically on data structure and access \citep{huang2021powerofdata}; an experimental demonstration of exponential advantage appears in \citet{huang2022experiments}. On quantum streaming: \citet{kallaugher2021streaming} established the first exponential quantum-classical space separation for a natural streaming problem; \citet{kallaugher2025designquantum} provided a black-box quantum-sketch construction for classical algorithm designers. The quantum oracle sketching framework of \citet{zhao2026exponential} avoids qRAM entirely and supports exponential separations for classification and dimension-reduction tasks.
+
+\subsection{Non-IID Data in Quantum Computing}
+
+\citet{arunachalam2018optimal} study quantum sample complexity under the IID PAC assumption. The quantum oracle sketching framework \citep{zhao2026exponential} is, to our knowledge, the first to address noisy, correlated, and time-varying classical data in a quantum streaming setting. We introduce operational proxies inspired by their correlated-data discussion across five structured regimes; the Markov mixing time follows product-chain results \citep{levin2017mixing} and the long-memory statistics follow fGn theory \citep{mandelbrot1968fbm, beran1994statistics}.
+
+
+%=====================================================================
+\section{Preliminaries}
+\label{sec:prelim}
+%=====================================================================
+
+\subsection{Quantum Oracle Sketching}
+
+The originating work \citep{zhao2026exponential} shows that a polylogarithmic-size quantum computer ($\bigO(n)$ qubits for $n$-dimensional data, $N = 2^n$) can perform classification and dimension reduction on massive classical data by processing random samples on the fly via quantum oracle sketching; Boolean function learning is one concrete instantiation. For several concrete tasks, the classical memory requirement scales polynomially in $N$, yielding an exponential memory gap. Their correlated-data extension uses a structured data-generation model that accounts for temporal dependence; we adopt the terms \emph{refreshing time} (decorrelation scale) and \emph{repetition number} (expected duplication) as our operational labels for the key correlation parameters, noting that our definitions (Section~\ref{sec:heuristic_model}) are inspired by but not necessarily identical to the exact quantities in their framework. Classical hardness results are task-specific, not a universal lower bound.
+
+\subsection{Heuristic Effective-Sample Model}
+\label{sec:heuristic_model}
+
+\textbf{Proxy status.} The quantities $\tau$ and $r$ defined below are \emph{paper-defined operational proxies} motivated by, but not formally equivalent to, the correlation parameters of the exact framework; \DIFdelbegin \DIFdel{equivalence proofs are follow-on work}\DIFdelend \DIFaddbegin \DIFadd{Section~\ref{sec:proxy_theory} separates precisely what this paper inherits from established theory, what it assumes, and what it constructs heuristically}\DIFaddend . We introduce a simplified effective-sample proxy that adapts the qualitative structure of the framework's correlated-data analysis into a tractable form for computational exploration across diverse correlation families. The choice $C{=}2$, $\delta{=}0.05$ in Eq.~\eqref{eq:oracle_error} rescales accuracy contours uniformly without deforming the qualitative regime ordering: changing $C$ or $\delta$ shifts every contour along the hyperbolic family $\tau r \propto (C^2 \log(1/\delta))^{-1}$, preserving the relative ranking of all \DIFdelbegin \DIFdel{regimes}\DIFdelend \DIFaddbegin \DIFadd{regimes---although the }\emph{\DIFadd{absolute}} \DIFadd{location of any proxy--baseline crossover does shift with these constants, as quantified in Section~\ref{sec:ablations} (Table~\ref{tab:cdelta})}\DIFaddend . Practitioners interpreting the landscape quantitatively should treat absolute contour values as indicative rather than universal.
+
+\begin{definition}[Refreshing Time -- operational proxy]
+We define the \emph{operational refreshing time} $\tau$ of a data stream as the smallest lag at which the normalized autocorrelation drops below $1/e$. This is an empirically measurable quantity that serves as a proxy for the decorrelation rate of the stream.
+\end{definition}
+
+\begin{definition}[Repetition Number -- operational proxy]
+We define the \emph{operational repetition number} $r$ as $1$ plus the expected number of \emph{exact duplicate} copies of each sample within a forward window of length $W$. Throughout this paper we use $W = 20$ in the empirical estimator; this is the definition that Fig.~\ref{fig:corr_char}(b) reports and matches the analytic family-level $r$ in units.
+\end{definition}
+
+We model the effective independent sample count as:
+\begin{equation}
+\Teff = T / (\tau \cdot r),
+\label{eq:teff}
+\end{equation}
+and use the following heuristic oracle error proxy:
+\begin{equation}
+\epsilon \leq C \sqrt{\frac{n \log(1/\delta)}{\Teff}},
+\label{eq:oracle_error}
+\end{equation}
+where $C = 2$ and $\delta = 0.05$ throughout our experiments. Under IID data, $\tau = 1$ and $r = 1$, recovering the standard scaling $\epsilon \sim \sqrt{n/T}$.
+
+\DIFaddbegin \DIFadd{The heuristic classification accuracy proxy used in our experiments is:
+}\begin{equation}
+\DIFadd{\mathrm{acc\_proxy} = \max\!\left(0.5,\; 1 - \epsilon^2\right),
+\label{eq:acc_proxy}
+}\end{equation}
+\DIFadd{where the floor of $0.5$ represents the random-guess baseline for binary classification. When $\epsilon^2 > 0.5$ (as occurs in the long-memory regime), the proxy saturates at $0.5$, reflecting that the model predicts no useful signal. This is an engineering surrogate that translates oracle approximation quality into a classification metric for visualization.
+}
+
+\subsection{\DIFadd{Relationship Between Operational Proxies and Quantum Oracle-Sketching Theory}}
+\label{sec:proxy_theory}
+
+\DIFadd{This subsection separates what the present study inherits from established theory, what it assumes, and what it constructs heuristically; Table~\ref{tab:provenance} summarises the provenance and epistemic status of every quantity used in the paper.
+}
+
+\paragraph{\DIFadd{Established theory}} \DIFadd{The exact framework }\citep{zhao2026exponential} \DIFadd{proves three results that this paper takes as given: (i) a polylogarithmic-size quantum computer ($\bigO(n)$ qubits, $n = \log_2 N$) suffices to construct oracle sketches of massive classical data streams; (ii) under the framework's hierarchical model of correlated data generation, the oracle-construction sample complexity is multiplied by the repetition number of the process---the refreshing time enters only by delimiting the window over which repetition is counted, and carries no independent penalty; and (iii) for specific tasks, classical machines of size $\bigO(N^{c})$, for any constant $c < 1$, cannot match the quantum performance. All three are theorems of }\citet{zhao2026exponential} \DIFadd{about the framework's constructions and hard instances; none has been verified on physical hardware, and this paper adds no new theory. A consequence worth stating explicitly: under the framework's own $r$-only accounting, the Markov, seasonal, and long-memory regimes (all $r = 1$) incur }\emph{\DIFadd{zero}} \DIFadd{overhead and collapse onto the IID point of the landscape, and no proxy--baseline crossover exists. The $\tau$-penalised landscape studied in this paper is therefore a }\emph{\DIFadd{classical effective-sample-size stress test}} \DIFadd{of robustness---strictly more pessimistic than the framework's accounting---not a rendering of the framework's own cost model.
+}
+
+\paragraph{\DIFadd{Assumptions}} \DIFadd{We assume (a) that a stream's temporal dependence can be usefully summarised by two scalars---a decorrelation scale and a duplication rate; (b) that binarised feature streams (Section~\ref{sec:experiments}) retain enough of the correlation structure of the underlying process for such scalars to be meaningful; and (c) that a task-level statistical generalisation rate evaluated at an effective sample count is a useful stand-in for end-to-end pipeline behaviour. None of these assumptions is inherited from the exact framework; they are modelling choices of this paper.
+}
+
+\DIFaddend \paragraph{\DIFdelbegin \DIFdel{Relation to the exact framework}\DIFdelend \DIFaddbegin \DIFadd{Heuristic constructions introduced in this paper}\DIFaddend } Two deliberate simplifications distinguish Eqs.~\eqref{eq:teff}--\eqref{eq:oracle_error} from the \DIFdelbegin \DIFdel{guarantees of }%DIFDELCMD < \citet{zhao2026exponential}%%%
+\DIFdelend \DIFaddbegin \DIFadd{exact guarantees}\DIFaddend . First, in the exact framework the correlation overhead enters through the repetition number \DIFdelbegin \DIFdel{alone---oracle-construction sample complexity is multiplied by $R$, while the refreshing time only delimits the window over which $R$ is measured---whereas }\DIFdelend \DIFaddbegin \DIFadd{alone, whereas }\DIFaddend Eq.~\eqref{eq:teff} additionally divides by $\tau$, in the manner of a classical effective-sample-size correction ($\Teff \approx T/\tau_{\mathrm{int}}$ \DIFaddbegin \DIFadd{in the sense long standard in Markov-chain output analysis }\citep{geyer1992practical}\DIFaddend ). Our $\Teff$ is therefore deliberately \emph{more conservative} than the exact overhead and should be read as a \DIFdelbegin \DIFdel{lower bound on effective information content}\DIFdelend \DIFaddbegin \DIFadd{pessimistic effective-information budget}\DIFaddend , not as a prediction of the framework's theorems. Second, the $\sqrt{n/\Teff}$ template in Eq.~\eqref{eq:oracle_error} is the statistical generalisation rate for the $n$-dimensional linear classification task studied here (VC dimension $n{+}1$) applied to the effective sample count; it is \DIFdelbegin \DIFdel{not }\DIFdelend \DIFaddbegin \emph{\DIFadd{not}} \DIFaddend the sample cost of the exact oracle-construction procedure, which for a uniform marginal over $N = 2^n$ inputs scales linearly in $N$. Throughout, \emph{oracle error} accordingly denotes the approximation error of our heuristic model's decision rule, not the construction error of the exact sketching procedure; the two views coincide numerically at our operating point ($n = 10$, $T = 10^4$) but scale differently in $n$ (see Experiment~6).
+
+\DIFdelbegin \DIFdel{For the quantum memoryrequirement}\DIFdelend \DIFaddbegin \paragraph{\DIFadd{Memory references}} \DIFadd{For quantum memory}\DIFaddend , the exact framework establishes that $\bigO(n)$ qubits suffice for oracle construction. On the classical side, it establishes task-specific hardness results in which classical machines of size $\bigO(N^{c})$, for any constant $c < 1$, cannot match the quantum performance. Throughout this paper we use $\Omega(\sqrt{N})$ as a \emph{conservative representative} of this polynomial-in-$N$ family, in the spirit of classical streaming space bounds \citep{alon1999space, kallaugher2021streaming}; it is \DIFaddbegin \DIFadd{a theoretical reference only. It is }\DIFaddend \emph{not} an empirically witnessed floor for \DIFaddbegin \DIFadd{any learner studied here: no experiment in this paper measures a memory lower bound for online SGD, averaged SGD, or Count-Min, and for }\DIFaddend the \DIFdelbegin \DIFdel{online-gradient classical learners studied here. For the }\DIFdelend 10-dimensional linear classification task used in our experiments \DIFdelbegin \DIFdel{, the classical learner is in fact }\DIFdelend \DIFaddbegin \DIFadd{the classical learners are }\DIFaddend sample-limited rather than memory-limited once $M$ exceeds a small threshold (Section~\ref{sec:acc_vs_memory}). The $\Omega(\sqrt{N})$ curve in our figures therefore illustrates the worst-case asymptotic separation \DIFdelbegin \DIFdel{, not the empirical gapon the specific task studied}\DIFdelend \DIFaddbegin \DIFadd{established by theory, not an observed empirical gap}\DIFaddend .
+
+\DIFdelbegin \DIFdel{The heuristic classification accuracy proxy used in our experiments is: }\begin{displaymath}
+\DIFdel{\mathrm{acc\_proxy} = \max\!\left(0.5,\; 1 - \epsilon^2\right),
+\label{eq:acc_proxy}
+}\end{displaymath}%DIFAUXCMD
+\DIFdel{where the floor of $0.5$ represents the random-guess baseline for binary classification. When $\epsilon^2 > 0.5$ (as occurs in the long-memory regime), }\DIFdelend \DIFaddbegin \begin{table}[t]
+\centering
+\caption{\DIFaddFL{Provenance and epistemic status of the model-level quantities used in this paper; the family-specific proxy expressions (Eqs.~\eqref{eq:tau_markov}--\eqref{eq:tau_lrd}) carry their own provenance notes in Section~\ref{sec:theory}. ``Established'' items are theorems of the originating framework or standard learning theory; ``introduced here'' items are operational constructions of this paper; the final column states what is }\emph{\DIFaddFL{not}} \DIFaddFL{theoretically guaranteed.}}
+\label{tab:provenance}
+\begin{tabularx}{\textwidth}{@{}p{5.1cm}p{3.6cm}X@{}}
+\toprule
+Quantity & Status & Not guaranteed \\
+\midrule
+$\times R$ sample overhead; $\bigO(n)$ qubits; $\bigO(N^{c})$ classical hardness & established theory & hardware validation; applicability beyond the framework's hard instances \\
+$\tau$ ($1/e$ ACF crossing) & introduced here (operational) & equivalence to the framework's refreshing time \\
+$r$ ($W$-window duplicate count) & introduced here (operational) & equivalence to the framework's repetition number \\
+$\Teff = T/(\tau r)$ & introduced here (conservative) & correspondence to any exact sample-complexity theorem \\
+$\epsilon \leq C\sqrt{n \log(1/\delta)/\Teff}$ & standard VC-type task rate, repurposed here & equality with oracle-construction cost (scales differently in $n$) \\
+$\mathrm{acc\_proxy} = \max(0.5,\, 1 - \epsilon^2)$ & introduced here (visualisation surrogate) & correspondence to any implemented algorithm's accuracy \\
+$\Omega(\sqrt{N})$ memory curve & conservative theoretical reference & empirical memory floor for SGD, averaged SGD, or Count-Min \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{\DIFadd{Scope limitations}} \DIFadd{The operational $\tau$ and $r$ are measurement conventions, not theoretical quantities: they are computable from any stream but are not formally equivalent to---and, as Section~\ref{sec:divergence} shows, can diverge substantially from---the refreshing time and repetition number of }\DIFaddend the \DIFdelbegin \DIFdel{proxy saturates at $0.5$, reflecting that the model predicts no useful signal. This is an engineering surrogate that translates oracle approximation quality into a classification metric for visualization}\DIFdelend \DIFaddbegin \DIFadd{exact framework, whose definitions are tied to a hierarchical generative model that real streams need not follow. Consequently, positions on the $(\tau, r)$ landscape are diagnostic coordinates, and every ``favourable''/``unfavourable'' designation in this paper is a statement about the proxy model evaluated at those coordinates, not about any realised quantum computation. Establishing formal equivalence, or bounding the divergence, is follow-on theoretical work (Section~\ref{sec:future_work})}\DIFaddend .
+
+
+%=====================================================================
+\section{Correlation Proxies for Specific Data Families}
+\label{sec:theory}
+%=====================================================================
+
+We specify heuristic expressions for the operational $\tau$ and $r$ under five concrete correlation regimes. Each is an engineering proxy motivated by the autocorrelation or mixing structure of the regime; tighter proofs of equivalence to the exact framework's correlation parameters are follow-on work.
+
+\subsection{Regime 1: IID Baseline}
+
+Under IID sampling from a uniform distribution over $\{0,1\}^n$:
+\begin{equation}
+    \tau_{\text{IID}} = 1, \qquad r_{\text{IID}} = 1, \qquad \Teff = T.
+\end{equation}
+This serves as the reference against which all other regimes are compared.
+
+\subsection{Regime 2: Markov Switching}
+
+Consider a Markov chain on $\{0,1\}^n$ where each bit flips independently with probability $(1 - \rho)/2$ at each step, for correlation parameter $\rho \in [0, 1)$. The stationary distribution is uniform.
+
+The mixing time of this product chain is $\Theta(n \log n / (1 - \rho))$. We use the simplified engineering proxy:
+\begin{equation}
+    \tau_{\text{Markov}}(\rho, n) \approx \frac{n}{1 - \rho},
+    \label{eq:tau_markov}
+\end{equation}
+which preserves the dominant divergence as $\rho \to 1$ while suppressing logarithmic and model-specific constants. \emph{Provenance:} the $1/(1{-}\rho)$ scaling is theory-motivated (mixing-time asymptotics); the omission of the $\log n$ factor is an engineering simplification; the equivalence to the exact framework's correlation parameters is unvalidated. Since samples from a Markov chain are not repeated exactly, $r_{\text{Markov}} = 1$, giving $\Teff \approx T(1{-}\rho)/n$.
+
+\subsection{Regime 3: Seasonal Drift}
+
+Consider a stream where bit $i$ at time $t$ is drawn as Bernoulli with probability $p_i(t) = \tfrac{1}{2} + \alpha \sin(2\pi t/P + \phi_i)$, where $P$ is the period, $\alpha \in (0, 0.5)$ is the drift strength, and $\phi_i$ are fixed phase offsets.
+
+The seasonal regime is \emph{distributional drift}: samples at distinct times are conditionally independent given $t$, making this non\nobreakdash-IID only in the weak sense of non-stationary marginals. It is included because both the quantum oracle construction and classical learners are affected by marginal drift, and because it is a common practical stream pattern.
+
+We propose the decorrelation proxy:
+\begin{equation}
+    \tau_{\text{Seasonal}}(P, \alpha) = \max(1,\; P \cdot \alpha),
+    \label{eq:tau_seasonal}
+\end{equation}
+lower-bounded by 1 to ensure $\tau \geq \tau_{\text{IID}}$ in all cases. \emph{Provenance:} the product $P\alpha$ captures the intuition that decorrelation scales with both period and drift strength; the functional form $\max(1, P\alpha)$ is an engineering convenience with no formal derivation. Since the distribution changes continuously, $r_{\text{Seasonal}} = 1$.
+
+\subsection{Regime 4: Burst Repetition}
+
+In the burst model, at each step, with probability $p_b$ the previous sample is exactly repeated for an additional $L$ consecutive copies (i.e., the burst contributes $L$ duplicate observations). The expected number of observations per effective fresh sample is therefore:
+\begin{equation}
+    r_{\text{Burst}}(L, p_b) = 1 + p_b \cdot L.
+    \label{eq:r_burst}
+\end{equation}
+\emph{Provenance:} the formula follows directly from the model definition (theory\nobreakdash-motivated); the assumption that duplicates contribute no new information is exact for our synthetic generator but would require validation on real burst-prone streams. Since bursts do not affect the mixing of fresh samples, $\tau_{\text{Burst}} = 1$, giving $\Teff = T/(1 + p_b L)$.
+
+\subsection{Regime 5: Long-Range Dependence}
+
+For streams driven by fractional Gaussian noise (fGn) with Hurst parameter $H \in (0.5, 1)$, the autocorrelation of the \emph{underlying Gaussian process} decays as a power law, and integrated autocorrelation grows as $T^{2H-1}$. We adopt as our proxy the horizon-dependent correlation penalty:
+\begin{equation}
+    \tau_{\text{LRD}}(H, T) = T^{2H-1},
+    \label{eq:tau_lrd}
+\end{equation}
+yielding $\Teff = T^{2(1-H)}$.
+
+\paragraph{Proxy status} Equation~\eqref{eq:tau_lrd} is an \emph{upper-bound proxy}. In our construction the stream is a \emph{binarized} fGn (each bit is a thresholded fGn path); binarization converts Gaussian autocorrelation $\gamma(k)$ into binary autocorrelation $(2/\pi)\arcsin(\gamma(k))$ \DIFaddbegin \DIFadd{by the arcsine law for clipped Gaussian signals }\citep{vanvleck1966spectrum}\DIFaddend , which is strictly smaller in absolute value. The effective decorrelation of the binary stream is therefore \emph{faster} than Eq.~\eqref{eq:tau_lrd} suggests, so the proxy is conservative. Deriving a tighter proxy that accounts for the arcsine transformation is deferred to future work. Unlike the other regimes, this proxy depends on the stream length $T$, reflecting the property that the underlying driving process has no finite decorrelation time.
+
+\subsection{Summary}
+
+\DIFdelbegin \DIFdel{Table~}\DIFdelend \DIFaddbegin \DIFadd{Each regime idealises a documented stream phenomenon: Markov switching captures short-range state persistence in sensor readouts; seasonal drift the diurnal and weekly cycles of telemetry and demand series }\citep{gama2014driftsurvey, arora2024driftreview}\DIFadd{; burst repetition the duplicate-heavy event bursts of monitoring and logging pipelines; and long-range dependence the self-similar traffic behaviour first measured on Ethernet }\citep{leland1994ethernet, willinger1997selfsimilarity}\DIFadd{. They are idealisations, not replicas: real streams mix these mechanisms (as the two NAB cases of Section~\ref{sec:real_stream} show), and the mapping from regime parameters to any concrete deployment is qualitative (Table~\ref{tab:stream_classes}).
+}
+
+\DIFadd{Table~}\DIFaddend \ref{tab:bounds} summarizes the proxy parameters and heuristic MSE proxy values for each regime, computed from the single master formula $\epsilon^2 = \min(1,\, C^2 n \log(1/\delta) / \Teff)$ with $C = 2$ and $\delta = 0.05$.
+
+\begin{table}[t]
+\centering
+\caption{Summary of heuristic correlation proxies and MSE proxy values ($\epsilon^2$) for each regime, with $T = 10{,}000$, $n = 10$, $C = 2$, and $\delta = 0.05$. The factor $\kappa = C^2 \log(1/\delta) \approx 12$.}
+\label{tab:bounds}
+\DIFdelbeginFL %DIFDELCMD < \begin{tabular}{@{}lcccc@{}}
+%DIFDELCMD < \toprule
+%DIFDELCMD < Regime & $\tau$ & $r$ & $\Teff$ & MSE proxy $\min(1, \kappa n / \Teff)$ \\
+%DIFDELCMD < \midrule
+%DIFDELCMD < IID & 1 & 1 & 10{,}000 & 0.012 \\
+%DIFDELCMD < Markov ($\rho{=}0.7$) & $n/(1{-}\rho) \approx 33$ & 1 & $\approx 300$ & 0.40 \\
+%DIFDELCMD < Seasonal ($P{=}100, \alpha{=}0.3$) & $\max(1, P\alpha) = 30$ & 1 & $\approx 333$ & 0.36 \\
+%DIFDELCMD < Burst ($L{=}10, p{=}0.3$) & 1 & $1{+}pL = 4$ & 2{,}500 & 0.048 \\
+%DIFDELCMD < Long-memory ($H{=}0.8$) & $T^{2H{-}1} \approx 251$ & 1 & $\approx 40$ & 1.0 (saturated) \\
+%DIFDELCMD < \bottomrule
+%DIFDELCMD < \end{tabular}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \begin{tabular}{@{}lcccc@{}}
+\toprule
+Regime & $\tau$ & $r$ & $\Teff$ & MSE proxy \\
+\midrule
+IID & 1 & 1 & 10{,}000 & 0.012 \\
+Markov ($\rho{=}0.7$) & $n/(1{-}\rho) \approx 33$ & 1 & $\approx 300$ & 0.40 \\
+Seasonal ($P{=}100, \alpha{=}0.3$) & $\max(1, P\alpha) = 30$ & 1 & $\approx 333$ & 0.36 \\
+Burst ($L{=}10, p{=}0.3$) & 1 & $1{+}pL = 4$ & 2{,}500 & 0.048 \\
+Long-memory ($H{=}0.8$) & $T^{2H{-}1} \approx 251$ & 1 & $\approx 40$ & 1.0 (saturated) \\
+\bottomrule
+\end{tabular}
+\DIFaddendFL 
+
+\end{table}
+
+
+%=====================================================================
+\section{Experimental Framework}
+\label{sec:experiments}
+%=====================================================================
+
+Throughout this section, the comparison is between (1)~empirical bounded-memory classical learners evaluated on a simple linear classification task, and (2)~a theory-inspired heuristic proxy for quantum oracle sketching performance; the empirical classical baselines are not the hard problem instances of the exact framework's lower-bound constructions.
+
+\subsection{Data Generation and Diagnostics}
+
+Data streams over $\{0,1\}^n$ with $n = 10$ ($N = 1{,}024$) and $T \leq 20{,}000$. Target task: binary classification with random linear separator $f(x) = \mathbf{1}[\langle x - \tfrac{1}{2}\mathbf{1}, w \rangle > 0]$, $w \in \R^n$ fixed. Parameter values follow Section~\ref{sec:theory}: IID (uniform), Markov ($\rho = 0.7$), Seasonal ($P = 100$, $\alpha = 0.3$), Burst ($L = 10$, $p_b = 0.3$), Long-memory ($H = 0.8$).
+
+Empirical diagnostics: $\tau$ is the smallest lag where normalized autocorrelation (averaged over bits) drops below $1/e$; $r$ is $1$ plus the mean exact-duplicate count in a $W = 20$ forward window.
+
+\DIFaddbegin \paragraph{\DIFadd{Estimator cost and scalability}} \DIFadd{Both diagnostics are single-pass friendly and cheap relative to any learning workload. The $\tau$ estimator requires the bitwise autocorrelation up to a maximum lag $K$ ($K = 500$ here): $\bigO(n T K)$ time naively, $\bigO(n K)$ memory with a $K$-length ring buffer per feature, and the lag loop vectorises. The $r$ estimator scans a $W$-length forward window per position---$\bigO(T W)$ vector comparisons, or expected $\bigO(T)$ with hashing---using $\bigO(W n)$ memory. Both are linear in $T$, independent of the alphabet size $N = 2^n$, and embarrassingly parallel across features; on the longest stream studied ($T = 22{,}695$) they complete in well under a second on a laptop, so the diagnostic adds negligible overhead for high-volume streaming deployments.
+}
+
+\DIFaddend \subsection{Classical Baselines}
+
+Three memory-bounded streaming classifiers cover the key axes:
+\begin{itemize}
+    \item \textbf{Online SGD}: logistic regression with feature hashing \citep{weinberger2009featurehashing, shalev2012online}; memory $\bigO(M)$.
+    \item \textbf{Averaged SGD}: Polyak--Ruppert running average $\bar{w}_t = \frac{1}{t}\sum_s w_s$ \citep{polyak1992averaging}; lower variance than plain SGD.
+    \item \textbf{Count-Min hash classifier}: Count-Min Sketch \citep{cormode2005improved} as a label-averaging lookup table; serves as a collision-limited non-gradient reference (near-chance for $M \ll N$).
+\end{itemize}
+Memory budgets range from $M = 8$ to $M = 256$. \DIFaddbegin \DIFadd{These three baselines are chosen to span complementary axes of bounded-memory streaming learning---gradient-based (online SGD), variance-reduced gradient-based (averaged SGD), and non-gradient hash-count-based (Count-Min)---while sharing the single-pass, fixed-memory regime that the proxy models. Drift-adaptive methods such as ADWIN-equipped learners or adaptive random forests }\citep{bifet2007adwin, gomes2017adaptiverf} \DIFadd{are deliberately excluded from the primary comparison: they respond to non-stationarity by discarding history, which would confound the correlation-budget question the proxy isolates; benchmarking them on the same landscape is a natural extension (Section~\ref{sec:future_work}).
+}\DIFaddend 
+
+\subsection{Quantum Performance Proxies}
+\label{sec:quantum_proxies}
+
+Rather than simulating quantum circuits (which would require exponential classical resources at meaningful scale), we compute proxy quantities from the effective-sample model of Section~\ref{sec:heuristic_model}:
+\begin{itemize}
+    \item Oracle MSE proxy: $\epsilon^2 = C^2 n \log(1/\delta) / \Teff$, with $C = 2$, $\delta = 0.05$.
+    \item Classification accuracy proxy: $\mathrm{acc\_proxy} = \max(0.5,\; 1 - \epsilon^2)$ (Eq.~\ref{eq:acc_proxy}).
+    \item Quantum memory: $\bigO(n)$ qubits \citep{zhao2026exponential}.
+\end{itemize}
+
+\paragraph{Justification of proxy constants and forms} Three design choices in the proxy expressions warrant explicit discussion.
+(i) The constant $C = 2$ in $\epsilon^2 = C^2 n \log(1/\delta) / \Teff$ is a \DIFdelbegin \DIFdel{conservative scaling factor consistent with concentration-inequality constants in the quantum oracle sketching literature; alternative }\DIFdelend \DIFaddbegin \DIFadd{conventional order-unity choice: no specific constant in the cited theory fixes it, and we make no claim that it does. Alternative }\DIFaddend values $C \in \{1, 1.5, 2.5\}$ scale the proxy curve uniformly and preserve all relative orderings between regimes\DIFaddbegin \DIFadd{, though the absolute proxy--baseline crossover location shifts with $C$ (Table~\ref{tab:cdelta})}\DIFaddend .
+(ii) The confidence parameter $\delta = 0.05$ matches the 95\% reporting convention used throughout the paper; a $10\times$ change in $\delta$ shifts $\log(1/\delta)$ by a factor of only ${\approx}1.5$, which is small relative to the cross-regime differences in $\Teff$ \DIFaddbegin \DIFadd{but visible in the absolute crossover location (Table~\ref{tab:cdelta})}\DIFaddend .
+(iii) The seasonal proxy $\tau = \max(1, P\alpha)$ is an engineering convenience encoding that periodic streams effectively reset every ${\sim}P\alpha$ samples; the long-memory proxy \DIFdelbegin \DIFdel{uses an arcsine correction following }%DIFDELCMD < \citet{beran1994statistics} %%%
+\DIFdel{to account for binarisation , and is acknowledged as conservative }\DIFdelend \DIFaddbegin \emph{\DIFadd{neglects}} \DIFadd{the arcsine shrinkage that binarisation induces }\citep{vanvleck1966spectrum} \DIFadd{and is therefore conservative (Section~\ref{sec:theory})}\DIFaddend . Section~\ref{sec:ablations} reports an explicit sensitivity analysis under four alternative $\tau$ estimators and three target functions, and shows that the qualitative regime ordering is preserved.
+
+\paragraph{Measured vs.\ proxy} \textbf{Empirically measured} (10 seeds, 95\% CI): classical accuracy, $\tau_{\text{emp}}$, $r_{\text{emp}}$. \textbf{Proxy-estimated} (deterministic): $\Teff = T/(\tau r)$, $\epsilon^2 = \min(1, \kappa n/\Teff)$ with $\kappa \approx 12$, $\mathrm{acc\_proxy} = \max(0.5, 1-\epsilon^2)$. All figures clearly distinguish the two categories; deterministic landscapes (Fig.~\ref{fig:landscape}) have no seed dependency.
+
+\paragraph{Reproducibility parameters} Table~\ref{tab:repro} consolidates all fixed experimental constants for independent reimplementation.
+
+\begin{table}[t]
+\centering
+\caption{Reproducibility summary: fixed experimental parameters.}
+\label{tab:repro}
+\DIFdelbeginFL %DIFDELCMD < \begin{tabular}{@{}ll@{}}
+%DIFDELCMD < \toprule
+%DIFDELCMD < Parameter & Value / method \\
+%DIFDELCMD < \midrule
+%DIFDELCMD < Seeds per experiment & 10 (indices 0--9) \\
+%DIFDELCMD < Forward window $W$ & 20 \\
+%DIFDELCMD < Proxy constants & $C = 2$, $\delta = 0.05$, $\kappa = C^2 \log(1/\delta) \approx 12$ \\
+%DIFDELCMD < $\tau_{\text{emp}}$ estimator & smallest lag $k$ where mean bit-wise autocorrelation $< 1/e$ \\
+%DIFDELCMD < $r_{\text{emp}}$ estimator & $1 +$ mean exact-duplicate count in $W$-forward window \\
+%DIFDELCMD < Wilcoxon pairing & each seed's classical accuracy paired with same-seed proxy value \\
+%DIFDELCMD < Stochastic quantities & classical accuracy, $\tau_{\text{emp}}$, $r_{\text{emp}}$ (10-seed, 95\% CI) \\
+%DIFDELCMD < Deterministic quantities & $\Teff$, $\epsilon^2$, $\mathrm{acc\_proxy}$, $(\tau,r)$ landscape \\
+%DIFDELCMD < \bottomrule
+%DIFDELCMD < \end{tabular}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Parameter & Value / method \\
+\midrule
+Seeds & 10/experiment (42--51, Exps.\ 1--7; 0--9, Exps.\ 8--9) \\
+Forward window $W$ & 20 \\
+CI construction & marginal: $\pm 1.96\,\mathrm{SE}$; paired: exact signed-rank \\
+Proxy constants & $C = 2$, $\delta = 0.05$, $\kappa = C^2 \log(1/\delta) \approx 12$ \\
+$\tau_{\text{emp}}$ estimator & smallest lag $k$ with mean bitwise ACF $< 1/e$ \\
+$r_{\text{emp}}$ estimator & $1 +$ mean exact-duplicate count in $W$-forward window \\
+Wilcoxon pairing & per-seed classical accuracy vs.\ same-seed proxy value \\
+Stochastic quantities & classical accuracy, $\tau_{\text{emp}}$, $r_{\text{emp}}$ (10-seed, 95\% CI) \\
+Deterministic quantities & $\Teff$, $\epsilon^2$, $\mathrm{acc\_proxy}$, $(\tau,r)$ landscape \\
+\bottomrule
+\end{tabular}
+\DIFaddendFL \end{table}
+
+
+%=====================================================================
+\section{Results\DIFdelbegin \DIFdel{and Discussion}\DIFdelend }
+\label{sec:results}
+%=====================================================================
+
+We now present nine experiments. Experiments~1--7 are visualisation experiments on the synthetic non\nobreakdash-IID regimes, each accompanied by multi-seed classical baselines on the same streams: Experiments~1--2 compare accuracy trajectories; Experiment~3 presents the analytic $(\tau, r)$ sensitivity landscape; Experiment~4 contrasts empirical and analytic correlation parameters; Experiment~5 sweeps Markov correlation strength; Experiment~6 examines dimension scaling; Experiment~7 shows rolling-accuracy dynamics over time. Experiment~8 is a real-stream sanity check on two NAB datasets (Section~\ref{sec:real_stream}); Experiment~9 is a sensitivity-ablation suite (Section~\ref{sec:ablations}).
+
+\subsection{Experiment 1: Classification Accuracy vs.\ Sample Count}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig1_accuracy_vs_samples.pdf}
+    \caption{Classification accuracy and \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL proxy error vs.\ stream length $T$\DIFdelbeginFL \DIFdelFL{(10-seed mean, 95\% CI bands)}\DIFdelendFL . \textbf{(a)} Three classical baselines at $M = 64$ \DIFaddbeginFL \DIFaddFL{(10-seed mean, $\pm 1.96\,\mathrm{SE}$ bands)}\DIFaddendFL : online SGD (solid), averaged SGD (dashed), Count-Min (dotted). \textbf{(b)} \DIFdelbeginFL \DIFdelFL{Quantum oracle }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Oracle }\DIFaddendFL MSE proxy $\epsilon^2$ (\DIFaddbeginFL \DIFaddFL{deterministic closed form, }\DIFaddendFL $n = 10$\DIFdelbeginFL \DIFdelFL{qubits}\DIFdelendFL ), log-log scale\DIFaddbeginFL \DIFaddFL{; no seed dependence}\DIFaddendFL .}
+    \label{fig:accuracy}
+\end{figure}
+
+Figure~\ref{fig:accuracy} shows that all classical baselines converge to $0.88$--$0.92$ accuracy with narrow CI bands. Averaged SGD (Polyak--Ruppert, \citealp{polyak1992averaging}) produces smoother trajectories, particularly in the burst regime; Count-Min saturates near $0.55$--$0.60$ due to hash collisions at $M \ll N$. The MSE proxy (Panel b) decays as $1/\Teff$: IID and burst show fast decay; for Markov, seasonal, and long-memory, analytic $\tau$ inflates $\epsilon^2$ enough that the accuracy proxy falls below classical (Section~\ref{sec:correlation_char} quantifies this).
+
+\subsection{Experiment 2: Classical Accuracy vs.\ Memory Budget}
+\label{sec:acc_vs_memory}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.7\textwidth]{fig2_accuracy_vs_memory.pdf}
+    \caption{Classical online SGD accuracy vs.\ memory $M$ ($T = 10{,}000$) compared with the quantum IID proxy (dashed). Classical accuracy saturates at $M \geq 16$; under the IID modelling assumptions, the IID proxy lies above the empirical classical curves on this task.}
+    \label{fig:accuracy_memory}
+\end{figure}
+
+Figure~\ref{fig:accuracy_memory} shows that classical accuracy saturates at $M \geq 16$, confirming that the SGD learner is sample-limited rather than memory-limited at this scale. Under the IID modelling assumptions, the IID proxy curve (${\sim}0.99$) lies above the empirical classical curves on this task---a proxy-side ordering, not an implemented algorithmic comparison; the $\Omega(\sqrt{N})$ memory reference is a conservative \DIFaddbegin \DIFadd{theoretical }\DIFaddend stand-in for the task-specific polynomial-in-$N$ classical bounds (Section~\DIFdelbegin \DIFdel{\ref{sec:heuristic_model}}\DIFdelend \DIFaddbegin \DIFadd{\ref{sec:proxy_theory}}\DIFaddend ).
+
+\subsection{Experiment 3: Sensitivity Landscape in $(\tau, r)$ Space}
+\label{sec:landscape}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig3_tau_r_landscape.pdf}
+    \caption{Sensitivity landscape in $(\tau, r)$ space ($T = 10{,}000$, $n = 10$). \textbf{(a)} $\Teff = T/(\tau r)$, log$_{10}$ scale. \textbf{(b)} Oracle error proxy $\epsilon$. \textbf{(c)} Classification accuracy proxy with contours at $0.7$, $0.8$, $0.9$; colored dots mark each regime's analytic $(\tau, r)$. \DIFaddbeginFL \DIFaddFL{The landscape is a hypothesis-generation map: contour values are proxy estimates under the modelling assumptions of Section~\ref{sec:heuristic_model}, not measured quantum performance.}\DIFaddendFL }
+    \label{fig:landscape}
+\end{figure}
+
+$\Teff$ decreases diagonally as $\tau$ and $r$ increase; accuracy contours follow hyperbolas in $\tau \cdot r$ space. \DIFaddbegin \DIFadd{Under the analytic placements, }\DIFaddend IID and burst fall in the high-accuracy corner; Markov and seasonal sit \DIFdelbegin \DIFdel{near the }\DIFdelend \DIFaddbegin \DIFadd{between the $0.5$ floor and the }\DIFaddend $0.7$ \DIFdelbegin \DIFdel{--$0.8$ contour }\DIFdelend \DIFaddbegin \DIFadd{contour (proxy accuracies $0.60$ and $0.64$, Table~\ref{tab:bounds})}\DIFaddend ; long-memory falls in the low-accuracy zone. \DIFaddbegin \DIFadd{The empirical placements of the burst and long-memory extremes differ (Section~\ref{sec:ablations}). }\DIFaddend Researchers can place estimated $(\tau, r)$ values on the landscape to identify comparable synthetic regimes for follow-on empirical or algorithm-level validation.
+
+\subsection{Experiment 4: Empirical vs.\ Proxy Correlation Parameters}
+\label{sec:correlation_char}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.85\textwidth]{fig4_correlation_characterization.pdf}
+    \caption{Empirical vs.\ analytic proxy $\tau$ and $r$ (10-seed mean $\pm$ 95\% CI). \textbf{(a)} Refreshing time $\tau$: analytic exceeds empirical for Markov, seasonal, long-memory; opposite for IID and burst. \textbf{(b)} Repetition number $r$: both quantities in units of expected exact duplicate copies per sample within a $W=20$ forward window.}
+    \label{fig:corr_char}
+\end{figure}
+
+Three findings emerge from Fig.~\ref{fig:corr_char}. First, analytic $\tau$ systematically overshoots empirical $\tau$: Markov ($33$ vs.\ $4$, $\approx 8\times$), long-memory ($251$ vs.\ $2$, $\approx 125\times$, explained by the arcsine \DIFdelbegin \DIFdel{relationship from binarisation }\DIFdelend \DIFaddbegin \DIFadd{shrinkage from binarisation }\citep{vanvleck1966spectrum} \DIFadd{together with the short-lag character of the estimator }\DIFaddend \citep{beran1994statistics,mandelbrot1968fbm}), and seasonal ($30$ vs.\ $2$); IID and burst show the opposite sign from finite-sample fluctuations. Second, unit-aligned $r$ values agree well: burst empirical $r \approx 5.6$ vs.\ analytic $r = 4$ (factor $1.4\times$, attributable to window-length choice); all other regimes near 1. Third, IID ($\tau_{\text{emp}} \approx 2$ vs.\ $\tau_{\text{analytic}} = 1$) sets the finite-sample noise floor. These findings confirm that $(\tau, r)$ are qualitatively informative but quantitatively loose; family-specific refinements would enlarge the predicted favourable region\DIFaddbegin \DIFadd{, and Section~\ref{sec:divergence} explains the mechanisms behind the directional gaps}\DIFaddend .
+
+\subsection{Experiment 5: Correlation Strength Sweep}
+\label{sec:sweep}
+
+Figure~\ref{fig:markov_sweep} examines how the classical-vs-proxy separation evolves as the Markov correlation strength $\rho$ is varied continuously from 0 (IID) to 0.95 (strong correlation), comparing the classical SGD baseline against the quantum proxy using both the \emph{analytic} $\tau$ and the \emph{empirically measured} $\tau$.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig5_markov_sweep.pdf}
+    \caption{Markov correlation strength sweep (10-seed mean with 95\% CI bands). \textbf{(a)} Classification accuracy: classical online SGD at $M = 64$ (blue) is approximately flat at ${\sim}0.92$ across the sweep. The \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL accuracy proxy using the \emph{analytic} $\tau = n/(1{-}\rho)$ (pink, dashed) \DIFdelbeginFL \DIFdelFL{degrades and crosses }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{lies }\DIFaddendFL below \DIFaddbeginFL \DIFaddFL{the }\DIFaddendFL classical \DIFdelbeginFL \DIFdelFL{at moderate $\rho$ near }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{baseline over }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{lower end of the }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{entire }\DIFaddendFL sweep \DIFaddbeginFL \DIFaddFL{and reaches the $0.5$ floor by $\rho \approx 0.8$}\DIFaddendFL . The \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL proxy using the \emph{empirical} $\tau$ (purple, dotted) remains above classical until \DIFaddbeginFL \DIFaddFL{the mean curves cross at $\rho^{*} \approx 0.82$, with the sign reversal established by the interval estimate at }\DIFaddendFL $\rho \approx 0.88$ \DIFaddbeginFL \DIFaddFL{(Table~\ref{tab:markov_summary}; the interval is consistent with a reversal as small as $0.003$)}\DIFaddendFL , indicating that tighter family-specific characterisations would enlarge the region in which the proxy model predicts a favourable separation. \textbf{(b)} Refreshing time: the proxy--practice gap (shaded) grows with $\rho$, showing that the analytic proxy is increasingly conservative under stronger correlation. \DIFaddbeginFL \DIFaddFL{Marginal }\DIFaddendFL CI bands \DIFdelbeginFL \DIFdelFL{are narrow throughout, confirming that }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{of }\DIFaddendFL the \DIFdelbeginFL \DIFdelFL{main trends are seed-stable}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{classical and empirical-$\tau$ proxy curves overlap; the sign of their difference is resolved by the paired analysis of Table~\ref{tab:markov_summary}, not by band separation}\DIFaddendFL .}
+    \label{fig:markov_sweep}
+\end{figure}
+
+Panel~(a) reveals a key \DIFdelbegin \DIFdel{insight: using the analytic proxy }\DIFdelend \DIFaddbegin \DIFadd{contrast between the two }\DIFaddend $\tau$ \DIFdelbegin \DIFdel{, the quantum performance proxy crosses below classical performance at $\rho \approx 0.3$, suggesting the proxy-model crossover occurs under moderate Markov correlation. However, using empirical }\DIFdelend \DIFaddbegin \DIFadd{conventions. The accuracy proxy computed with the }\emph{\DIFadd{analytic}} \DIFadd{$\tau = n/(1-\rho)$ lies below the measured classical baseline over the entire sweep (proxy $0.88$ at $\rho = 0$ against classical $0.928$) and reaches the $0.5$ floor by $\rho \approx 0.8$. Using }\emph{\DIFadd{empirical}} \DIFaddend $\tau$ instead, the \DIFdelbegin \DIFdel{empirical-$\tau$ }\DIFdelend proxy remains above $0.9$ for $\rho \leq 0.8$ and above the classical baseline across most of the sweep. Under the empirical-proxy model, the \DIFdelbegin \DIFdel{classical baseline first becomes statistically indistinguishable from the proxy near $\rho \approx 0.68$ and significantly exceeds it by $\rho \approx 0.88$ (see Table~\ref{tab:markov_summary} for paired Wilcoxon $p$-values); the proxy-model crossover therefore occurs near }\DIFdelend \DIFaddbegin \DIFadd{paired proxy$\,-\,$classical difference declines from $+0.042$ at $\rho = 0$ (Hodges--Lehmann estimate; exact 95\% CI $[+0.011, +0.087]$) to $+0.019$ at $\rho = 0.68$ (CI $[-0.011, +0.069]$, spanning zero) and reverses sign to $-0.046$ by $\rho = 0.88$ (CI $[-0.079, -0.003]$). The mean proxy and classical curves cross between the $\rho = 0.81$ and $\rho = 0.88$ grid points (interpolated $\rho^{*} \approx 0.82$ under the operating constants; the pivotal grid-point difference is within seed noise, so $\rho^{*}$ should be read as a bracket rather than a point, and Section~\ref{sec:ablations} quantifies how it moves with $C$ and $\delta$). The hypothesized proxy-favourable region is closed by }\DIFaddend $\rho \approx 0.88$, where even the empirical autocorrelation becomes severe. \DIFaddbegin \DIFadd{Table~\ref{tab:markov_summary} reports the full interval estimates and effect sizes.
+}\DIFaddend 
+
+Panel~(b) quantifies the source of this discrepancy: the analytic proxy $\tau = n/(1{-}\rho)$ grows as a pole at $\rho = 1$, while the empirical $\tau$ grows much more gradually. The shaded proxy--practice gap widens by over an order of magnitude at $\rho = 0.9$. This gap is the primary driver of the pessimistic quantum performance proxies observed in Experiments~1--3, and its characterization is one of the central contributions of this paper.
+
+\begin{table}[t]
+\centering
+\caption{Classical-vs-proxy comparison across representative Markov correlation strengths $\rho$: empirical classical online-SGD accuracy at $M = 64$ \DIFdelbeginFL \DIFdelFL{, }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{and }\DIFaddendFL the heuristic quantum accuracy proxy using the empirically measured $\tau$ \DIFdelbeginFL \DIFdelFL{, }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{(}\DIFaddendFL 10-seed \DIFdelbeginFL \DIFdelFL{half-width of the }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{mean $\pm$ }\DIFaddendFL 95\% CI \DIFaddbeginFL \DIFaddFL{half-width). Tests are computed at five pre-specified targets $\rho \in \{0, 0.3, 0.5, 0.7, 0.9\}$}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{and }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{snapped to }\DIFaddendFL the \DIFaddbeginFL \DIFaddFL{nearest of the 15 sweep grid points; the Holm family is these five. $\hat{\Delta}$ is the Hodges--Lehmann (pseudomedian) estimate of the }\DIFaddendFL paired \DIFaddbeginFL \DIFaddFL{(proxy $-$ classical) difference with its exact signed-rank interval (achieved coverage 95.1\% at $n = 10$); $r_{\mathrm{rb}}$ is the matched-pairs rank-biserial correlation; $p$ is the two-sided paired }\DIFaddendFL Wilcoxon signed-rank $p$-value\DIFaddbeginFL \DIFaddFL{, reported descriptively. Marginal $\pm$ values are $1.96 \times \mathrm{SE}$ }\DIFaddendFL (\DIFdelbeginFL \DIFdelFL{two-sided}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{normal approximation}\DIFaddendFL )\DIFaddbeginFL \DIFaddFL{; a proxy half-width of $0.000$ is exact---all ten seeds return the same integer $\tau$, reflecting lattice quantisation of a discrete estimator, not proxy precision}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{``Proxy $>$ classical'' }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{A positive $\hat{\Delta}$ }\DIFaddendFL means \DIFaddbeginFL \DIFaddFL{only that }\DIFaddendFL the proxy estimate exceeds the empirical classical baseline, not \DIFdelbeginFL \DIFdelFL{realized }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{realised }\DIFaddendFL quantum algorithmic superiority. \DIFdelbeginFL \DIFdelFL{Significant differences are marked with $^{\star}$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Under a Holm correction across the five points no comparison falls below the 0.05 family-wise level }\DIFaddendFL (\DIFdelbeginFL \DIFdelFL{$p < 0.05$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{smallest adjusted $p = 0.098$}\DIFaddendFL )\DIFaddbeginFL \DIFaddFL{; the evidence for the crossover is the monotone sign reversal of $\hat{\Delta}$ and its interval estimates, not any single test}\DIFaddendFL .\DIFdelbeginFL \DIFdelFL{Accuracies are reported as mean $\pm$ half-width.}\DIFdelendFL }
+\label{tab:markov_summary}
+\DIFdelbeginFL %DIFDELCMD < \begin{tabular}{lccccc}
+%DIFDELCMD < \hline
+%DIFDELCMD < $\rho$ & Classical SGD & Quantum proxy (emp.\ $\tau$) & $\Delta$ & Wilcoxon $p$ & Significance \\
+%DIFDELCMD < \hline
+%DIFDELCMD < $0.00$ & $0.928 \pm 0.034$ & $0.976 \pm 0.000$ & $+0.048$ & $0.020$ & $^{\star}$ proxy $>$ classical \\
+%DIFDELCMD < $0.27$ & $0.927 \pm 0.034$ & $0.976 \pm 0.000$ & $+0.049$ & $0.027$ & $^{\star}$ proxy $>$ classical \\
+%DIFDELCMD < $0.47$ & $0.925 \pm 0.034$ & $0.964 \pm 0.000$ & $+0.039$ & $0.049$ & $^{\star}$ proxy $>$ classical \\
+%DIFDELCMD < $0.68$ & $0.925 \pm 0.036$ & $0.952 \pm 0.000$ & $+0.027$ & $0.375$ & not significant \\
+%DIFDELCMD < $0.88$ & $0.924 \pm 0.034$ & $0.884 \pm 0.004$ & $-0.040$ & $0.037$ & $^{\star}$ classical $>$ proxy \\
+%DIFDELCMD < \hline
+%DIFDELCMD < \end{tabular}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \begin{tabular}{lccccc}
+\hline
+$\rho$ & Classical SGD & Proxy (emp.\ $\tau$) & $\hat{\Delta}$ [95\% CI] & $r_{\mathrm{rb}}$ & $p$ \\
+\hline
+$0.00$ & $0.928 \pm 0.034$ & $0.976 \pm 0.000$ & $+0.042\,[+0.011, +0.087]$ & $+0.82$ & $0.020$ \\
+$0.27$ & $0.927 \pm 0.034$ & $0.976 \pm 0.000$ & $+0.042\,[+0.012, +0.090]$ & $+0.78$ & $0.027$ \\
+$0.48$ & $0.925 \pm 0.034$ & $0.964 \pm 0.000$ & $+0.031\,[+0.002, +0.080]$ & $+0.71$ & $0.049$ \\
+$0.68$ & $0.925 \pm 0.036$ & $0.952 \pm 0.000$ & $+0.019\,[-0.011, +0.069]$ & $+0.35$ & $0.375$ \\
+$0.88$ & $0.924 \pm 0.034$ & $0.884 \pm 0.004$ & $-0.046\,[-0.079, -0.003]$ & $-0.75$ & $0.037$ \\
+\hline
+\end{tabular}
+\DIFaddendFL \end{table}
+
+\paragraph{\DIFdelbegin \DIFdel{Stability of the proxy-baseline crossover}\DIFdelend \DIFaddbegin \DIFadd{What these tests do and do not establish}\DIFaddend } These \DIFdelbegin \DIFdel{tests compare an empiricalclassical learner against a deterministic proxy pipeline, not two empirical algorithms; they establish the stability of the proxy-baseline crossover, not quantum superiority. For each correlation strength }\DIFdelend \DIFaddbegin \DIFadd{comparisons pair an empirical, stochastic classical learner with a model prediction, not with a second implemented algorithm: for each }\DIFaddend $\rho$\DIFdelbegin \DIFdel{in the sweep}\DIFdelend , the paired observations are the per-seed \DIFdelbegin \DIFdel{empirical classical accuracy (10 seeds) and the deterministic proxy valueat that $\rho$ (which is identical across seeds because the proxy is }\DIFdelend \DIFaddbegin \DIFadd{classical accuracy and the same seed's proxy value, which is }\DIFaddend a closed-form function of \DIFaddbegin \DIFadd{that seed's }\DIFaddend empirically measured $\tau$\DIFdelbegin \DIFdel{and $r$, not of any classical model state). The Wilcoxon $p$-value therefore tests whether the }\DIFdelend \DIFaddbegin \DIFadd{. The proxy's }\DIFaddend seed-to-seed \DIFdelbegin \DIFdel{variability of the empirical learner is consistent with a fixed offset relative to the proxy curve, notwhether one implemented algorithm beats another. Paired Wilcoxon tests confirm that the crossover is not a seed artefact: the proxy significantly exceeds classical at $\rho \in \{0, 0.27, 0.47\}$ ($p \leq 0.049$)}\DIFdelend \DIFaddbegin \DIFadd{variability is therefore inherited entirely from the $\tau$ estimator (negligible at $\rho \leq 0.68$, $\pm 0.004$ at $\rho = 0.88$), not from any stochastic training process. The tests consequently quantify whether the sign of the classical$\,-\,$proxy offset is stable across seeds---they do not, and cannot, establish that one algorithm outperforms another, and no quantum algorithm is implemented anywhere in this comparison. We accordingly interpret Table~\ref{tab:markov_summary} through the interval estimates, with two caveats stated up front. First, because the proxy arm is near-constant}\DIFaddend , \DIFaddbegin \DIFadd{$r_{\mathrm{rb}}$ is scale-free and indexes }\emph{\DIFadd{sign concordance across seeds}} \DIFadd{rather than magnitude: $r_{\mathrm{rb}} \geq +0.71$ means at most two of ten seeds are discordant, and all magnitude information lives in $\hat{\Delta}$ (about four accuracy points at mild correlation). Second, the $\tau$ estimator is integer-valued and one lattice step changes the proxy by exactly $0.012$: shifting $\hat{\tau}$ by $+1$ at $\rho = 0.48$ moves that row's interval from $[+0.002, +0.080]$ to $[-0.010, +0.068]$, across zero, so the zero-exclusion at $\rho = 0.48$ is not robust to a one-lag change of estimator (}\DIFaddend the \DIFdelbegin \DIFdel{two curves are indistinguishable }\DIFdelend \DIFaddbegin \DIFadd{$\rho \leq 0.27$ and $\rho = 0.88$ intervals are). With those caveats, the pattern is: sign-concordant positive differences at mild correlation, indistinguishable from zero }\DIFaddend at $\rho = 0.68$\DIFdelbegin \DIFdel{($p = 0.375$), and classical significantly exceeds the proxy }\DIFdelend \DIFaddbegin \DIFadd{, and sign-concordant negative }\DIFaddend at $\rho = 0.88$ (\DIFdelbegin \DIFdel{$p = 0.037$; Table~\ref{tab:markov_summary}). }\DIFdelend \DIFaddbegin \DIFadd{$r_{\mathrm{rb}} = -0.75$, CI excluding zero). The unadjusted $p$-values are reported for completeness; under a Holm correction across the five pre-specified points none falls below the 0.05 family-wise threshold at $n = 10$ seeds---an empirical outcome of one-to-two discordant seeds, not a design ceiling, since the smallest attainable adjusted $p$ at $n = 10$ is $0.0098$---so we treat the sign reversal and its interval estimates, not statistical significance, as the finding. The crossover location itself is the deterministic solution of $\mathrm{acc\_proxy}(\hat{\tau}(\rho)) = \bar{a}_{\mathrm{classical}}$; its uncertainty is inherited from $\hat{\tau}$ and from the constants $(C, \delta)$, not from the tests.
+}\DIFaddend 
+
+\subsection{Experiment 6: Dimension Scaling}
+
+Figure~\ref{fig:scaling} illustrates the exponential scaling of the \DIFaddbegin \emph{\DIFadd{theoretical}} \DIFaddend quantum-vs-classical memory \DIFdelbegin \DIFdel{gap }\DIFdelend \DIFaddbegin \DIFadd{references }\DIFaddend with data dimension. \DIFaddbegin \DIFadd{No memory lower bound is measured empirically in this experiment: the curves in panel~(a) plot cited theoretical quantities, and no result here constitutes an empirical memory floor for online SGD, averaged SGD, or Count-Min.
+}\DIFaddend 
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig6_dimension_scaling.pdf}
+    \caption{Dimension scaling analysis\DIFdelbeginFL \DIFdelFL{(10-seed mean, 95\% CI bands)}\DIFdelendFL . \textbf{(a)} \DIFdelbeginFL \DIFdelFL{Worst-case }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Theoretical worst-case }\DIFaddendFL memory reference \DIFaddbeginFL \DIFaddFL{(cited bounds; no measured content)}\DIFaddendFL : representative classical lower bound $\Omega(\sqrt{N}) = \Omega(2^{n/2})$ \DIFaddbeginFL \DIFaddFL{from the cited task-specific hardness results }\DIFaddendFL vs.\ quantum $\bigO(n)$. The \DIFdelbeginFL \DIFdelFL{gap }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{separation }\DIFaddendFL is exponential in $n$ \DIFaddbeginFL \DIFaddFL{at the level of theory}\DIFaddendFL ; \DIFdelbeginFL \DIFdelFL{this }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{it }\DIFaddendFL is \DIFdelbeginFL \DIFdelFL{a worst-case reference, }\DIFdelendFL not a witnessed empirical floor \DIFaddbeginFL \DIFaddFL{for any classical baseline studied here (Section~\ref{sec:proxy_theory})}\DIFaddendFL . \textbf{(b)} Classification accuracy vs.\ dimension $n$: classical online-SGD accuracy for IID, Markov, and long-memory data (solid lines\DIFaddbeginFL \DIFaddFL{; 10-seed mean, $\pm 1.96\,\mathrm{SE}$ bands}\DIFaddendFL ) compared with \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{deterministic }\DIFaddendFL accuracy proxies for IID and Markov (dashed). The \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL IID proxy is consistently near $1.0$ (a task-level generalisation trend, not oracle-construction feasibility; Section~\DIFdelbeginFL \DIFdelFL{\ref{sec:heuristic_model}}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{\ref{sec:proxy_theory}}\DIFaddendFL ); the \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{analytic-$\tau$ }\DIFaddendFL Markov proxy degrades with dimension (because $\tau_{\text{Markov}} = n/(1{-}\rho)$ grows with $n$, reducing $\Teff$), while classical accuracy is approximately stable across the range studied.}
+    \label{fig:scaling}
+\end{figure}
+
+Panel~(a) shows that at $n = 14$ ($N = 16{,}384$) the representative classical memory reference exceeds 128 while the quantum \DIFdelbegin \DIFdel{requirement }\DIFdelend \DIFaddbegin \DIFadd{reference }\DIFaddend is only 14 qubits — \DIFdelbegin \DIFdel{an exponential gap that widens with }\DIFdelend \DIFaddbegin \DIFadd{a separation that is exponential in }\DIFaddend $n$ \DIFaddbegin \DIFadd{at the level of the cited bounds }\DIFaddend (the $\Omega(\sqrt{N})$ floor is a \DIFaddbegin \DIFadd{theoretical }\DIFaddend worst-case reference, not an empirical floor \DIFaddbegin \DIFadd{measured for any baseline here}\DIFaddend ; see Section~\DIFdelbegin \DIFdel{\ref{sec:heuristic_model}}\DIFdelend \DIFaddbegin \DIFadd{\ref{sec:proxy_theory}}\DIFaddend ). Panel~(b) shows that classical SGD accuracy is approximately stable across $n \in [6, 14]$, while the quantum IID proxy is consistently near $1.0$. This flatness is a property of the task-level $\sqrt{n/\Teff}$ rate; under the exact framework's oracle-construction cost, which grows linearly in $N = 2^n$, the fixed horizon $T = 10^4$ is already comparable to $N$ at $n = 14$, so the flat trend should not be read as construction feasibility at higher dimensions (Section~\DIFdelbegin \DIFdel{\ref{sec:heuristic_model}}\DIFdelend \DIFaddbegin \DIFadd{\ref{sec:proxy_theory}}\DIFaddend ). The quantum Markov proxy \emph{decreases} with dimension because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly with $n$; family-specific proxy refinements are therefore most useful at higher dimensions.
+
+\subsection{Experiment 7: Rolling Accuracy Dynamics}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig7_rolling_accuracy.pdf}
+    \caption{Rolling accuracy (window $= 500$) per regime; 10-seed mean $\pm$ 95\% CI. Classical SGD at $M \in \{32, 64, 128\}$ (solid), averaged SGD $M = 64$ (dashed grey), \DIFdelbeginFL \DIFdelFL{quantum }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{accuracy }\DIFaddendFL proxy (dashed pink\DIFaddbeginFL \DIFaddFL{; analytic $\tau$}\DIFaddendFL ). Under IID and burst the proxy reaches or exceeds classical by horizon end; under Markov and seasonal it rises more slowly and remains below classical (conservative analytic $\tau$); under long-memory the \DIFaddbeginFL \DIFaddFL{analytic-$\tau$ }\DIFaddendFL proxy is pinned at $0.5$ throughout \DIFaddbeginFL \DIFaddFL{(the empirical-$\tau$ placement of this regime differs; Section~\ref{sec:ablations})}\DIFaddendFL .}
+    \label{fig:rolling}
+\end{figure}
+
+Figure~\ref{fig:rolling} confirms the regime-dependent pattern of Experiments~1 and 5: IID and burst show higher proxy-estimated trajectories; Markov and seasonal show a visible gap attributable to the conservative analytic $\tau$ (a tighter family-specific proxy would shift the trajectory upward, as the Markov sweep confirms); long-memory exhibits the $0.5$ saturation floor and persistent low-frequency classical oscillations characteristic of long-range dependence.
+
+
+\subsection{Experiment 8: Real-Stream Sanity Check}
+\label{sec:real_stream}
+
+The synthetic experiments above leave open whether the empirical $\tau$ and $r$ estimators apply usefully to real streams. To answer this we apply the proxy framework end-to-end to two publicly available real streams from the Numenta Anomaly Benchmark \citep{ahmad2017numenta} (NAB; MIT licence) and report what is observed. No claim of quantum advantage is made; the contribution of this experiment is the successful application of the diagnostic workflow outside the synthetic regime, not a comparison against a realised quantum algorithm. The two streams were \DIFdelbegin \DIFdel{chosen }\emph{\DIFdel{before}} %DIFAUXCMD
+\DIFdel{examining the results to span very different correlation regimes(}\DIFdelend \DIFaddbegin \DIFadd{selected on structural grounds (contrasting correlation regimes: }\DIFaddend transport-traffic seasonality versus industrial-sensor drift) \DIFdelbegin \DIFdel{, and we pre-committed to reporting whichever placement and baseline outcomes emerged}\DIFdelend \DIFaddbegin \DIFadd{before any baseline was run, and all outcomes that emerged are reported; no registration artifact exists for this choice, so it is a disclosure, not a pre-registration claim}\DIFaddend .
+
+\paragraph{Datasets} (i) \emph{NYC Taxi}: $T = 10{,}320$ half-hour pickup counts in New York City (2014-07-01 to 2015-01-31). Combines strong daily/weekly seasonality with documented burst events (NYC Marathon, Thanksgiving, snowstorms); overlaps the synthetic seasonal $+$ burst $+$ low-order Markov regimes. (ii) \emph{Machine Temperature}: $T = 22{,}695$ five-minute readings from an industrial machine sensor preceding a documented system failure. Exhibits slow drift over hours-to-days plus localised spike events; overlaps the long-memory $+$ burst regimes.
+
+\paragraph{Binarisation choice} Each continuous series is encoded into $n = 6$ binary features (matched to Section~\ref{sec:ablations}): a 3-bit time-of-day bucket, a weekend flag, and two trend bits (current and lag-1 indicator of whether the value exceeds a 7-day rolling median; the rolling window is $336$ bins for NYC Taxi at 30-min resolution and $2{,}016$ bins for Machine Temperature at 5-min resolution). The target $y_t$ is a simple rare-event classification proxy: $y_t = 1$ iff the next-bin value is at or above the 80th percentile of the full series. \emph{This is a per-stream high-activity threshold and not the original NAB anomaly label.} The 80th percentile is chosen because it produces a non-trivial $\sim$20\%/80\% class imbalance that exposes both majority-baseline behaviour and the rare-event regime; this target is intentionally imbalanced and not a balanced classification task. To prevent accuracy from masking majority-class memorisation, we report balanced accuracy and $F_1$ of the positive (rare) class alongside accuracy in Table~\ref{tab:real_stream_metrics}. \DIFdelbegin \DIFdel{Sensitivity to this threshold (}\DIFdelend \DIFaddbegin \DIFadd{The recorded threshold sensitivity spans positive rates $0.30 / 0.20 / 0.10$ at }\DIFaddend $q \in \{0.70, 0.80, 0.90\}$ \DIFdelbegin \DIFdel{) is recorded in the JSON output for transparency. }\DIFdelend \DIFaddbegin \DIFadd{(threshold values in the released JSON); baseline metrics are reported at $q = 0.80$ only. One further design simplification is disclosed here: the threshold is computed from the }\emph{\DIFadd{full}} \DIFadd{series, so the target definition uses information not available prequentially at each step. The feature stream and the $(\tau, r)$ estimates involve no such look-ahead, and the landscape placement is target-free, so this affects only the classical-baseline reference numbers; a threshold calibrated on an initial interval, or updated from previously observed samples only, is the rigorous prequential design and is adopted as future work. }\DIFaddend Binarisation discards information, so the resulting empirical $\tau$ and $r$ should be read as lower bounds on the correlation lengths in the underlying continuous process.
+
+\paragraph{Procedure} Empirical $\tau$ and $r$ are computed using the same estimators as the synthetic experiments (Section~\ref{sec:experiments})\DIFaddbegin \DIFadd{, on the }\emph{\DIFadd{temporally ordered}} \DIFadd{stream}\DIFaddend . The three classical baselines are run with $M = 64$ on seed-permuted prequential orders (10 \DIFdelbegin \DIFdel{seeds, 95\% confidence }\DIFdelend \DIFaddbegin \DIFadd{random shuffles of the fixed series; $\pm 1.96\,\mathrm{SE}$ }\DIFaddend intervals). \DIFaddbegin \DIFadd{Two consequences of this design are stated plainly: the intervals measure ordering variability of a single fixed dataset---not sampling uncertainty about the stream, sensor, or domain---and, because permutation removes the temporal dependence that $(\tau, r)$ quantify, the classical accuracies are upper-optimistic relative to the ordered stream. }\DIFaddend The proxy accuracy is $\mathrm{acc\_proxy} = \max(0.5, 1 - C^2 n \log(1/\delta) / \Teff)$ with $C = 2$, $\delta = 0.05$.
+
+\paragraph{Findings (Tables~\ref{tab:real_stream} and \ref{tab:real_stream_metrics})} The two streams land on opposite sides of the proxy-favourable region in $(\tau, r)$ space, and the imbalance-aware metrics expose effects that accuracy alone hides:
+\begin{itemize}
+    \item \textbf{NYC Taxi} (\DIFaddbegin \DIFadd{proxy-}\DIFaddend favourable region): $\tau_{\text{emp}} = 6.0$, $r_{\text{emp}} = 2.77$, $\Teff = 621$, proxy $= 0.884$. Count-Min reaches accuracy $0.865 \pm 0.016$, balanced accuracy \DIFdelbegin \DIFdel{$0.777$, and $F_1 = 0.644$}\DIFdelend \DIFaddbegin \DIFadd{$0.777 \pm 0.042$, and $F_1 = 0.644 \pm 0.062$}\DIFaddend , materially above majority on every metric \DIFdelbegin \DIFdel{. Online-SGD and Averaged-SGD have lower }\DIFdelend \DIFaddbegin \DIFadd{(though with wide ordering-to-ordering spread: per-ordering $F_1$ ranges $0.43$--$0.72$). Both SGD variants fall }\emph{\DIFadd{below}} \DIFadd{the $0.800$ majority baseline on }\DIFaddend accuracy ($0.670 \pm 0.006$ and $0.673 \pm 0.004$)\DIFdelbegin \DIFdel{and balanced accuracy near $0.50$, indicating they }\DIFdelend \DIFaddbegin \DIFadd{, and Averaged-SGD's balanced accuracy ($0.498 \pm 0.012$, interval straddling $0.50$) is indistinguishable from chance---under this binarisation the hashed-linear learners do not }\DIFaddend recover the rare class\DIFdelbegin \DIFdel{only weakly under hashed-linear features}\DIFdelend .
+    \item \textbf{Machine Temperature} (\DIFaddbegin \DIFadd{proxy-}\DIFaddend unfavourable region): $\tau_{\text{emp}} = 32.0$, $r_{\text{emp}} = 13.55$, $\Teff = 52$, proxy $= 0.500$ (saturated at the chance floor). All three classical baselines have accuracy \DIFdelbegin \DIFdel{near }\DIFdelend \DIFaddbegin \DIFadd{at or slightly above/below }\DIFaddend the majority value ($0.724$, $0.735$, $0.801$ \DIFdelbegin \DIFdel{), but balanced accuracy is only }\DIFdelend \DIFaddbegin \DIFadd{against $0.800$), balanced accuracy of }\DIFaddend $0.55$, $0.54$, and $0.56$\DIFaddbegin \DIFadd{, }\DIFaddend and $F_1 \in [0.23, 0.27]$. The accuracy \DIFdelbegin \DIFdel{gap above the saturated proxy is therefore largely }\DIFdelend \DIFaddbegin \DIFadd{levels are therefore produced largely by }\DIFaddend majority-class \DIFdelbegin \DIFdel{memorisation; on the imbalance-aware metrics no classical baseline meaningfully exceeds chance for the rare class}\DIFdelend \DIFaddbegin \DIFadd{prediction; the balanced accuracies exceed the $0.50$ chance level by a statistically resolvable but practically negligible margin}\DIFaddend .
+\end{itemize}
+
+\begin{table}[t]
+\centering
+\caption{Real-stream sanity check, landscape coordinates: empirical $(\tau, r)$, proxy accuracy, \DIFaddbeginFL \DIFaddFL{and }\DIFaddendFL classical-baseline accuracy (\DIFdelbeginFL \DIFdelFL{10-seed }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{10-ordering }\DIFaddendFL mean) \DIFdelbeginFL \DIFdelFL{, and the majority-class accuracy }\DIFdelendFL for two NAB datasets\DIFaddbeginFL \DIFaddFL{; the majority baselines appear in Table~\ref{tab:real_stream_metrics}}\DIFaddendFL . The proxy places NYC Taxi in a \DIFdelbeginFL \DIFdelFL{favourable }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{proxy-favourable }\DIFaddendFL region and Machine Temperature in \DIFdelbeginFL \DIFdelFL{an unfavourable }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{a proxy-unfavourable }\DIFaddendFL region (proxy saturates at $0.5$). Imbalance-aware metrics \DIFdelbeginFL \DIFdelFL{(balanced accuracy, $F_1$) }\DIFdelendFL for the same runs are reported \DIFdelbeginFL \DIFdelFL{separately }\DIFdelendFL in Table~\ref{tab:real_stream_metrics}.}
+\label{tab:real_stream}
+\begin{tabular}{@{}lrrrrcccc@{}}
+\toprule
+Dataset & $T$ & $\tau$ & $r$ & $\Teff$ & proxy & SGD & Avg-SGD & Count-Min \\
+\midrule
+NYC Taxi          & $10{,}320$ & $6.0$  & $2.77$  & $621$ & $0.884$ & $0.670$ & $0.673$ & $0.865$ \\
+Machine Temp.\    & $22{,}695$ & $32.0$ & $13.55$ & $52$  & $0.500$ & $0.724$ & $0.735$ & $0.801$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Imbalance-aware metrics for the real-stream sanity check (\DIFdelbeginFL \DIFdelFL{10-seed }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{10-ordering }\DIFaddendFL mean \DIFaddbeginFL \DIFaddFL{$\pm 1.96\,\mathrm{SE}$}\DIFaddendFL ). Accuracy alone is misleading at a $\sim$20\%/80\% positive/negative split, so balanced accuracy and $F_1$ of the positive (rare) class are reported alongside it. \DIFaddbeginFL \DIFaddFL{Majority-baseline rows are determined by the 80th-percentile target construction (base rate $\approx 0.20$) and are identical for both streams by design; balanced accuracy $0.500$ and $F_1 = 0.000$ are the analytic values for a constant classifier. }\DIFaddendFL The proxy is an accuracy projection only; balanced accuracy and $F_1$ are \DIFdelbeginFL \DIFdelFL{reported for the classical baselines and are }\DIFdelendFL not targets the proxy attempts to match.\DIFdelbeginFL \DIFdelFL{On NYC Taxi, Count-Min materially exceeds majority on every metric. On Machine Temperature, all classical baselines have accuracy slightly above majority but balanced accuracy near $0.5$ and $F_1 < 0.30$, indicating the accuracy gap is largely majority-class memorisation.}\DIFdelendFL }
+\label{tab:real_stream_metrics}
+\DIFdelbeginFL %DIFDELCMD < \begin{tabular}{@{}llccc@{}}
+%DIFDELCMD < \toprule
+%DIFDELCMD < Dataset & Method & accuracy & balanced acc.\ & $F_1$ (positive) \\
+%DIFDELCMD < \midrule
+%DIFDELCMD < NYC Taxi              & majority           & $0.800$ & $0.500$ & $0.000$ \\
+%DIFDELCMD <                       & Online-SGD         & $0.670$ & $0.535$ & $0.273$ \\
+%DIFDELCMD <                       & Averaged-SGD       & $0.673$ & $0.498$ & $0.199$ \\
+%DIFDELCMD <                       & Count-Min          & $0.865$ & $0.777$ & $0.644$ \\
+%DIFDELCMD < \midrule
+%DIFDELCMD < Machine Temperature   & majority           & $0.800$ & $0.500$ & $0.000$ \\
+%DIFDELCMD <                       & Online-SGD         & $0.724$ & $0.550$ & $0.269$ \\
+%DIFDELCMD <                       & Averaged-SGD       & $0.735$ & $0.538$ & $0.234$ \\
+%DIFDELCMD <                       & Count-Min          & $0.801$ & $0.560$ & $0.228$ \\
+%DIFDELCMD < \bottomrule
+%DIFDELCMD < \end{tabular}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \small
+\begin{tabular}{@{}llccc@{}}
+\toprule
+Dataset & Method & accuracy & balanced acc.\ & $F_1$ (positive) \\
+\midrule
+NYC Taxi              & majority           & $0.800$ & $0.500$ & $0.000$ \\
+                      & Online-SGD         & $0.670 \pm 0.006$ & $0.535 \pm 0.004$ & $0.273 \pm 0.006$ \\
+                      & Averaged-SGD       & $0.673 \pm 0.004$ & $0.498 \pm 0.012$ & $0.199 \pm 0.025$ \\
+                      & Count-Min          & $0.865 \pm 0.016$ & $0.777 \pm 0.042$ & $0.644 \pm 0.062$ \\
+\midrule
+Machine Temperature   & majority           & $0.800$ & $0.500$ & $0.000$ \\
+                      & Online-SGD         & $0.724 \pm 0.001$ & $0.550 \pm 0.019$ & $0.269 \pm 0.047$ \\
+                      & Averaged-SGD       & $0.735 \pm 0.002$ & $0.538 \pm 0.016$ & $0.234 \pm 0.049$ \\
+                      & Count-Min          & $0.801 \pm 0.001$ & $0.560 \pm 0.021$ & $0.228 \pm 0.075$ \\
+\bottomrule
+\end{tabular}
+\DIFaddendFL \end{table}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig8_real_stream_validation.pdf}
+    \caption{Real-stream sanity check (two NAB datasets). \textbf{(a, b)} Raw series for the first 14 days of each dataset. \textbf{(c)} Final cumulative classical baseline accuracy (10-seed mean $\pm$ 95\% CI) for both streams; dashed lines are the deterministic proxy values, dotted lines are the majority baseline. \textbf{(d)} Both real-stream points (coloured stars\DIFaddbeginFL \DIFaddFL{, plotted at their measured coordinates}\DIFaddendFL ) on the $(\tau, r)$ landscape, alongside \DIFaddbeginFL \emph{\DIFaddFL{indicative}} \DIFaddendFL synthetic-regime \DIFdelbeginFL \DIFdelFL{markers }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{positions }\DIFaddendFL (black crosses\DIFaddbeginFL \DIFaddFL{; schematic placements for orientation, not the measured coordinates of Table~\ref{tab:bounds} or Fig.~\ref{fig:corr_char}}\DIFaddendFL ). NYC Taxi \DIFdelbeginFL \DIFdelFL{falls }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{sits at $(\tau, r) = (6.0, 2.77)$, $\Teff = 621$, }\DIFaddendFL in a moderately \DIFdelbeginFL \DIFdelFL{favourable }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{proxy-favourable }\DIFaddendFL region\DIFdelbeginFL \DIFdelFL{near the synthetic Markov point}\DIFdelendFL ; Machine Temperature \DIFdelbeginFL \DIFdelFL{falls }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{sits at $(32.0, 13.55)$, $\Teff = 52$, }\DIFaddendFL in the \DIFdelbeginFL \DIFdelFL{unfavourable }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{proxy-unfavourable }\DIFaddendFL upper-right region \DIFdelbeginFL \DIFdelFL{(high $\tau$ and very high $r$) }\DIFdelendFL where the proxy saturates. \DIFaddbeginFL \DIFaddFL{The stars are computed at $n = 6$ and the underlying contours at $n = 10$; because contour values depend on $n$ and $T$, the overlay supports qualitative placement only. }\DIFaddendFL Imbalance-aware metrics for the same runs are reported in Table~\ref{tab:real_stream_metrics}.}
+    \label{fig:real_stream}
+\end{figure}
+
+\paragraph{Why Count-Min looks strong on NYC Taxi} The near-proxy accuracy of Count-Min on NYC Taxi has a structural explanation that is worth stating up front, because otherwise the apparent agreement could be misread as evidence that the proxy is ``correct''. With $n = 6$ binary features only $2^n = 64$ feature vectors exist, and many of them repeat in the data; Count-Min can therefore essentially memorise per-bucket positive rates and predict the majority class for each bucket, which is enough to reach $F_1 = 0.644$ at this binarisation granularity. SGD with hashed-linear features cannot represent the same per-bucket conditional distribution as efficiently. The Count-Min result should be interpreted as a memorisation-friendly bounded-memory baseline under coarse binarisation, not as general evidence that the proxy predicts all classical learners. As $n$ grows, $2^n$ outpaces practical Count-Min table sizes and this memorisation route disappears.
+
+\paragraph{Interpretation} Three observations.
+(i) The empirical $\tau$ and $r$ estimators apply unchanged to both real streams and place each stream in the regime that matches its underlying structure: NYC Taxi has moderate $\tau$ (multiple-bin daily/weekly correlation) and moderate $r$ (modest exact-feature-vector repetition at $n = 6$); Machine Temperature has high $\tau$ (slow multi-hour drift) and very high $r$ (5-min sensor data has many near-identical consecutive feature vectors).
+(ii) On NYC Taxi, Count-Min materially exceeds the majority baseline on balanced accuracy ($0.777$ vs.\ $0.500$) and on $F_1$ ($0.644$ vs.\ $0.000$), so the accuracy match between Count-Min and the proxy reflects genuine rare-class learning rather than majority memorisation alone, even though the underlying mechanism is the bounded-$n$ memorisation route described above.
+(iii) On Machine Temperature, the saturated proxy is exceeded by all classical baselines on accuracy, but the imbalance-aware metrics show that the \DIFdelbegin \DIFdel{gap is mostly }\DIFdelend \DIFaddbegin \DIFadd{accuracy levels are produced mostly by }\DIFaddend majority-class \DIFdelbegin \DIFdel{memorisation}\DIFdelend \DIFaddbegin \DIFadd{prediction}\DIFaddend : balanced accuracy is at most $0.56$ and $F_1$ is below $0.30$ for every classical baseline. \DIFdelbegin \DIFdel{This is the expected diagnostic behaviour }\DIFdelend \DIFaddbegin \DIFadd{Read strictly as an accuracy projection, the proxy is }\emph{\DIFadd{falsified}} \DIFadd{on this stream ($0.500$ predicted against $0.72$--$0.80$ observed); the diagnostic reading---that }\DIFaddend at $\Teff = 52$ \DIFdelbegin \DIFdel{---}\DIFdelend no sample-limited estimator should be expected to recover the \DIFdelbegin \DIFdel{rare class at this effective sample count---and we treat it as a genuine negative case. }\DIFdelend \DIFaddbegin \emph{\DIFadd{rare class}}\DIFadd{---reinterprets the saturated value as a rare-class-learnability indicator, which is a change of metric and is offered as interpretation, not confirmation. For symmetry, the proxy's miss on NYC Taxi is $0.019$ against accuracy and $0.107$ against balanced accuracy. We also state plainly that the favourable-side separation between the two streams rests on Count-Min alone; the hashed-linear learners do not corroborate it, consistent with the scope boundary that the proxy does not predict per-learner outcomes (Section~\ref{sec:scope_diag}).
+}\DIFaddend 
+
+\DIFdelbegin \DIFdel{The two streams together illustrate the value of the }\DIFdelend \DIFaddbegin \paragraph{\DIFadd{Encoding and resolution sensitivity}} \DIFadd{Because four of the six binary features are deterministic calendar fields, the measured }\DIFaddend $(\tau, r)$ \DIFdelbegin \DIFdel{diagnostic: it identifies real streams that fall on either side of the proxy-favourable boundary using the same estimators applied to }\DIFdelend \DIFaddbegin \DIFadd{could in principle reflect the ratio of sampling rate to encoder field width rather than the underlying signal. To check this, we re-encoded the same raw series across sampling resolutions and time-of-day bucket widths and recomputed $(\tau, r, \Teff)$ and the proxy with the unchanged estimators (deterministic re-analysis; no training). Table~\ref{tab:encoder_sens} shows that absolute values do move with the encoder---as they must, since the diagnostic characterises the stream }\emph{\DIFadd{as encoded and fed to the learner}}\DIFadd{---but the ordering never reverses: NYC Taxi's proxy value exceeds Machine Temperature's in every one of the ten configurations, including at matched 30-minute resolution ($0.884$ vs.\ $0.576$) and matched 60-minute resolution ($0.908$ vs.\ $0.719$). Machine Temperature leaves proxy saturation only when downsampled $6$--$12\times$, which discards precisely the fast-timescale redundancy that the diagnostic is designed to count. Placements should accordingly be read as encoder-conditional but ordering-stable.
+}
+
+\begin{table}[t]
+\centering
+\caption{\DIFaddFL{Encoding/resolution sensitivity of the real-stream placements (deterministic re-analysis of the same raw series; $n = 6$, $W = 20$, $C = 2$, $\delta = 0.05$). The NYC Taxi $>$ Machine Temperature proxy ordering holds in all ten configurations; absolute values are encoder-conditional.}}
+\label{tab:encoder_sens}
+\small
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+Stream & Resolution / ToD bucket & $T$ & $\tau$ & $r$ & $\Teff$ & proxy \\
+\midrule
+NYC Taxi & 30 min / 3 h (published) & 10{,}320 & 6.0 & 2.77 & 621 & 0.884 \\
+NYC Taxi & 30 min / 6 h & 10{,}320 & 8.0 & 4.55 & 283 & 0.746 \\
+NYC Taxi & 30 min / 1.5 h & 10{,}320 & 4.0 & 1.89 & 1367 & 0.947 \\
+NYC Taxi & 60 min / 3 h & 5{,}160 & 4.0 & 1.64 & 785 & 0.908 \\
+\midrule
+Machine Temp. & 5 min / 3 h (published) & 22{,}695 & 32.0 & 13.55 & 52 & 0.500 \\
+Machine Temp. & 5 min / 6 h & 22{,}695 & 52.0 & 16.04 & 27 & 0.500 \\
+Machine Temp. & 5 min / 1.5 h & 22{,}695 & 22.0 & 9.32 & 111 & 0.500 \\
+Machine Temp. & 30 min / 3 h & 3{,}781 & 7.0 & 3.18 & 170 & 0.576 \\
+Machine Temp. & 30 min / 6 h & 3{,}781 & 10.0 & 5.59 & 68 & 0.500 \\
+Machine Temp. & 60 min / 3 h & 1{,}891 & 4.0 & 1.85 & 255 & 0.719 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\DIFadd{The two streams together demonstrate the $(\tau, r)$ }\emph{\DIFadd{placement}} \DIFadd{workflow: the estimators apply unchanged to both streams and place them at opposite ends of the $\Teff$ range ($621$ vs.\ $52$), an ordering that is stable across encoder configurations (Table~\ref{tab:encoder_sens}). We do not claim the placement predicts classical performance---on balanced accuracy, both SGD variants score marginally }\emph{\DIFadd{higher}} \DIFadd{on the nominally unfavourable stream, and only Count-Min (via the memorisation route above) separates the two---and }\DIFaddend the \DIFdelbegin \DIFdel{synthetic regimes, and the }\DIFdelend imbalance-aware metrics \DIFdelbegin \DIFdel{confirm }\DIFdelend \DIFaddbegin \DIFadd{are consistent with the placement reading rather than proof of it. With only two datasets, however, this experiment is illustrative rather than statistically representative: it demonstrates }\DIFaddend that the diagnostic \DIFdelbegin \DIFdel{is not an artefact of accuracy on imbalanced labels}\DIFdelend \DIFaddbegin \DIFadd{workflow runs end-to-end on real telemetry and produces interpretable placements, but it cannot establish that those placements generalise across stream domains}\DIFaddend . Broader real-stream coverage across financial, network-traffic, \DIFaddbegin \DIFadd{cybersecurity, }\DIFaddend and additional sensor domains remains future work (Section~\ref{sec:future_work}).
+
+
+\subsection{Experiment 9: Proxy-Sensitivity and Estimator Ablations}
+\label{sec:ablations}
+
+To address the concern that several proxy choices appear ad hoc, we vary \DIFdelbegin \DIFdel{four }\DIFdelend \DIFaddbegin \DIFadd{five }\DIFaddend ingredients of the pipeline and report whether the qualitative ordering of regimes on the $(\tau, r)$ landscape is preserved. \DIFdelbegin \DIFdel{All }\DIFdelend \DIFaddbegin \DIFadd{The first four }\DIFaddend ablations use $T = 4096$, $W = 20$, and a feature dimension $n = 6$ chosen to match the real-stream case study (Section~\ref{sec:real_stream}) for direct comparability; the \DIFaddbegin \DIFadd{fifth (the $C$--$\delta$ analysis) re-evaluates the Markov sweep of Section~\ref{sec:sweep} at its native $T = 10^{4}$, $n = 10$; the }\DIFaddend synthetic main experiments use $n = 10$, so absolute proxy values in this section are not \DIFdelbegin \DIFdel{directly comparable to those in Sections~\ref{sec:results}--\ref{sec:correlation_char}, but the qualitative regimeordering is }\DIFdelend \DIFaddbegin \DIFadd{comparable across sections. What this section establishes is that the regime ordering induced by the }\emph{\DIFadd{empirical-$\tau$ estimator family}} \DIFadd{is stable across the four estimators within it. That ordering differs from the analytic-$\tau$ ordering of Table~\ref{tab:bounds} at the two extremes---long-memory moves from worst (analytic) to the best tier (empirical, the short-lag artifact of Section~\ref{sec:divergence}), while burst moves from second-best to saturated worst (its measured $\tau \cdot r$ is the largest of any regime)---and this estimator dependence is itself a finding, not a defect to be hidden}\DIFaddend .
+
+\paragraph{Alternative $\tau$ estimators} Four definitions are compared: the default ($1/e$ ACF crossing), an aggressive variant ($1/2$ ACF crossing), the integrated absolute ACF up to first non-positive lag, and an AR(1) effective lag $-1/\log|\rho_1|$. The qualitative ordering is preserved across all five regimes: Burst always has the largest $\tau$ ($3.3$--$7.0$), IID and long-memory always the smallest ($1.0$--$2.0$), Markov consistently moderate ($2.8$--$4.0$). Resulting proxy accuracies (Table~\ref{tab:ablations}) shift by at most $0.04$ between estimators \DIFdelbegin \DIFdel{; the largest shift is in the }\DIFdelend \DIFaddbegin \DIFadd{for the four non-saturated regimes; the }\DIFaddend Burst regime, \DIFdelbegin \DIFdel{where the proxy is in saturation and }\DIFdelend \DIFaddbegin \DIFadd{which sits at the $0.5$ saturation floor at $T = 4096$, moves by $0.155$ under }\DIFaddend the AR(1) estimator \DIFdelbegin \DIFdel{yields a modestly higher value because it }\DIFdelend \DIFaddbegin \DIFadd{because that estimator }\DIFaddend captures only the lag-1 dependence.
+
+\paragraph{Forward-window size $W$} Repeating the $r$ estimator at $W \in \{10, 20, 50\}$ yields a monotone increase in $r$ (more chances to find duplicates) and a corresponding monotone decrease in $\Teff$. The relative ordering of regimes by $r$ is \DIFdelbegin \DIFdel{preserved across }\DIFdelend \DIFaddbegin \DIFadd{insensitive to }\DIFaddend $W$ \DIFdelbegin \DIFdel{values, confirming }\DIFdelend \DIFaddbegin \DIFadd{over the range tested; this establishes ordering stability, not }\DIFaddend that $W = 20$ is \DIFdelbegin \DIFdel{a representativechoice}\DIFdelend \DIFaddbegin \DIFadd{uniquely representative}\DIFaddend .
+
+\paragraph{Stream length $T$} Varying $T \in \{1024, 2048, 4096, 8192\}$ yields the expected scaling in $\Teff$. For Burst the proxy emerges from saturation only at $T \geq 8192$, indicating sample-size sensitivity for highly repetitive regimes.
+
+\paragraph{Target function} \DIFdelbegin \DIFdel{On the }\DIFdelend \DIFaddbegin \DIFadd{This ablation uses a colder protocol than the main experiments---prequential (test-then-train) accuracy over the full stream at learning rate $0.01$ and $T = 4096$, versus held-out evaluation at learning rate $0.05$ and $T = 10^{4}$ in Sections~\ref{sec:results}--\ref{sec:sweep}---so absolute SGD levels here are not comparable to Table~\ref{tab:markov_summary}. Under this protocol, on the }\DIFaddend linear target the SGD baseline degrades to near-chance ($\approx 0.5$) for these synthetic streams and the small $n=6$ feature set; on a threshold target ($y = 1$ iff $\sum_i x_i \geq n/2$) SGD attains $\approx 0.65$ across all regimes; on the parity target SGD remains near chance. The proxy model is target-independent (it depends only on $\Teff$), so this ablation isolates the gap between the proxy framework and the empirical learner's task-specific capability. \DIFaddbegin \DIFadd{This is a scope boundary, stated plainly: classical learner performance is strongly target-dependent, while the proxy depends only on $(\tau, r, T)$ and is target-independent by construction. The proxy therefore cannot universally predict downstream classifier performance; it characterises the correlation structure of the stream---the effective sample budget available to }\emph{\DIFadd{any}} \DIFadd{bounded-memory learner---not task-specific learnability. Predictions read off the landscape are statements about correlation-driven budget erosion and must not be interpreted as accuracy forecasts for a particular classifier--target pair (Section~\ref{sec:scope_diag}).
+}\DIFaddend 
+
+\DIFaddbegin \paragraph{\DIFadd{Proxy constants $C$ and $\delta$}} \DIFadd{Because the proxy is a closed-form function of the measured $(\tau, r)$, its sensitivity to the constants requires no new stochastic runs: we re-evaluate the accuracy proxy on the same per-seed empirical $\tau$ values from the Markov sweep (Section~\ref{sec:sweep}) over the grid $C \in \{1, 1.5, 2, 2.5\}$, $\delta \in \{0.01, 0.05, 0.1\}$, and record where the mean proxy curve crosses the mean classical curve. Table~\ref{tab:cdelta} shows that the regime }\emph{\DIFadd{ordering}} \DIFadd{is invariant---as it must be, since $C$ and $\delta$ enter only through the multiplicative factor $\kappa = C^{2}\log(1/\delta)$, a monotone rescaling---but the }\emph{\DIFadd{absolute}} \DIFadd{crossover location $\rho^{*}$ moves substantially: from $\rho^{*} \approx 0.38$ at the most pessimistic setting $(C{=}2.5, \delta{=}0.01)$ to beyond the sweep range at $C = 1$. At the paper's operating point $(C{=}2, \delta{=}0.05)$, $\rho^{*} \approx 0.82$. The landscape should therefore be read }\emph{\DIFadd{ordinally}}\DIFadd{: relative placements of regimes and streams are robust to the constants, while any absolute boundary---including the $\rho^{*}$ values above---is conditional on the chosen $(C, \delta)$.
+}
+
+\DIFaddend \begin{table}[t]
+\centering
+\caption{\DIFdelbeginFL \DIFdelFL{Proxy-sensitivity ablation: alternative $\tau$ estimators on synthetic streams }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Sensitivity of the proxy--baseline crossover $\rho^{*}$ }\DIFaddendFL (\DIFdelbeginFL \DIFdelFL{$T = 4096$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Markov sweep}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{$W = 20$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{empirical $\tau$}\DIFaddendFL , \DIFdelbeginFL \DIFdelFL{$n = 6$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{mean curves}\DIFaddendFL ) \DIFaddbeginFL \DIFaddFL{to the proxy constants $C$ and $\delta$}\DIFaddendFL . \DIFdelbeginFL \DIFdelFL{Qualitative }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Entries are interpolated on the 15-point sweep grid; ``$>0.95$'' means the mean proxy curve remains above the mean classical curve over the entire sweep. Regime }\DIFaddendFL ordering \DIFdelbeginFL \DIFdelFL{of regimes by $\tau$ }\DIFdelendFL is \DIFdelbeginFL \DIFdelFL{preserved }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{invariant }\DIFaddendFL across \DIFdelbeginFL \DIFdelFL{all four estimators}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{the grid}\DIFaddendFL ; \DIFdelbeginFL \DIFdelFL{proxy accuracy changes by at most $0.04$}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{the absolute crossover is not}\DIFaddendFL . \DIFaddbeginFL \DIFaddFL{The paper's operating point $(C = 2$, $\delta = 0.05)$ is set in bold.}\DIFaddendFL }
+\DIFaddbeginFL \label{tab:cdelta}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & $\delta = 0.01$ & $\delta = 0.05$ & $\delta = 0.10$ \\
+\midrule
+$C = 1.0$ & $0.93$ & $>0.95$ & $>0.95$ \\
+$C = 1.5$ & $0.84$ & $0.89$ & $0.92$ \\
+$C = 2.0$ & $0.61$ & $\mathbf{0.82}$ & $0.86$ \\
+$C = 2.5$ & $0.38$ & $0.61$ & $0.76$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{\DIFaddFL{Proxy-sensitivity ablation: alternative $\tau$ estimators on synthetic streams ($T = 4096$, $W = 20$, $n = 6$). Qualitative ordering of regimes by $\tau$ is preserved across all four estimators; proxy accuracy changes by at most $0.04$ for the non-saturated regimes, while Burst (at the $0.5$ floor) moves $0.155$ under the AR(1) estimator. Note that this empirical-family ordering differs from the analytic ordering of Table~\ref{tab:bounds} at the burst and long-memory extremes (see text).}}
+\DIFaddendFL \label{tab:ablations}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Regime & $1/e$ (default) & $1/2$-cross & integrated & AR(1) eff. \\
+\midrule
+IID         & $0.954$ & $0.954$ & $0.977$ & $0.977$ \\
+Markov $0.7$ & $0.856$ & $0.892$ & $0.877$ & $0.899$ \\
+Seasonal    & $0.942$ & $0.942$ & $0.893$ & $0.971$ \\
+Burst       & $0.500$ & $0.500$ & $0.500$ & $0.655$ \\
+Long-memory & $0.954$ & $0.954$ & $0.977$ & $0.977$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{fig9_ablations.pdf}
+    \caption{Proxy-sensitivity and estimator ablations. \textbf{(a)} Estimated $\tau$ on each regime under four alternative estimators. \textbf{(b)} Resulting proxy accuracy. \textbf{(c)} Repetition number $r$ versus forward-window size $W$. \textbf{(d)} Online-SGD accuracy across three target functions (linear, parity, threshold), 10-seed mean with 95\% CI. The proxy curve is target-independent \DIFaddbeginFL \DIFaddFL{by construction; it does not track task-specific learnability}\DIFaddendFL .}
+    \label{fig:ablations}
+\end{figure}
+
+Together these ablations show that the proxy model's qualitative regime ordering is robust to $\tau$ estimator choice and forward-window size, while the absolute proxy values are sensitive to the constants $C$ and $\delta$ \DIFaddbegin \DIFadd{(Table~\ref{tab:cdelta} quantifies the induced movement of the crossover $\rho^{*}$) }\DIFaddend and to the stream length $T$. The Burst regime is the most sensitive: at $T = 4096$ it is in proxy saturation under most estimators, but emerges from saturation as $T$ doubles. These findings support the paper's claim that the $(\tau, r)$ landscape is a hypothesis-generating screening heuristic rather than a precise prediction tool.
+
+
+%=====================================================================
+\section{Discussion}
+\label{sec:discussion}
+%=====================================================================
+
+\subsection{Implications for Quantum Streaming Applications}
+
+Three structural factors are consistent with a \DIFdelbegin \DIFdel{favourable proxy-estimated }\DIFdelend \DIFaddbegin \DIFadd{hypothesized proxy-favourable }\DIFaddend regime: (1) the $\bigO(n)$ vs.\ $\Omega(\sqrt{N})$ worst-case memory-reference gap is \DIFdelbegin \DIFdel{independent of correlation and }\DIFdelend \DIFaddbegin \DIFadd{a correlation-independent theoretical separation that }\DIFaddend grows exponentially with $n$, so at $n \geq 20$ even large increases in $\tau$ and $r$ \DIFdelbegin \DIFdel{do }\DIFdelend \DIFaddbegin \DIFadd{would }\DIFaddend not eliminate the proxy-side memory-separation \DIFdelbegin \DIFdel{reference}\DIFdelend \DIFaddbegin \DIFadd{reference---an extrapolation of the cited bounds beyond the tested range $n \leq 14$, not a measured trend (Section~\ref{sec:proxy_theory})}\DIFaddend ; (2) analytic proxy $\tau$ \DIFdelbegin \DIFdel{systematically }\DIFdelend overshoots empirical $\tau$ \DIFaddbegin \DIFadd{for the mixing regimes }\DIFaddend (Fig.~\ref{fig:corr_char}\DIFaddbegin \DIFadd{; Section~\ref{sec:divergence}}\DIFaddend ), so \DIFdelbegin \DIFdel{the proxy model }\DIFdelend \DIFaddbegin \DIFadd{for those regimes the analytic proxy }\DIFaddend is conservative and tighter family-specific characterizations would enlarge the predicted favourable region; (3) the proxy \DIFaddbegin \DIFadd{model }\DIFaddend predicts a favourable separation at \DIFdelbegin \DIFdel{$\rho \leq 0.47$ ($p \leq 0.049$) and the proxy-model crossover occurs near $\rho \approx 0.88$ ($p = 0.037$; }\DIFdelend \DIFaddbegin \DIFadd{mild Markov correlation (sign-concordant paired differences, $r_{\mathrm{rb}} \geq +0.71$, with exact CIs excluding zero at $\rho \leq 0.27$ and the $\rho = 0.48$ interval one estimator lattice step from zero) that closes at $\rho^{*} \approx 0.82$--$0.88$ (}\DIFaddend Table~\ref{tab:markov_summary}), \DIFdelbegin \DIFdel{which overlaps autocorrelation ranges }\DIFdelend \DIFaddbegin \DIFadd{a range that overlaps autocorrelation levels }\DIFaddend reported in prior measurement studies; the two real-stream cases examined here (Section~\ref{sec:real_stream}) place one stream inside and one outside the \DIFdelbegin \DIFdel{proxy-favourable }\DIFdelend \DIFaddbegin \DIFadd{hypothesized favourable }\DIFaddend region, and broader validation across additional domains remains future work. \DIFaddbegin \DIFadd{All three factors are properties of the proxy model and the cited theory; none is a measured quantum result.
+}\DIFaddend 
+
+The $(\tau, r)$ landscape is a hypothesis-generating screening heuristic: researchers can place a candidate stream's estimated $(\tau, r)$ on the map to identify the most comparable synthetic regime and determine whether deeper empirical or algorithm-level study is warranted, with the contour shape robust to multiplicative proxy rescalings.
+
+\subsection{Practical Implications: Stream Classes on the Landscape}
+\label{sec:practical_impl}
+
+Table~\ref{tab:stream_classes} translates typical autocorrelation ranges from the measurement literature into $(\tau, r)$ coordinates and records the proxy model's qualitative prediction. This table itself reports no new measurements; the overlays rely on published statistics \citep{leland1994ethernet,willinger1997selfsimilarity,beran1994statistics,su2024elasticonline,yan2024bidynamic,gama2014driftsurvey,arora2024driftreview}. The new real-stream measurements in this paper are the two NAB cases (Section~\ref{sec:real_stream}): NYC Taxi falls in the favourable lower-left region of the landscape, while Machine Temperature falls in the unfavourable upper-right region where the proxy saturates. Running the full pipeline at scale---broader real-stream coverage paired with an implementable quantum oracle sketching algorithm---remains an explicit follow-on target (Section~\ref{sec:future_work}).
+
+\begin{table}[t]
+\centering
+\caption{Qualitative mapping of real stream classes onto the $(\tau, r)$ landscape (Fig.~\ref{fig:landscape}c). Reported parameter ranges are from the cited measurement literature; \DIFaddbeginFL \DIFaddFL{all placements use the }\emph{\DIFaddFL{analytic}}\DIFaddFL{-$\tau$ convention and the paper's }\DIFaddendFL proxy \DIFdelbeginFL \DIFdelFL{predictions are qualitative}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{formula at $T = 10^{4}$, $n = 10$}\DIFaddendFL . \DIFaddbeginFL \DIFaddFL{The final column records hypotheses generated by the proxy landscape for future algorithm-level testing, not demonstrated performance.}\DIFaddendFL }
+\label{tab:stream_classes}
+\DIFdelbeginFL %DIFDELCMD < \begin{tabular}{@{}llll@{}}
+%DIFDELCMD < \toprule
+%DIFDELCMD < Stream class & Reported range & Landscape region & Proxy prediction \\
+%DIFDELCMD < \midrule
+%DIFDELCMD < Network backbone & $H \approx 0.75$--$0.95$ & upper-right (long-memory) & \emph{Unfavourable} \\
+%DIFDELCMD < Financial returns & $H \approx 0.55$--$0.70$ & low-to-moderate $\tau$, $r \approx 1$ & \emph{Favourable} \\
+%DIFDELCMD < Sensor / IoT & burst + mid-$\rho$ Markov & $0.7$--$0.8$ accuracy contour & \emph{Borderline} \\
+%DIFDELCMD < Concept-drifted & seasonal, moderate drift & $0.7$--$0.8$ contour (analytic $\tau$) & \emph{Modest at best} \\
+%DIFDELCMD < \bottomrule
+%DIFDELCMD < \end{tabular}
+%DIFDELCMD < %%%
+\DIFdelendFL \DIFaddbeginFL \begin{tabularx}{\textwidth}{@{}lp{2.9cm}XX@{}}
+\toprule
+Stream class & Reported range & Landscape region & Proxy hypothesis \\
+\midrule
+Network backbone & $H \approx 0.75$--$0.95$ & upper-right (long-memory) & \emph{Unfavourable} \\
+Financial returns & $H \approx 0.55$--$0.70$ & $\tau \approx 2.5$--$40$ & \emph{Favourable ($H {\lesssim} 0.6$) $\to$ borderline} \\
+Sensor / IoT & burst + mid-$\rho$ Markov & $0.6$--$0.8$ contour band & \emph{Borderline} \\
+Concept-drifted & seasonal, moderate drift & ${\approx}0.6$--$0.65$ contour & \emph{Modest at best} \\
+\bottomrule
+\end{tabularx}
+\DIFaddendFL \end{table}
+
+\subsection{\DIFdelbegin \DIFdel{Limitations}\DIFdelend \DIFaddbegin \DIFadd{Why Analytic and Empirical Correlation Estimates Diverge}\DIFaddend }
+\DIFaddbegin \label{sec:divergence}
+\DIFaddend 
+
+\DIFdelbegin %DIFDELCMD < \begin{enumerate}
+%DIFDELCMD <     \item %%%
+\textbf{\DIFdel{No quantum simulation or implementation.}} %DIFAUXCMD
+\DIFdel{The study does not simulate quantum circuits and does not implement a quantum oracle sketching algorithm; quantum performance is reported only as heuristic proxies derived from }\DIFdelend \DIFaddbegin \DIFadd{Experiment~4 found gaps of ${\approx}8\times$ (Markov) and ${\approx}125\times$ (long-memory) between analytic and empirical $\tau$. These gaps are systematic, and understanding them matters for anyone using the landscape, so we give the technical explanation, its interpretation, and its implications.
+}
+
+\paragraph{\DIFadd{Technical explanation}} \DIFadd{The two quantities estimate }\emph{\DIFadd{different aspects}} \DIFadd{of temporal dependence. Each analytic proxy targets a model-level, worst-case dependence scale of the }\emph{\DIFadd{generator}}\DIFadd{: for Markov switching it tracks the mixing time of the joint $n$-bit product chain ($\Theta(n \log n/(1-\rho))$, simplified to $n/(1-\rho)$), and for long-range dependence it tracks the growth of the integrated autocorrelation of the underlying Gaussian driver ($T^{2H-1}$), which is dominated by the heavy }\emph{\DIFadd{tail}} \DIFadd{of the power-law autocorrelation function. The empirical estimator instead measures the first $1/e$ crossing of the }\emph{\DIFadd{marginal, bitwise}} \DIFadd{autocorrelation of the }\emph{\DIFadd{binarised}} \DIFadd{stream---an instance-level, short-lag quantity. For Markov switching, each individual bit decorrelates as $\rho^{k}$, crossing $1/e$ at $k \approx 1/\ln(1/\rho)$ ($\approx 2.8$ at $\rho = 0.7$), while the joint state of all $n$ bits takes $\Theta(n \log n/(1-\rho))$ steps to mix; both numbers are correct answers to different questions. For long-range dependence the divergence is compounded three ways: the underlying process has no finite decorrelation time at all (its autocorrelation is non-summable), so any finite empirical $\tau$ is a property of the estimator rather than of the process; binarisation shrinks the autocorrelation via the arcsine law $(2/\pi)\arcsin(\gamma)$ }\citep{vanvleck1966spectrum}\DIFadd{; and the $1/e$-crossing responds to the fast initial decay of the power-law autocorrelation while the analytic proxy integrates its slow tail.
+}
+
+\paragraph{\DIFadd{Interpretation}} \DIFadd{The divergence is partly }\emph{\DIFadd{expected behaviour}} \DIFadd{and partly a }\emph{\DIFadd{proxy limitation}}\DIFadd{, and the long-memory regime shows why the two cannot be fully separated: for a non-mixing process there is no single scalar that both estimators could agree on, so a single-number $\tau$ is intrinsically lossy there. It is }\emph{\DIFadd{not}} \DIFadd{evidence of a data-generation defect: the fGn generator reproduces the intended Hurst statistics, and the gap persists under all four alternative $\tau$ estimators in Experiment~9, which shows that the estimator family, not an implementation artefact, is responsible. The practical consequence is stark and worth stating: under empirical $\tau$ }\DIFaddend the \DIFaddbegin \DIFadd{long-memory regime moves to the best tier of the landscape (its finite $\hat{\tau}$ measures only the fast head of a non-summable autocorrelation), while burst moves to the saturated floor (its measured $\tau \cdot r$ is the largest of any regime)---the analytic and empirical conventions disagree at exactly the two extremes (Section~\ref{sec:ablations}).
+}
+
+\paragraph{\DIFadd{Implications}} \DIFadd{First, the empirical $\tau$ is the operationally meaningful input for placing a stream on the landscape: it reflects the short-lag effective information that a bounded-memory learner actually experiences over the measured horizon. Second, the analytic $\tau$ retains value as a conservative stress-test envelope: a stream that remains in the hypothesized favourable region even under the analytic $\tau$ is favourable with margin. Third, the }\emph{\DIFadd{ratio}} \DIFadd{of analytic to empirical $\tau$ is itself a useful diagnostic---large ratios flag long-memory content whose risk a short-lag estimator will underestimate at longer horizons. Multi-scale refinements of $\tau$ (e.g., a family of integrated-autocorrelation estimates at several horizons) are a natural follow-on (Section~\ref{sec:future_work}).
+}
+
+\subsection{\DIFadd{Scope of the Diagnostic: What the Landscape Can and Cannot Predict}}
+\label{sec:scope_diag}
+
+\DIFadd{The experiments delimit the diagnostic sharply, and we state the boundary explicitly. The landscape }\emph{\DIFadd{can}}\DIFadd{: (i) rank correlation regimes and real streams by proxy-estimated effective sample budget, using estimators that apply unchanged to synthetic and real streams (Experiments~4 and~8); (ii) flag streams whose correlation structure erodes the budget so severely that no sample-limited method should be expected to recover a rare class (Machine Temperature at $\Teff = 52$); and (iii) generate falsifiable, regime-level hypotheses about where an implemented oracle-sketching algorithm would be most worth evaluating. The landscape }\emph{\DIFadd{cannot}}\DIFadd{: (i) predict the accuracy of a specific classifier on a specific target---classical performance is target-dependent while the proxy is target-independent (Experiment~9, Fig.~\ref{fig:ablations}d); (ii) anticipate representation-specific effects such as the Count-Min memorisation route on coarse binarisations (Experiment~8); (iii) predict classical-learner accuracy from $\Teff$ even on a fixed target---measured classical accuracy is flat across the Markov sweep while $\Teff$ falls roughly fivefold (Fig.~\ref{fig:markov_sweep}), so the }\DIFaddend effective-sample \DIFdelbegin \DIFdel{model}\DIFdelend \DIFaddbegin \DIFadd{construction is a budget model, not a performance model, even for the classical arm; or (iv) certify quantum performance, because no quantum algorithm is implemented. In short, the landscape characterises correlation structure, not task-specific learning performance, and its outputs are hypotheses for validation rather than performance guarantees.
+}
+
+\paragraph{\DIFadd{Falsifiable hypotheses}} \DIFadd{To make the hypothesis-generation claim concrete, the landscape's headline predictions are stated with refutation criteria, each bound to the estimator convention it uses. }\textbf{\DIFadd{H1}} \DIFadd{(ordering): an implemented or simulated oracle-sketching pipeline, evaluated at matched $T$ and $n$ across the five synthetic regimes at their }\emph{\DIFadd{empirical}} \DIFadd{$(\tau, r)$ coordinates, ranks the regimes in the same order as $\mathrm{acc\_proxy}$ (Spearman $\rho_s \geq 0.8$); refuted if $\rho_s < 0.5$}\DIFaddend . \DIFdelbegin %DIFDELCMD < \item %%%
+\DIFdelend \DIFaddbegin \textbf{\DIFadd{H2}} \DIFadd{(budget floor): on any stream whose measured $\Teff < 100$ under the published estimators, no bounded-memory learner with $M \leq 256$ exceeds balanced accuracy $0.60$ on a 20\%-rare-event target; refuted by a single counterexample (Machine Temperature, $\Teff = 52$, is the first instance and is so far consistent). }\DIFaddend \textbf{\DIFdelbegin \DIFdel{Proxy parameters are not formally equivalent to the exact framework's quantities.}\DIFdelend \DIFaddbegin \DIFadd{H3}\DIFaddend } \DIFdelbegin \DIFdel{Our }\DIFdelend \DIFaddbegin \DIFadd{(crossover): under the operating constants and the empirical-}\DIFaddend $\tau$ \DIFdelbegin \DIFdel{and }\DIFdelend \DIFaddbegin \DIFadd{convention, an implemented pipeline's accuracy advantage over online SGD on the Markov family changes sign within $\rho \in [0.75, 0.95]$; refuted if the sign change falls outside that interval or does not occur. These are proxy-level predictions; testing them is the first priority of Section~\ref{sec:future_work}.
+}
+
+
+%DIF > =====================================================================
+\section{\DIFadd{Threats to Validity}}
+\label{sec:threats}
+%DIF > =====================================================================
+
+\DIFadd{We systematise the study's limitations as threats to validity, stating for each how it is mitigated and what residual risk remains.
+}
+
+\paragraph{\DIFadd{Construct validity}} \DIFadd{The central constructs---$\tau$, }\DIFaddend $r$\DIFdelbegin \DIFdel{are paper-defined operational labels }\DIFdelend \DIFaddbegin \DIFadd{, $\Teff$, and the accuracy proxy---are operational stand-ins for theoretical quantities they do not provably equal }\DIFaddend (Section~\DIFdelbegin \DIFdel{\ref{sec:prelim}); equivalence }\DIFdelend \DIFaddbegin \DIFadd{\ref{sec:proxy_theory}). Four specific risks follow. (i) No quantum algorithm is implemented or simulated, so ``quantum'' curves measure the heuristic model, not quantum computation. (ii) $\tau$ and $r$ are not formally equivalent }\DIFaddend to the exact \DIFdelbegin \DIFdel{correlation parameters of }%DIFDELCMD < \citet{zhao2026exponential} %%%
+\DIFdel{is not proven and is deferred to follow-on work. }%DIFDELCMD < \item %%%
+\textbf{\DIFdel{Classical baselines are practical learners, not lower-bound-hard instances.}} %DIFAUXCMD
+\DIFdel{Online SGD, averaged SGD, and Count-Min are standard memory-bounded streaming }\DIFdelend \DIFaddbegin \DIFadd{framework's refreshing time and repetition number, and Section~\ref{sec:divergence} shows that a single-scalar $\tau$ is intrinsically lossy for non-mixing processes. (iii) The accuracy proxy applies a task-level generalisation rate rather than the oracle-construction cost, and the two scale differently in $n$ (Experiment~6). (iv) Feature binarisation changes the correlation structure it is meant to measure (arcsine shrinkage), so real-stream $(\tau, r)$ estimates are lower bounds on the underlying continuous-process correlation. Mitigations: the provenance of the model-level quantities is tabulated (Table~\ref{tab:provenance}) with family-specific notes in Section~\ref{sec:theory}, and the estimator ablations (Experiment~9) establish ordering stability }\emph{\DIFadd{within}} \DIFadd{the empirical estimator family---while exposing that the analytic and empirical conventions disagree at the burst and long-memory extremes (Section~\ref{sec:divergence}), a disagreement the text reports rather than conceals.
+}
+
+\paragraph{\DIFadd{Internal validity}} \DIFadd{(i) The headline comparisons pair a stochastic learner with a deterministic-given-$\hat{\tau}$ model prediction; they are seed-stability statements, not algorithm-versus-algorithm outcomes, and are labelled as such (Experiment~5). (ii) The same stream realisation is used both to estimate $(\tau, r)$ and to evaluate the classical baselines, which could couple estimation error with baseline noise; the narrow CI bands and the estimator ablations bound this effect. (iii) Classical hyperparameters (learning rate, hash width $M$) are fixed across regimes rather than tuned per regime; conclusions about the proxy are unaffected, but per-regime classical accuracies should not be read as the best classically achievable. (iv) The classical baselines are practical }\DIFaddend learners on a simple linear \DIFdelbegin \DIFdel{classification task; they are }\DIFdelend \DIFaddbegin \DIFadd{task, }\DIFaddend not the worst-case \DIFdelbegin \DIFdel{task-specific instances that motivate the $\Omega(\sqrt{N})$ classical hardness reference, so the empirical comparison is not }\DIFdelend \DIFaddbegin \DIFadd{hard instances of the cited lower bounds, so no comparison here is }\DIFaddend an algorithm-versus-algorithm benchmark \DIFdelbegin \DIFdel{.
+    }%DIFDELCMD < \item %%%
+\textbf{\DIFdel{Real-stream evidence is a sanity check, not a domain-wide validation.}} %DIFAUXCMD
+\DIFdel{Two NAB datasets are examined }\DIFdelend \DIFaddbegin \DIFadd{of the theory. (v) On real streams, the rare-event target threshold is computed from the full series---look-ahead in the target definition, affecting the classical reference numbers only, since the $(\tau, r)$ placement is target-free---and baselines are evaluated on permuted orderings whose intervals measure ordering variability of one fixed series }\DIFaddend (Section~\ref{sec:real_stream})\DIFdelbegin \DIFdel{; broader }\DIFdelend \DIFaddbegin \DIFadd{.
+}
+
+\paragraph{\DIFadd{External validity}} \DIFadd{(i) The five synthetic families are author-chosen idealisations of documented stream phenomena; other correlation structures (regime-switching with heavy-tailed sojourns, adversarial drift) are unrepresented. (ii) Only two real-world datasets are analysed, both from NAB telemetry; the }\DIFaddend real-stream \DIFdelbegin \DIFdel{validation across financial, network-traffic, and additional sensor domains remains future work. }%DIFDELCMD < \item %%%
+\textbf{\DIFdel{Modest dimensions.}} %DIFAUXCMD
+\DIFdel{Computation is tractable only to $n \leq 14$; compelling memory gaps are expected at $n \geq 20$ per the polynomial-in-$N$ classical bounds, for which $\Omega(\sqrt{N})$ is our conservative reference }\DIFdelend \DIFaddbegin \DIFadd{findings are illustrative, and generalisation to network telemetry, cybersecurity event streams, financial series, and large IoT fleets is unverified }\DIFaddend (Section~\DIFdelbegin \DIFdel{\ref{sec:heuristic_model}). The }\DIFdelend \DIFaddbegin \DIFadd{\ref{sec:future_work}). (iii) Dimensions are modest ($n \leq 14$), while the theoretically compelling memory separations concern $n \geq 20$; moreover $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly in $n$, so the analytic }\DIFaddend Markov proxy becomes less favourable \DIFdelbegin \DIFdel{at higher $n$ because $\tau_{\text{Markov}} = n/(1-\rho)$ grows linearly}\DIFdelend \DIFaddbegin \DIFadd{exactly where the memory argument strengthens}\DIFaddend , making family-specific refinements \DIFdelbegin \DIFdel{especially }\DIFdelend \DIFaddbegin \DIFadd{most }\DIFaddend valuable there. \DIFdelbegin %DIFDELCMD < \item %%%
+\textbf{\DIFdel{Task-specific lower bounds.}} %DIFAUXCMD
+\DIFdel{The $\Omega(\sqrt{N})$ floor is representative, not universal; exact hardness results in the originating framework are task-specific.
+}%DIFDELCMD < \end{enumerate}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \DIFadd{(iv) The rare-event target on real streams is a per-stream 80th-percentile threshold, not the original NAB anomaly labels, so results do not transfer to NAB benchmark comparisons.
+}\DIFaddend 
+
+\DIFdelbegin \subsection{\DIFdel{Future Work}}
+%DIFAUXCMD
+\addtocounter{subsection}{-1}%DIFAUXCMD
+\DIFdelend \DIFaddbegin \paragraph{\DIFadd{Statistical-conclusion validity}} \DIFadd{All stochastic results use 10 seeds; marginal intervals are $1.96 \times \mathrm{SE}$ normal approximations, while paired differences use exact signed-rank intervals (Table~\ref{tab:repro}). The five sweep comparisons do not survive Holm correction at the family-wise 0.05 level; this is an empirical outcome of one-to-two discordant seeds, not a design ceiling (the smallest attainable adjusted $p$ at $n = 10$ is $0.0098$), and the crossover claim accordingly rests on effect sizes and interval estimates rather than significance (Table~\ref{tab:markov_summary}). The paired tests' interpretation is further restricted by the deterministic-vs-stochastic pairing above. Absolute landscape boundaries are conditional on the constants $(C, \delta)$ (Table~\ref{tab:cdelta}); only ordinal statements are robust across the grid.
+}
+
+
+%DIF > =====================================================================
+\section{\DIFadd{Future Work}}
+\DIFaddend \label{sec:future_work}
+%DIF > =====================================================================
+
+\DIFdelbegin \DIFdel{Future work should pursue: }\DIFdelend \DIFaddbegin \DIFadd{The framework's outputs are hypotheses, and the priority for future work is to test them. }\DIFaddend (i) \DIFdelbegin \DIFdel{tighter, family-specific correlation characterizations that close the proxy--empirical $\tau$ gap; }\DIFdelend \DIFaddbegin \emph{\DIFadd{Algorithm-level validation}}\DIFadd{: implement or simulate an oracle-sketching pipeline at small $n$ and compare its measured behaviour against the landscape's regime-level predictions---the single step that would convert the hypotheses generated here into evidence. }\DIFaddend (ii) \DIFdelbegin \DIFdel{extending the }\DIFdelend \DIFaddbegin \emph{\DIFadd{Formal bridging}}\DIFadd{: prove equivalence of, or bounds between, the operational $(\tau, r)$ and the exact framework's correlation parameters, including multi-scale refinements of $\tau$ for non-mixing processes (Section~\ref{sec:divergence}). (iii) }\emph{\DIFadd{Broader real-stream corpora}}\DIFadd{: extend the }\DIFaddend two-dataset \DIFdelbegin \DIFdel{real-stream sanity check in Section~\ref{sec:real_stream} to financial, network-traffic, }\DIFdelend \DIFaddbegin \DIFadd{sanity check to network telemetry (flow and latency series), cybersecurity event streams (intrusion and log-anomaly feeds), financial tick and returns series, }\DIFaddend and \DIFdelbegin \DIFdel{additional sensor streams, characterising their }\DIFdelend \DIFaddbegin \DIFadd{large-scale IoT monitoring fleets, characterising each stream's }\DIFaddend $(\tau, r)$ \DIFdelbegin \DIFdel{parameters and mapping them }\DIFdelend \DIFaddbegin \DIFadd{and mapping it }\DIFaddend onto Fig.~\ref{fig:landscape} with imbalance-aware metrics throughout\DIFdelbegin \DIFdel{; (iii) formal verification of the proxy formulas against the exact framework's correlation parameters; (}\DIFdelend \DIFaddbegin \DIFadd{. (}\DIFaddend iv) \DIFdelbegin \DIFdel{extension }\DIFdelend \DIFaddbegin \emph{\DIFadd{Tighter family-specific proxies}} \DIFadd{that close the analytic--empirical $\tau$ gap. (v) }\emph{\DIFadd{Task extensions}} \DIFaddend to multiclass classification and regression\DIFdelbegin \DIFdel{; and (v) }\DIFdelend \DIFaddbegin \DIFadd{, and }\DIFaddend repetition-aware oracle constructions that exploit burst structure variance-reductively rather than treating duplicates as wasted samples.
+
+
+%=====================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+%=====================================================================
+
+This paper \DIFdelbegin \DIFdel{conducted }\DIFdelend \DIFaddbegin \DIFadd{introduced }\DIFaddend a proxy-based \DIFdelbegin \DIFdel{computational study of quantum oracle sketching performance across }\DIFdelend \DIFaddbegin \DIFadd{diagnostic and hypothesis-generation framework for correlation-sensitive streaming analysis, and applied it in a computational study spanning }\DIFaddend five structured synthetic non\nobreakdash-IID regimes, \DIFdelbegin \DIFdel{comparing proxy-based quantum estimates against three classical streaming baselines. }\DIFdelend \DIFaddbegin \DIFadd{two real telemetry streams, and a five-way ablation suite. The }\textbf{\DIFadd{primary contribution}} \DIFadd{is the $(\tau, r)$ sensitivity landscape: an operational map, built from measurable correlation proxies, on which synthetic regimes and real streams are placed with the same estimators. The }\textbf{\DIFadd{secondary contribution}} \DIFadd{is the use of that landscape for hypothesis generation: it identifies where quantum oracle sketching is most likely to remain robust, and therefore where algorithm-level validation effort should be spent first. The paper demonstrates no quantum advantage and implements no quantum algorithm; every quantum-side quantity is a heuristic proxy whose provenance and epistemic status are tabulated in Section~\ref{sec:proxy_theory}.
+}\DIFaddend 
+
+\paragraph{Research question answers}
+\begin{itemize}
+    \item \textbf{RQ1}: Analytic \DIFdelbegin \DIFdel{proxies overestimate }\DIFdelend \DIFaddbegin \DIFadd{and }\DIFaddend empirical $\tau$ \DIFaddbegin \DIFadd{estimates diverge }\DIFaddend by $\approx 8\times$ (Markov) to $\approx 125\times$ (long-memory)\DIFdelbegin \DIFdel{, showing the generic robustness bound }\DIFdelend \DIFaddbegin \DIFadd{; for non-mixing processes the two are not commensurable, and Section~\ref{sec:divergence} explains the divergence as two estimators answering different questions about temporal dependence. The generic analytic proxy }\DIFaddend is qualitatively informative but quantitatively loose.
+    \item \textbf{RQ2}: The $(\tau, r)$ landscape (Fig.~\ref{fig:landscape}) organises \DIFdelbegin \DIFdel{regimes consistently; family-specific refinements recover additional predictive power, as the Markov sweep illustrates. }\DIFdelend \DIFaddbegin \DIFadd{the regimes and both real streams; its ordering is stable }\emph{\DIFadd{within}} \DIFadd{the empirical estimator family and across window sizes and proxy constants (Experiment~9), while the analytic and empirical conventions disagree at the burst and long-memory extremes and absolute boundaries are conditional on $(C, \delta)$ (Table~\ref{tab:cdelta}). $\tau$ and $r$ are effective-sample-budget summaries, not accuracy predictors (Fig.~\ref{fig:ablations}d).
+    }\DIFaddend \item \textbf{RQ3}: \DIFdelbegin \DIFdel{Using empirical $\tau$, the proxy remains above the classical baseline at IID , }\DIFdelend \DIFaddbegin \DIFadd{Under the }\emph{\DIFadd{analytic}} \DIFadd{proxies the hypothesized favourable region covers IID and }\DIFaddend burst, and \DIFdelbegin \DIFdel{low-to-moderate Markov; the proxy-model crossover occurs near $\rho \approx 0.88$; }\DIFdelend the \DIFdelbegin \DIFdel{proxy is absent in the }\DIFdelend \DIFaddbegin \DIFadd{proxy-predicted separation vanishes in the }\DIFaddend long-memory \DIFdelbegin \DIFdel{regime}\DIFdelend \DIFaddbegin \DIFadd{regime; under the }\emph{\DIFadd{empirically measured}} \DIFadd{$(\tau, r)$ those two extremes exchange places (Section~\ref{sec:ablations})---an estimator dependence that is itself a finding. On the Markov family, characterised under both conventions, the paired proxy$\,-\,$classical difference declines from $+0.042$ to $+0.019$ (Hodges--Lehmann) and reverses sign ($-0.046$, exact CI excluding zero), with the mean curves crossing between $\rho \approx 0.81$ and $0.88$ under the operating constants; this closure is the robust finding}\DIFaddend .
+    \item \textbf{RQ4}: Analytic $r$ and empirical $r$ agree within $1.4\times$ for burst and are near-identical for all other regimes under unit-aligned measurement; the directional $\tau$ gaps are monotone in correlation strength and admit family-specific refinement.
+\end{itemize}
+
+\DIFdelbegin \DIFdel{The }\DIFdelend \DIFaddbegin \paragraph{\DIFadd{Practical contribution}} \DIFadd{For stream-processing practitioners, the framework is a cheap pre-screening step: estimate }\DIFaddend $(\tau, r)$ \DIFdelbegin \DIFdel{sensitivity landscape is }\DIFdelend \DIFaddbegin \DIFadd{with }\DIFaddend the paper's \DIFdelbegin \DIFdel{central operational artifact: it provides a hypothesis-generating map of favourable and unfavourable regimes that researchers can use to position a real stream before committing to deeper empirical or algorithm-level study.
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\paragraph{\DIFdel{Real-stream sanity check and ablations}} %DIFAUXCMD
+\addtocounter{paragraph}{-1}%DIFAUXCMD
+\DIFdel{Section~\ref{sec:real_stream} applies the proxy framework end-to-end to two NAB datasets (NYC Taxi and Machine Temperature ) and reports accuracy alongside }\DIFdelend \DIFaddbegin \DIFadd{estimators, place the stream on the landscape, and read off whether correlation alone already erodes the effective sample budget to a level at which rare-event learning is unlikely---as it does for the Machine Temperature stream ($\Teff = 52$)---before investing in any advanced pipeline, quantum or classical. The real-stream check (Experiment~8) shows the workflow runs end-to-end on public telemetry, with }\DIFaddend imbalance-aware \DIFdelbegin \DIFdel{balanced accuracy and $F_1$. The empirical $\tau$ and $r$ estimators apply unchanged to both real streams and place NYC Taxi in the favourable region of the landscape (Count-Min reaches $F_1 = 0.644$ and balanced accuracy $0.777$, materially above majority) and Machine Temperature in the unfavourable region (the saturated proxy is exceeded on accuracy alone, but balanced accuracy near $0.5$ and $F_1 < 0.30$ for every classical baseline indicate the gap is mostly }\DIFdelend \DIFaddbegin \DIFadd{metrics guarding against }\DIFaddend majority-class \DIFdelbegin \DIFdel{memorisation, not rare-class learning).
+Section~\ref{sec:ablations} verifies that the qualitative landscape ordering is robust to alternative $\tau$ estimators, forward-window size $W$, and target-function choice, while absolute proxy values depend on the constants $C$, $\delta$, and the stream length $T$}\DIFdelend \DIFaddbegin \DIFadd{artefacts.
+}
+
+\paragraph{\DIFadd{Limitations and required validation}} \DIFadd{The framework's outputs are hypotheses conditioned on a heuristic model; Section~\ref{sec:threats} systematises the construct, internal, external, and statistical threats. The decisive missing step is algorithm-level validation: an implemented or simulated oracle-sketching pipeline evaluated at the landscape's predicted-favourable and predicted-unfavourable coordinates (Section~\ref{sec:future_work}). Until that step is taken, the landscape should be used as a prioritisation tool, not as evidence of quantum benefit}\DIFaddend .
+
+
+%=====================================================================
+% References
+%=====================================================================
+\vspace{6pt}
+
+\authorcontributions{Conceptualization, A.H.; methodology, A.H. and M.M.; software, M.M.; validation, M.F.; formal analysis, M.M.; investigation, M.M.; visualization, M.M.; writing---original draft preparation, M.M.; writing---review and editing, A.H. and M.F.; supervision, A.H. All authors have read and agreed to the published version of the manuscript.}
+
+\funding{This research received no external funding.}
+
+\institutionalreview{Not applicable.}
+
+\informedconsent{Not applicable.}
+
+\DIFdelbegin %DIFDELCMD < \dataavailability{The two real-world datasets analysed in this work---NYC Taxi pickup counts and machine-temperature sensor readings---are publicly available under the MIT licence in the Numenta Anomaly Benchmark repository \citep{ahmad2017numenta}. All other data are synthetic and generated by seeded random-number generators with the parameters specified in Section~\ref{sec:experiments} and Table~\ref{tab:repro}; every stochastic experiment uses 10 seeds (indices $0$--$9$). A reference Python implementation of the stream generators, classical baselines, proxy formulas, real-stream loader, and ablation harness is openly available under the MIT licence and archived at Zenodo (DOI~\href{https://doi.org/10.5281/zenodo.19831893}{\texttt{10.5281/zenodo.19831893}}), with an active mirror on GitHub (\url{https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin}). The repository regenerates every figure and table reported in this paper.}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \dataavailability{The two real-world datasets analysed in this work---NYC Taxi pickup counts and machine-temperature sensor readings---are publicly available under the MIT licence in the Numenta Anomaly Benchmark repository \citep{ahmad2017numenta}. All other data are synthetic and generated by seeded random-number generators with the parameters specified in Section~\ref{sec:experiments} and Table~\ref{tab:repro}; every stochastic experiment uses 10 seeds (indices 42--51 for the synthetic suite, 0--9 for the ablation and real-stream harnesses). A reference Python implementation of the stream generators, classical baselines, proxy formulas, real-stream loader, and ablation harness is openly available under the MIT licence and archived at Zenodo (DOI~\href{https://doi.org/10.5281/zenodo.19831893}{\texttt{10.5281/zenodo.19831893}}), with an active mirror on GitHub (\url{https://github.com/mmahmoudai/Beyond-IID-Data-A-Proxy-Based-Computational-Study-of-Quantum-Oracle-Sketchin}). The repository regenerates all figures and the measured tables; the effect-size, constant-sensitivity, and encoder-sensitivity tables are deterministic re-analyses of those outputs whose scripts are included in the revision package.}
+\DIFaddend 
+
+\acknowledgments{During the preparation of this manuscript the authors used Claude (Anthropic) to assist with drafting, language editing, and formatting; the authors reviewed, verified, and edited all content and take full responsibility for the content of this publication.}
+
+\conflictsofinterest{The authors declare no conflicts of interest.}
+
+\begin{adjustwidth}{-\extralength}{0cm}
+\reftitle{References}
+\begin{thebibliography}{999}
+
+\bibitem[Aaronson(2015)]{aaronson2015readthefineprint}
+Aaronson, S., 2015.
+\newblock Read the fine print.
+\newblock \emph{Nature Physics} 11~(4), 291--293.
+\newblock \url{https://doi.org/10.1038/nphys3272}.
+
+\bibitem[Ahmad et~al.(2017)]{ahmad2017numenta}
+Ahmad, S., Lavin, A., Purdy, S., Agha, Z., 2017.
+\newblock Unsupervised real-time anomaly detection for streaming data.
+\newblock \emph{Neurocomputing} 262, 134--147.
+\newblock \url{https://doi.org/10.1016/j.neucom.2017.04.070}.
+
+\bibitem[Alon et~al.(1999)]{alon1999space}
+Alon, N., Matias, Y., Szegedy, M., 1999.
+\newblock The space complexity of approximating the frequency moments.
+\newblock \emph{Journal of Computer and System Sciences} 58~(1), 137--147.
+\newblock \url{https://doi.org/10.1006/jcss.1997.1545}.
+
+\bibitem[Arora et~al.(2024)]{arora2024driftreview}
+Arora, S., Rani, R., Saxena, N., 2024.
+\newblock A systematic review on detection and adaptation of concept drift in streaming data using machine learning techniques.
+\newblock \emph{WIREs Data Mining and Knowledge Discovery} 14~(4), e1536.
+\newblock \url{https://doi.org/10.1002/widm.1536}.
+
+\bibitem[Arunachalam and de~Wolf(2018)]{arunachalam2018optimal}
+Arunachalam, S., de~Wolf, R., 2018.
+\newblock Optimal quantum sample complexity of learning algorithms.
+\newblock \emph{Journal of Machine Learning Research} 19~(71), 1--36.
+\newblock \url{https://jmlr.org/papers/v19/18-195.html}.
+
+\bibitem[Ben~Mazziane et~al.(2022)]{benmazziane2022countmin}
+Ben~Mazziane, Y., Alouf, S., Neglia, G., 2022.
+\newblock Analyzing count-min sketch with conservative updates.
+\newblock \emph{Computer Networks} 217, 109315.
+\newblock \url{https://doi.org/10.1016/j.comnet.2022.109315}.
+
+\bibitem[Beran(1994)]{beran1994statistics}
+Beran, J., 1994.
+\newblock \emph{Statistics for Long-Memory Processes}.
+\newblock Chapman \& Hall/CRC, Boca Raton. ISBN 978-0412049019.
+\newblock \url{https://doi.org/10.1201/9780203738481}.
+
+\bibitem[Ben-David et~al.(2010)]{ben2010agnostic}
+Ben-David, S., Blitzer, J., Crammer, K., Kulesza, A., Pereira, F., Vaughan, J.W., 2010.
+\newblock A theory of learning from different domains.
+\newblock \emph{Machine Learning} 79, 151--175.
+\newblock \url{https://doi.org/10.1007/s10994-009-5152-4}.
+
+\bibitem[Besbes et~al.(2015)]{besbes2015non}
+Besbes, O., Gur, Y., Zeevi, A., 2015.
+\newblock Non-stationary stochastic optimization.
+\newblock \emph{Operations Research} 63~(5), 1227--1244.
+\newblock \url{https://doi.org/10.1287/opre.2015.1408}.
+
+\bibitem[Biamonte et~al.(2017)]{biamonte2017qml}
+Biamonte, J., Wittek, P., Pancotti, N., Rebentrost, P., Wiebe, N., Lloyd, S., 2017.
+\newblock Quantum machine learning.
+\newblock \emph{Nature} 549~(7671), 195--202.
+\newblock \url{https://doi.org/10.1038/nature23474}.
+
+\bibitem[Bifet and Gavald\`a(2007)]{bifet2007adwin}
+Bifet, A., Gavald\`a, R., 2007.
+\newblock Learning from time-changing data with adaptive windowing.
+\newblock In \emph{Proceedings of the 2007 SIAM International Conference on Data Mining}, pp.~443--448.
+\newblock \url{https://doi.org/10.1137/1.9781611972771.42}.
+
+\bibitem[Bifet et~al.(2010)]{bifet2010moa}
+Bifet, A., Holmes, G., Kirkby, R., Pfahringer, B., 2010.
+\newblock MOA: massive online analysis.
+\newblock \emph{Journal of Machine Learning Research} 11, 1601--1604.
+\newblock \url{https://jmlr.org/papers/v11/bifet10a.html}.
+
+\bibitem[Cerezo et~al.(2021)]{cerezo2021variational}
+Cerezo, M., Arrasmith, A., Babbush, R., Benjamin, S.C., Endo, S., Fujii, K., McClean, J.R., Mitarai, K., Yuan, X., Cincio, L., Coles, P.J., 2021.
+\newblock Variational quantum algorithms.
+\newblock \emph{Nature Reviews Physics} 3~(9), 625--644.
+\newblock \url{https://doi.org/10.1038/s42254-021-00348-9}.
+
+\bibitem[Chakraborty et~al.(2019)]{chakraborty2019blockencodings}
+Chakraborty, S., Gily\'en, A., Jeffery, S., 2019.
+\newblock The power of block-encoded matrix powers: improved regression techniques via faster Hamiltonian simulation.
+\newblock In \emph{Proceedings of the 46th International Colloquium on Automata, Languages, and Programming (ICALP)}, Article 33.
+\newblock \url{https://doi.org/10.4230/LIPIcs.ICALP.2019.33}.
+
+\bibitem[Chen et~al.(2024)]{chen2024qmlsurvey}
+Chen, L., Li, T., Chen, Y., Chen, X., Wo\'zniak, M., Xiong, N., Liang, W., 2024.
+\newblock Design and analysis of quantum machine learning: a survey.
+\newblock \emph{Connection Science} 36~(1), 2312121.
+\newblock \url{https://doi.org/10.1080/09540091.2024.2312121}.
+
+\bibitem[Cormode and Muthukrishnan(2005)]{cormode2005improved}
+Cormode, G., Muthukrishnan, S., 2005.
+\newblock An improved data stream summary: the count-min sketch and its applications.
+\newblock \emph{Journal of Algorithms} 55~(1), 58--75.
+\newblock \url{https://doi.org/10.1016/j.jalgor.2003.12.001}.
+
+\bibitem[Cormode et~al.(2011)]{cormode2011synopses}
+Cormode, G., Garofalakis, M., Haas, P.J., Jermaine, C., 2011.
+\newblock Synopses for massive data: samples, histograms, wavelets, sketches.
+\newblock \emph{Foundations and Trends in Databases} 4~(1--3), 1--294.
+\newblock \url{https://doi.org/10.1561/1900000004}.
+
+\bibitem[Ditzler et~al.(2015)]{ditzler2015nonstationary}
+Ditzler, G., Roveri, M., Alippi, C., Polikar, R., 2015.
+\newblock Learning in nonstationary environments: a survey.
+\newblock \emph{IEEE Computational Intelligence Magazine} 10~(4), 12--25.
+\newblock \url{https://doi.org/10.1109/MCI.2015.2471196}.
+
+\bibitem[Gama(2010)]{gama2010knowledge}
+Gama, J., 2010.
+\newblock \emph{Knowledge Discovery from Data Streams}.
+\newblock Chapman \& Hall/CRC, Boca Raton.
+\newblock \url{https://doi.org/10.1201/EBK1439826119}.
+
+\bibitem[Gama et~al.(2014)]{gama2014driftsurvey}
+Gama, J., \v{Z}liobait\.e, I., Bifet, A., Pechenizkiy, M., Bouchachia, A., 2014.
+\newblock A survey on concept drift adaptation.
+\newblock \emph{ACM Computing Surveys} 46~(4), Article 44.
+\newblock \url{https://doi.org/10.1145/2523813}.
+
+\DIFaddbegin \bibitem[Geyer(1992)]{geyer1992practical}
+\DIFadd{Geyer, C.J., 1992.
+}\newblock \DIFadd{Practical Markov chain Monte Carlo.
+}\newblock \emph{\DIFadd{Statistical Science}} \DIFadd{7~(4), 473--483.
+}\newblock \url{https://doi.org/10.1214/ss/1177011137}\DIFadd{.
+}
+
+\DIFaddend \bibitem[Ghashami et~al.(2016)]{ghashami2016frequent}
+Ghashami, M., Liberty, E., Phillips, J.M., Woodruff, D.P., 2016.
+\newblock Frequent directions: simple and deterministic matrix sketching.
+\newblock \emph{SIAM Journal on Computing} 45~(5), 1762--1792.
+\newblock \url{https://doi.org/10.1137/15M1009718}.
+
+\bibitem[Gily\'en et~al.(2019)]{gilyen2019qsvt}
+Gily\'en, A., Su, Y., Low, G.H., Wiebe, N., 2019.
+\newblock Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics.
+\newblock In \emph{Proceedings of the 51st Annual ACM SIGACT Symposium on Theory of Computing}, pp.~193--204.
+\newblock \url{https://doi.org/10.1145/3313276.3316366}.
+
+\bibitem[Giovannetti et~al.(2008)]{giovannetti2008quantum}
+Giovannetti, V., Lloyd, S., Maccone, L., 2008.
+\newblock Quantum random access memory.
+\newblock \emph{Physical Review Letters} 100~(16), 160501.
+\newblock \url{https://doi.org/10.1103/PhysRevLett.100.160501}.
+
+\bibitem[Gomes et~al.(2017)]{gomes2017adaptiverf}
+Gomes, H.M., Bifet, A., Read, J., Barddal, J.P., Enembreck, F., Pfahringer, B., Holmes, G., Abdessalem, T., 2017.
+\newblock Adaptive random forests for evolving data stream classification.
+\newblock \emph{Machine Learning} 106~(9--10), 1469--1495.
+\newblock \url{https://doi.org/10.1007/s10994-017-5642-8}.
+
+\bibitem[Harrow et~al.(2009)]{harrow2009hhl}
+Harrow, A.W., Hassidim, A., Lloyd, S., 2009.
+\newblock Quantum algorithm for linear systems of equations.
+\newblock \emph{Physical Review Letters} 103~(15), 150502.
+\newblock \url{https://doi.org/10.1103/PhysRevLett.103.150502}.
+
+\bibitem[Havl\'i\v{c}ek et~al.(2019)]{havlicek2019qkernels}
+Havl\'i\v{c}ek, V., C\'orcoles, A.D., Temme, K., Harrow, A.W., Kandala, A., Chow, J.M., Gambetta, J.M., 2019.
+\newblock Supervised learning with quantum-enhanced feature spaces.
+\newblock \emph{Nature} 567~(7747), 209--212.
+\newblock \url{https://doi.org/10.1038/s41586-019-0980-2}.
+
+\bibitem[Hoi et~al.(2021)]{hoi2021online}
+Hoi, S.C.H., Sahoo, D., Lu, J., Zhao, P., 2021.
+\newblock Online learning: a comprehensive survey.
+\newblock \emph{Neurocomputing} 459, 249--289.
+\newblock \url{https://doi.org/10.1016/j.neucom.2021.04.112}.
+
+\bibitem[Huang et~al.(2020)]{huang2020shadows}
+Huang, H.-Y., Kueng, R., Preskill, J., 2020.
+\newblock Predicting many properties of a quantum system from very few measurements.
+\newblock \emph{Nature Physics} 16~(10), 1050--1057.
+\newblock \url{https://doi.org/10.1038/s41567-020-0932-7}.
+
+\bibitem[Huang et~al.(2021)]{huang2021powerofdata}
+Huang, H.-Y., Broughton, M., Mohseni, M., Babbush, R., Boixo, S., Neven, H., McClean, J.R., 2021.
+\newblock Power of data in quantum machine learning.
+\newblock \emph{Nature Communications} 12, 2631.
+\newblock \url{https://doi.org/10.1038/s41467-021-22539-9}.
+
+\bibitem[Huang et~al.(2022)]{huang2022experiments}
+Huang, H.-Y., Broughton, M., Cotler, J., Chen, S., Li, J., Mohseni, M., Neven, H., Babbush, R., Kueng, R., Preskill, J., McClean, J.R., 2022.
+\newblock Quantum advantage in learning from experiments.
+\newblock \emph{Science} 376~(6598), 1182--1186.
+\newblock \url{https://doi.org/10.1126/science.abn7293}.
+
+\bibitem[Kallaugher(2021)]{kallaugher2021streaming}
+Kallaugher, J., 2021.
+\newblock A quantum advantage for a natural streaming problem.
+\newblock In \emph{Proceedings of the 62nd IEEE Annual Symposium on Foundations of Computer Science (FOCS)}, pp.~897--908.
+\newblock \url{https://doi.org/10.1109/FOCS52979.2021.00091}.
+
+\bibitem[Kallaugher et~al.(2025)]{kallaugher2025designquantum}
+Kallaugher, J., Parekh, O., Voronova, N., 2025.
+\newblock How to design a quantum streaming algorithm without knowing anything about quantum computing.
+\newblock In \emph{Proceedings of the 2025 Symposium on Simplicity in Algorithms (SOSA)}, pp.~9--45.
+\newblock \url{https://arxiv.org/abs/2410.18922}.
+
+\bibitem[Leland et~al.(1994)]{leland1994ethernet}
+Leland, W.E., Taqqu, M.S., Willinger, W., Wilson, D.V., 1994.
+\newblock On the self-similar nature of Ethernet traffic (extended version).
+\newblock \emph{IEEE/ACM Transactions on Networking} 2~(1), 1--15.
+\newblock \url{https://doi.org/10.1109/90.282603}.
+
+\bibitem[Levin and Peres(2017)]{levin2017mixing}
+Levin, D.A., Peres, Y., 2017.
+\newblock \emph{Markov Chains and Mixing Times}, 2nd ed.
+\newblock American Mathematical Society, Providence, RI. ISBN 978-1470429621.
+\newblock \url{https://doi.org/10.1090/mbk/107}.
+
+\bibitem[Lloyd et~al.(2014)]{lloyd2014quantum}
+Lloyd, S., Mohseni, M., Rebentrost, P., 2014.
+\newblock Quantum principal component analysis.
+\newblock \emph{Nature Physics} 10~(9), 631--633.
+\newblock \url{https://doi.org/10.1038/nphys3029}.
+
+\bibitem[Mandelbrot and Van~Ness(1968)]{mandelbrot1968fbm}
+Mandelbrot, B.B., Van~Ness, J.W., 1968.
+\newblock Fractional Brownian motions, fractional noises and applications.
+\newblock \emph{SIAM Review} 10~(4), 422--437.
+\newblock \url{https://doi.org/10.1137/1010093}.
+
+\bibitem[Muthukrishnan(2005)]{muthukrishnan2005data}
+Muthukrishnan, S., 2005.
+\newblock Data streams: algorithms and applications.
+\newblock \emph{Foundations and Trends in Theoretical Computer Science} 1~(2), 117--236.
+\newblock \url{https://doi.org/10.1561/0400000002}.
+
+\bibitem[Park and Willinger(2000)]{park2000selfsimilar}
+Park, K., Willinger, W. (Eds.), 2000.
+\newblock \emph{Self-Similar Network Traffic and Performance Evaluation}.
+\newblock Wiley-Interscience, New York.
+\newblock \url{https://doi.org/10.1002/047120644X}.
+
+\bibitem[Polyak and Juditsky(1992)]{polyak1992averaging}
+Polyak, B.T., Juditsky, A.B., 1992.
+\newblock Acceleration of stochastic approximation by averaging.
+\newblock \emph{SIAM Journal on Control and Optimization} 30~(4), 838--855.
+\newblock \url{https://doi.org/10.1137/0330046}.
+
+\bibitem[Preskill(2018)]{preskill2018nisq}
+Preskill, J., 2018.
+\newblock Quantum computing in the NISQ era and beyond.
+\newblock \emph{Quantum} 2, 79.
+\newblock \url{https://doi.org/10.22331/q-2018-08-06-79}.
+
+\bibitem[Rebentrost et~al.(2014)]{rebentrost2014quantum}
+Rebentrost, P., Mohseni, M., Lloyd, S., 2014.
+\newblock Quantum support vector machine for big data classification.
+\newblock \emph{Physical Review Letters} 113~(13), 130503.
+\newblock \url{https://doi.org/10.1103/PhysRevLett.113.130503}.
+
+\bibitem[Schuld and Petruccione(2018)]{schuld2018supervised}
+Schuld, M., Petruccione, F., 2018.
+\newblock \emph{Supervised Learning with Quantum Computers}.
+\newblock Quantum Science and Technology. Springer, Cham.
+\newblock \url{https://doi.org/10.1007/978-3-319-96424-9}.
+
+\bibitem[Schuld et~al.(2021)]{schuld2021encoding}
+Schuld, M., Sweke, R., Meyer, J.J., 2021.
+\newblock Effect of data encoding on the expressive power of variational quantum-machine-learning models.
+\newblock \emph{Physical Review A} 103~(3), 032430.
+\newblock \url{https://doi.org/10.1103/PhysRevA.103.032430}.
+
+\bibitem[Shalev-Shwartz(2012)]{shalev2012online}
+Shalev-Shwartz, S., 2012.
+\newblock Online learning and online convex optimization.
+\newblock \emph{Foundations and Trends in Machine Learning} 4~(2), 107--194.
+\newblock \url{https://doi.org/10.1561/2200000018}.
+
+\bibitem[Su et~al.(2024)]{su2024elasticonline}
+Su, R., Guo, H., Wang, W., 2024.
+\newblock Elastic online deep learning for dynamic streaming data.
+\newblock \emph{Information Sciences} 676, 120783.
+\newblock \url{https://doi.org/10.1016/j.ins.2024.120783}.
+
+\bibitem[Tang(2019)]{tang2019quantum}
+Tang, E., 2019.
+\newblock A quantum-inspired classical algorithm for recommendation systems.
+\newblock In \emph{Proceedings of the 51st Annual ACM SIGACT Symposium on Theory of Computing}, pp.~217--228.
+\newblock \url{https://doi.org/10.1145/3313276.3316310}\DIFaddbegin \DIFadd{.
+}
+
+\bibitem[Van~Vleck and Middleton(1966)]{vanvleck1966spectrum}
+\DIFadd{Van~Vleck, J.H., Middleton, D., 1966.
+}\newblock \DIFadd{The spectrum of clipped noise.
+}\newblock \emph{\DIFadd{Proceedings of the IEEE}} \DIFadd{54~(1), 2--19.
+}\newblock \url{https://doi.org/10.1109/PROC.1966.4567}\DIFaddend .
+
+\bibitem[Weinberger et~al.(2009)]{weinberger2009featurehashing}
+Weinberger, K., Dasgupta, A., Langford, J., Smola, A., Attenberg, J., 2009.
+\newblock Feature hashing for large scale multitask learning.
+\newblock In \emph{Proceedings of the 26th International Conference on Machine Learning (ICML)}, pp.~1113--1120.
+\newblock \url{https://doi.org/10.1145/1553374.1553516}.
+
+\bibitem[Willinger et~al.(1997)]{willinger1997selfsimilarity}
+Willinger, W., Taqqu, M.S., Sherman, R., Wilson, D.V., 1997.
+\newblock Self-similarity through high-variability: statistical analysis of Ethernet LAN traffic at the source level.
+\newblock \emph{IEEE/ACM Transactions on Networking} 5~(1), 71--86.
+\newblock \url{https://doi.org/10.1109/90.554723}.
+
+\bibitem[Woodruff(2014)]{woodruff2014sketching}
+Woodruff, D.P., 2014.
+\newblock Sketching as a tool for numerical linear algebra.
+\newblock \emph{Foundations and Trends in Theoretical Computer Science} 10~(1--2), 1--157.
+\newblock \url{https://doi.org/10.1561/0400000060}.
+
+\bibitem[Wu et~al.(2024)]{wu2024evolvingprototypes}
+Wu, Z., Wang, H., Guo, J., Yang, Q., Shao, J., 2024.
+\newblock Learning evolving prototypes for imbalanced data stream classification with limited labels.
+\newblock \emph{Information Sciences} 679, 120979.
+\newblock \url{https://doi.org/10.1016/j.ins.2024.120979}.
+
+\bibitem[Yan et~al.(2024)]{yan2024bidynamic}
+Yan, H., Liu, J., Xiao, J., Niu, S., Dong, S., You, D., Shen, L., 2024.
+\newblock Online learning for data streams with bi-dynamic distributions.
+\newblock \emph{Information Sciences} 676, 120796.
+\newblock \url{https://doi.org/10.1016/j.ins.2024.120796}.
+
+\bibitem[Zhao et~al.(2026)]{zhao2026exponential}
+Zhao, H., Zlokapa, A., Neven, H., Babbush, R., Preskill, J., McClean, J.R., Huang, H.-Y., 2026.
+\newblock Exponential quantum advantage in processing massive classical data.
+\newblock arXiv:2604.07639. Preprint.
+\newblock \url{https://arxiv.org/abs/2604.07639}.
+
+\end{thebibliography}
+\end{adjustwidth}
+
+\end{document}

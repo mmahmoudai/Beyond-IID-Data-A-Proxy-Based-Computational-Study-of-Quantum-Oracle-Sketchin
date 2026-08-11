@@ -402,7 +402,7 @@ def experiment_4():
            color=[COLORS[n] for n in regime_names], alpha=.35,
            edgecolor='black', lw=1.5, label='Analytic proxy')
     ax.set_yscale('log'); ax.set_ylabel('Refreshing time $\\tau$')
-    ax.set_title('(a) Refreshing time: empirical vs.\\ analytic proxy')
+    ax.set_title('(a) Refreshing time: empirical vs. analytic proxy')
     ax.set_xticks(x); ax.set_xticklabels(regime_names, rotation=30, ha='right')
     ax.legend()
 
@@ -415,7 +415,7 @@ def experiment_4():
            color=[COLORS[n] for n in regime_names], alpha=.35,
            edgecolor='black', lw=1.5, label='Analytic proxy')
     ax.set_ylabel('Repetition number $r$  (expected exact duplicates/sample)')
-    ax.set_title('(b) Repetition number: empirical vs.\\ analytic proxy')
+    ax.set_title('(b) Repetition number: empirical vs. analytic proxy')
     ax.set_xticks(x); ax.set_xticklabels(regime_names, rotation=30, ha='right')
     ax.legend()
 
@@ -517,10 +517,10 @@ def experiment_5():
     ax.fill_between(rhos, qemp_m - qemp_h, qemp_m + qemp_h, color='#9C27B0', alpha=0.10)
     ax.fill_between(rhos, qemp_m, c_m,
                     where=(qemp_m > c_m),
-                    alpha=.12, color='#9C27B0', label='Proxy-model advantage (empirical $\\tau$)')
+                    alpha=.12, color='#9C27B0', label='Proxy-estimated separation (empirical $\\tau$)')
     ax.set_xlabel('Markov correlation strength $\\rho$')
     ax.set_ylabel('Classification accuracy (mean, 95% CI band)')
-    ax.set_title('(a) Accuracy vs.\\ correlation strength')
+    ax.set_title('(a) Accuracy vs. correlation strength')
     ax.legend(framealpha=0.9, fontsize=9)
     ax.set_ylim(0.45, 1.0)
 
@@ -534,7 +534,7 @@ def experiment_5():
                     label='Proxy--practice gap')
     ax.set_xlabel('Markov correlation strength $\\rho$')
     ax.set_ylabel('Refreshing time $\\tau$')
-    ax.set_title('(b) Refreshing time: empirical vs.\\ analytic proxy')
+    ax.set_title('(b) Refreshing time: empirical vs. analytic proxy')
     ax.legend(framealpha=0.9); ax.set_yscale('log')
 
     plt.tight_layout()
@@ -604,7 +604,7 @@ def experiment_6():
 
     ax.set_xlabel('Input dimension $n$')
     ax.set_ylabel('Classification accuracy (mean, 95% CI)')
-    ax.set_title('(b) Accuracy vs.\\ dimension')
+    ax.set_title('(b) Accuracy vs. dimension')
     ax.legend(framealpha=0.9, fontsize=9)
     ax.set_ylim(0.45, 1.0)
 

@@ -86,3 +86,4 @@ paper/*.zip
 *-eps-converted-to.pdf
 
 paper/**/*.zip
+.playwright-mcp/

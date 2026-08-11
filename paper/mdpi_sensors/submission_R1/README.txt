@@ -13,7 +13,9 @@ tracked_changes.pdf      Highlighted version (built with latexdiff against
                          (stated in the response letter).
 tracked_changes.tex      Its LaTeX source.
 response_to_reviewers.pdf  Point-by-point response (Reviewer 1: 15 points;
-                           Reviewer 2: 10 points; verbatim quotes). 9 pp.
+                           Reviewer 2: 10 points; verbatim quotes;
+                           manuscript ID sensors-4470240). 9 pp.
+response_to_reviewers.docx Same letter as an editable Word document.
 response_to_reviewers.tex  Its standalone LaTeX source (compiles alone
                            with xelatex; Times New Roman).
 source_package.zip       Complete self-contained source: main.tex,

@@ -95,4 +95,41 @@ Consistency check (post-edit): 54 in-text citation keys ↔ 54 bibliography entr
 | 53 | yan2024bidynamic | Yan et al. 2024, *Inf. Sci.* 676:120796 | journal | no | — | none |
 | 54 | zhao2026exponential | Zhao et al. 2026, arXiv:2604.07639 | **preprint** | **no** (verified: arXiv-only as of 2026-08-11) | **RETAINED + FLAGGED** — subject of the study; entry labelled "Preprint"; same-claim peer-reviewed anchors co-cited (#31, #32, #33) |
 
-Notes: entries 5 and 12 (JMLR) carry the journal's canonical URLs because JMLR does not assign DOIs; they are peer-reviewed journal articles, not preprints. All other entries carry publisher DOIs (verified in the earlier full-bibliography DOI audit of this project).
+Notes: entries 5 and 12 (JMLR) carry the journal's canonical URLs because JMLR does not assign DOIs; they are peer-reviewed journal articles, not preprints. All other entries carry publisher DOIs.
+
+---
+
+## Metadata verification addendum (2026-08-11, five-agent workflow)
+
+A second, adversarial pass verified every entry at the metadata level: a mechanical sweep resolved **all 51 DOIs** via doi.org content negotiation (CSL JSON; 0 unresolved) and machine-compared resolved title / first author / venue / year against the bibliography, while four independent web agents re-checked the judgment cases against primary sources.
+
+**Result: 42 exact matches, 7 benign differences (documented below), 1 false positive, and 1 genuine defect — now fixed.**
+
+### The defect (found and fixed)
+
+`su2024elasticonline` cited DOI `10.1016/j.ins.2024.120783`, which resolves to an **unrelated** *Information Sciences* article ("Fine-grained complexity-driven latency predictor in hardware-aware neural architecture search using composite loss", first author Lin). Crossref locates the cited paper — "Elastic online deep learning for dynamic streaming data", **Su, Rui; Guo, Husheng; Wang, Wenjian**, *Information Sciences* **676**, issued 2024-08 — at DOI **10.1016/j.ins.2024.120799** (content-negotiation re-verified: title, all three authors, container, and volume match the entry exactly; only the article-number digits had been transposed). Fixed (article number and URL, `120783 → 120799`) in **all five venue variants** (the shared bibliography carried the same error); the frozen `main_as_reviewed.tex` snapshot is untouched so the tracked-changes document shows the correction to the reviewers.
+
+### Confirmations from the independent agents
+
+- **zhao2026exponential — PREPRINT_ONLY, quadruple-confirmed**: arXiv abs page has no journal-reference field (single version v1, only the arXiv DataCite DOI); six exact-title+publisher searches return zero publisher-domain hits; Google Research's official listing states the venue verbatim as "arXiv:2604.07639 (preprint)"; a Crossref API bibliographic query on the exact title returns **no registered publisher DOI**. Retained and flagged stands on registry evidence.
+- **kallaugher2025designquantum — CONFIRMED, including author order**: DOI 10.1137/1.9781611978315.2 resolves to the SIAM article page titled "2025 Symposium on Simplicity in Algorithms (SOSA) | How to Design a Quantum Streaming Algorithm…", pages 9–45. The printed byline is **Kallaugher, Parekh, Voronova** (publisher article page contributor markup, the proceedings table of contents, and the authors' own arXiv listing all agree); the conflicting "Parekh first" ordering exists only in Crossref's publisher-deposited metadata and dblp's mirror of that deposit — a deposit artifact, not the publication byline. Our entry is correct as-is.
+- **JMLR pair — BOTH CONFIRMED verbatim** against JMLR's official BibTeX files (jmlr.org): Arunachalam–de Wolf 2018, 19(71):1–36; Bifet et al. 2010, 11:1601–1604 (JMLR's retroactive per-paper number 52 omitted, as is standard for the classic pagination form).
+- **Publication-status sample — ALL SIX CONFIRMED by registry type fields**: SDM 2007 and ICML 2009 and FOCS 2021 = Crossref `proceedings-article`; ICALP 2019 = DataCite `ConferencePaper` (LIPIcs registers via DataCite — its Crossref 404 is expected, not a red flag); Park–Willinger 2000 = Crossref `edited-book`; Gama 2010 = Crossref `book`.
+
+### The seven benign differences (no changes warranted)
+
+| Key | Difference | Why no change |
+|---|---|---|
+| beran1994statistics | DOI issued 2017, publisher "Routledge" | The DOI is the Routledge digital reissue of the 1994 Chapman & Hall monograph; citing the original year with the live DOI is standard practice |
+| ben2010agnostic | DOI issued 2009 | Online-first date; the print citation (*Mach. Learn.* 79, 2010) is correct |
+| kallaugher2021streaming | DOI issued 2022 | IEEE dates the FOCS proceedings volume 2022; the conference year 2021 is the standard citation form |
+| chakraborty2019blockencodings | container "LIPIcs, Volume 132" | Same venue, registry naming convention vs proceedings name |
+| kallaugher2025designquantum | container field = publisher (SIAM) | Same venue; CSL field-population difference |
+| schuld2018supervised | publisher string "Springer International Publishing" | Same publisher family as "Springer, Cham" |
+| weinberger2009featurehashing | container includes "Annual" | Phrasing-only |
+
+False positive: `park2000selfsimilar` failed the mechanical first-author check only because an edited-book CSL record has editors, no `author` field; title, venue, and year match exactly.
+
+### Post-fix state
+
+51/51 DOIs resolve to the cited works; 3 non-DOI entries verified at source (2 × JMLR, 1 × arXiv flagged preprint); citation–bibliography bijection re-checked (54 ↔ 54); all five variants recompiled with 0 errors.

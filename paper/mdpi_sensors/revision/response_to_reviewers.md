@@ -1,9 +1,8 @@
 # Response to Reviewers
 
 **Manuscript:** *Proxy-Based Diagnostics of Quantum Oracle Sketching Robustness for Non-IID Sensor and Telemetry Streams*
-(submitted 16 July 2026 as *Quantum Oracle Sketching for Non-IID Sensor and Telemetry Streams: A Proxy-Based Computational Study*)
-**Journal:** Sensors (MDPI) · **Manuscript ID:** [ID]
-**Date:** 11 August 2026
+(submitted 16 July 2026 as *Quantum Oracle Sketching for Non-IID Sensor and Telemetry Streams: A Proxy-Based Computational Study*)\
+**Journal:** Sensors (MDPI) · **Manuscript ID:** sensors-4470240
 
 We thank both reviewers for careful, constructive reviews that have materially improved the paper. Both reviews converge on the same central point, and we agree with it: the previous version, although internally hedged, still presented itself as evidence about quantum performance, when what it can honestly support is a **proxy-based diagnostic and hypothesis-generation framework for correlation-sensitive streaming analysis**. The revision repositions the manuscript accordingly — title, abstract, statistics, figures, and conclusion — without removing any experiment or altering any measured result: all stochastic outputs regenerate bit-identically from the same seeded pipeline (we verified this explicitly before re-analysis; the verification scripts ship with the revision).
 

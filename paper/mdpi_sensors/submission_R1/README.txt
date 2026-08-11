@@ -3,10 +3,12 @@ Sensors (MDPI) revision R1 - upload set (2026-08-11)
 
 manuscript_revised.pdf   Clean revised manuscript (29 pp).
 manuscript_revised.tex   Its LaTeX source.
-tracked_changes.pdf      Highlighted version (latexdiff vs the 16 July
-                         submission): additions blue, deletions red
-                         strikeout; 31 pp. NOTE: the MDPI class keeps the
-                         title and abstract in the preamble, which
+tracked_changes.pdf      Highlighted version (built with latexdiff against
+                         the 16 July submission): new and modified text in
+                         blue; removed text omitted entirely (no strikeout),
+                         so the document reads as the final manuscript with
+                         changes highlighted; 29 pp. NOTE: the MDPI class
+                         keeps the title and abstract in the preamble, which
                          latexdiff cannot mark - both are fully rewritten
                          (stated in the response letter).
 tracked_changes.tex      Its LaTeX source.

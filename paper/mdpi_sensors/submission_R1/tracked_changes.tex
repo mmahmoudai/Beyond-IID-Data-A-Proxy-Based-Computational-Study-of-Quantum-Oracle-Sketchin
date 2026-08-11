@@ -1,7 +1,7 @@
 %% MDPI Sensors variant --- official MDPI class (Definitions/mdpi.cls, v4.0, 20 March 2024).
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL revision/main_as_reviewed.tex   Tue Aug 11 20:45:05 2026
-%DIF ADD main.tex                        Tue Aug 11 20:43:52 2026
+%DIF ADD main.tex                        Tue Aug 11 22:51:49 2026
 %% documentclass option "submit" adds line numbers for peer review; change to "accept" at acceptance.
 \documentclass[sensors,article,submit,pdftex,moreauthors]{Definitions/mdpi}
 
@@ -76,7 +76,7 @@ $^{3}$ \quad Department of Information Systems and Technology, Faculty of Gradua
 %DIF UNDERLINE PREAMBLE %DIF PREAMBLE
 \RequirePackage[normalem]{ulem} %DIF PREAMBLE
 \RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
-%DIF Highlight style: new/modified text in blue; removed text omitted entirely
+%DIF Highlight style: new/modified text in blue; removed text omitted
 \providecommand{\DIFadd}[1]{{\protect\color{blue}#1}} %DIF PREAMBLE
 \providecommand{\DIFdel}[1]{} %DIF PREAMBLE
 %DIF SAFE PREAMBLE %DIF PREAMBLE
@@ -1112,7 +1112,8 @@ Kallaugher, J., 2021.
 Kallaugher, J., Parekh, O., Voronova, N., 2025.
 \newblock How to design a quantum streaming algorithm without knowing anything about quantum computing.
 \newblock In \emph{Proceedings of the 2025 Symposium on Simplicity in Algorithms (SOSA)}, pp.~9--45.
-\newblock \url{https://arxiv.org/abs/2410.18922}.
+\newblock \DIFdelbegin %DIFDELCMD < \url{https://arxiv.org/abs/2410.18922}%%%
+\DIFdelend \DIFaddbegin \url{https://doi.org/10.1137/1.9781611978315.2}\DIFaddend .
 
 \bibitem[Leland et~al.(1994)]{leland1994ethernet}
 Leland, W.E., Taqqu, M.S., Willinger, W., Wilson, D.V., 1994.

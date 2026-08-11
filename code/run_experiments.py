@@ -217,7 +217,7 @@ def experiment_1():
     ax.set_xscale('log'); ax.set_yscale('log')
     ax.set_xlabel('Number of streaming samples $T$')
     ax.set_ylabel('Oracle MSE proxy $\\epsilon^2$ (log scale)')
-    ax.set_title(f'(b) Quantum proxy (oracle error squared, $n = {n}$ qubits)')
+    ax.set_title(f'(b) Oracle MSE proxy (closed form, $n = {n}$)')
     ax.legend(framealpha=0.9, fontsize=9)
 
     plt.tight_layout()
@@ -267,7 +267,7 @@ def experiment_2():
 
     qb_iid = compute_regime_quantum_bounds('IID', T, n, {})
     ax.axhline(qb_iid['accuracy'], color=QUANTUM_COLOR, ls='--', lw=2,
-               label=f'Quantum proxy (IID, {n} qubits)', alpha=0.8)
+               label=f'Accuracy proxy (IID, closed form, $n={n}$)', alpha=0.8)
 
     ax.set_xscale('log', base=2)
     ax.set_xlabel('Classical memory budget $M$')
@@ -560,13 +560,13 @@ def experiment_6():
     c_mem = [classical_memory_lower_bound(n) for n in n_vals]
     q_mem = [quantum_memory(n) for n in n_vals]
     ax.semilogy(n_vals, c_mem, '-o', color='#2196F3',
-                label='Worst-case classical $\\Omega(\\sqrt{N})$', linewidth=2, markersize=6)
+                label='Classical $\\Omega(\\sqrt{N})$ (cited theory)', linewidth=2, markersize=6)
     ax.semilogy(n_vals, q_mem, '--s', color=QUANTUM_COLOR,
-                label='Quantum $O(n)$', linewidth=2, markersize=6)
+                label='Quantum $O(n)$ (cited theory)', linewidth=2, markersize=6)
     ax.fill_between(n_vals, q_mem, c_mem, alpha=.12, color=QUANTUM_COLOR)
     ax.set_xlabel('Input dimension $n$ (domain size $N=2^n$)')
     ax.set_ylabel('Memory requirement')
-    ax.set_title('(a) Worst-case memory lower bound')
+    ax.set_title('(a) Theoretical worst-case memory references')
     ax.legend(framealpha=0.9)
     ax2 = ax.twiny(); ax2.set_xlim(ax.get_xlim())
     ax2.set_xticks(n_vals)

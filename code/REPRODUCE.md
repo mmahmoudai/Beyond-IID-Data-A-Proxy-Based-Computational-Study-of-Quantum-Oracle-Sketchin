@@ -1,8 +1,9 @@
 # Reproducing the Paper
 
-This directory regenerates every figure and table in
-"Beyond IID Data: A Proxy-Based Computational Study of Quantum Oracle
-Sketching Robustness under Structured Non-IID Streaming."
+This directory regenerates the figures and measured tables in
+"Proxy-Based Diagnostics of Quantum Oracle Sketching Robustness for
+Non-IID Sensor and Telemetry Streams" (MDPI Sensors variant; the same
+pipeline also backs the sibling venue variants under `paper/`).
 
 ## 1. Environment
 
@@ -19,61 +20,59 @@ Matplotlib 3.7, Seaborn 0.13, Pandas 2.0.
 
 ### Synthetic streams
 No download. Generated on demand from `code/data_generators.py` with
-explicit seeds 0-9.
+explicit seeds (see section 5).
 
-### Real stream
-NYC Taxi pickup counts from the Numenta Anomaly Benchmark (MIT licence):
+### Real streams
+Two series from the Numenta Anomaly Benchmark (MIT licence):
 
 ```
 mkdir -p data/raw
 curl -L -o data/raw/nyc_taxi.csv \
   https://raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/nyc_taxi.csv
+curl -L -o data/raw/nab_machine_temperature.csv \
+  https://raw.githubusercontent.com/numenta/NAB/master/data/realKnownCause/machine_temperature_system_failure.csv
 ```
 
-10,320 half-hour bins covering 2014-07-01 to 2015-01-31.
+NYC Taxi: 10,320 half-hour bins covering 2014-07-01 to 2015-01-31.
+Machine Temperature: 22,695 five-minute readings preceding a documented
+system failure.
 
 ## 3. Run all experiments
 
 ```
-# Figures 1-7 + Table 3 (Markov sweep)
+# Figures 1-7 + the Markov-sweep data behind the effect-size table
 python code/run_experiments.py
 
-# Figure 8 (real-stream sanity check, Section 6.8)
+# Figure 8 + real-stream tables (Experiment 8)
 python code/real_streams.py
 
-# Figure 9 + Table 4 (proxy-sensitivity ablations, Section 6.9)
+# Figure 9 + tau-estimator/window/length/target ablation table (Experiment 9)
 python code/ablations.py
+
+# Effect sizes, exact signed-rank CIs, Holm adjustment, and the C-delta
+# crossover grid (deterministic re-analysis of the Markov sweep)
+python code/exp5_effectsizes.py
 ```
 
-Total runtime: roughly 15-20 minutes on a standard laptop.
+Total runtime: roughly 15-25 minutes on a standard laptop.
 
 ## 4. Output locations
 
 - `figures/fig*.{pdf,png}` — all paper figures
-- `results/real_stream_summary.json` — NYC Taxi numerical summary
+- `figures/exp5_wilcoxon.txt` — Markov-sweep summary used by the effect-size script
+- `results/real_stream_summary.json` — real-stream numerical summary (both datasets, incl. balanced-accuracy/F1 intervals and threshold sensitivity)
 - `results/ablations.json` — full ablation table dump
 - `results/ablations_table.txt` — LaTeX-ready table rows
 
 ## 5. Random seeds
 
-Every stochastic experiment uses seeds 0-9 (10 seeds) and reports mean
-plus 95% CI half-width. Non-stochastic landscapes use no seed.
+Every stochastic experiment uses 10 seeds and reports mean plus a
+1.96×SE half-width (normal approximation): `run_experiments.py`
+(Experiments 1–7) uses seed indices 42–51; `ablations.py` and
+`real_streams.py` (Experiments 8–9) use indices 0–9. Paired-difference
+inference in the effect-size script uses exact signed-rank (Walsh
+average) intervals. Non-stochastic landscapes use no seed.
 
-## 6. Determinism
-
-Within a single Python process, results are deterministic given the
-seed. Across NumPy/SciPy minor-version changes the third decimal place
-of accuracy values may shift; the qualitative ordering of regimes and
-the proxy-baseline crossover point are stable.
-
-## 7. Where the proxy formulas live
-
-- `code/quantum_bounds.py` — closed-form heuristic proxies for quantum
-  oracle sketching performance
-- `code/data_generators.py` — five non-IID stream generators and the
-  empirical (tau, r) estimators
-- `code/classical_baselines.py` — Online SGD, Averaged SGD, Count-Min
-  hash classifier, Frequent Directions
-- `code/run_experiments.py` — main figures
-- `code/real_streams.py` — real-stream case study (Section 6.8)
-- `code/ablations.py` — sensitivity ablations (Section 6.9)
+The encoder/resolution sensitivity check for the real streams
+(deterministic re-encoding of the same raw series) is
+`paper/mdpi_sensors/revision/encoder_sensitivity.py`.

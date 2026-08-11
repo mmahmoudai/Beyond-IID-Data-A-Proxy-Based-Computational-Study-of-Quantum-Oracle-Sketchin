@@ -1,5 +1,5 @@
 {
-  "fidelity_exact_match": false,
+  "fidelity_exact_match": true,
   "seeds": [
     42,
     43,
@@ -23,8 +23,8 @@
       "proxy_ci95_half": 0.0,
       "mean_diff_classical_minus_proxy": -0.0484,
       "mean_diff_ci95": [
-        -0.082,
-        -0.0148
+        -0.0872,
+        -0.0096
       ],
       "hodges_lehmann": -0.042,
       "hl_exact_ci95": [
@@ -47,8 +47,8 @@
       "proxy_ci95_half": 0.0,
       "mean_diff_classical_minus_proxy": -0.0494,
       "mean_diff_ci95": [
-        -0.0835,
-        -0.0153
+        -0.0888,
+        -0.0101
       ],
       "hodges_lehmann": -0.042,
       "hl_exact_ci95": [
@@ -71,8 +71,8 @@
       "proxy_ci95_half": 0.0,
       "mean_diff_classical_minus_proxy": -0.0392,
       "mean_diff_ci95": [
-        -0.0736,
-        -0.0047
+        -0.0789,
+        0.0006
       ],
       "hodges_lehmann": -0.0308,
       "hl_exact_ci95": [
@@ -95,8 +95,8 @@
       "proxy_ci95_half": 0.0,
       "mean_diff_classical_minus_proxy": -0.0275,
       "mean_diff_ci95": [
-        -0.0635,
-        0.0086
+        -0.0691,
+        0.0141
       ],
       "hodges_lehmann": -0.0191,
       "hl_exact_ci95": [
@@ -119,8 +119,8 @@
       "proxy_ci95_half": 0.0036,
       "mean_diff_classical_minus_proxy": 0.0401,
       "mean_diff_ci95": [
-        0.0071,
-        0.0731
+        0.002,
+        0.0782
       ],
       "hodges_lehmann": 0.0463,
       "hl_exact_ci95": [

@@ -2,7 +2,7 @@
 
 Date: 2026-08-11. Scope: `paper/mdpi_sensors/` only; the other four venue variants are untouched on `main`.
 
-**Provenance note.** No verbatim reviewer reports are present in the repository; the audit below is reconstructed from the revision brief's 13-phase digest of Reviewer #1 and Reviewer #2. Theme 1 is explicitly attributed to both reviewers by the brief ("the reviewers' central concern"); per-reviewer attribution of the remaining themes should be confirmed against the verbatim reports before the response letter is sent (quotation slots are provided in `response_to_reviewers.md`).
+**Provenance note (updated 2026-08-11).** The verbatim reviewer reports were received after the first revision pass (R1: 15 recommendations, review dated 07 Aug 2026, "must be improved" on Methods; R2: long-form "extensive revision"). `response_to_reviewers.md` is now the final point-by-point letter with verbatim quotes. The reports confirmed the brief's digest almost exactly; four points required *new* text beyond the first pass and were added in the third commit: R1.7 (baseline justification, §5.2), R1.9 (regime realism, §4.6), R1.11 (τ/r estimator cost and scalability, §5.1 — the one item entirely absent before), and R2.7 (full-series percentile threshold = look-ahead in the target definition — disclosed in §6.8 + Threats(v); placement is target-free so only baseline reference numbers are touched; calibration-window threshold adopted as future work).
 
 ---
 
@@ -27,16 +27,23 @@ Date: 2026-08-11. Scope: `paper/mdpi_sensors/` only; the other four venue varian
 
 | Theme | Reviewer #1 | Reviewer #2 | Consensus |
 |---|---|---|---|
-| T1 overstatement | ✅ (per brief) | ✅ (per brief) | **BOTH — central concern** |
-| T2 statistics | ● | ● | attribute on receipt of verbatim reports |
-| T3 τ/r divergence | ● | ● | " |
-| T4 memory scaling | ● | ● | " |
-| T5 real data | ● | ● | " |
-| T6 target function | ● | ● | " |
-| T7 C/δ | ● | ● | " |
-| T8 figures | ● | ● | " |
-| T9 validity | ● | ● | " |
-| T10 conclusion | ● | ● | " |
+| T1 overstatement / reposition as diagnostic | ✅ R1.1 | ✅ R2.2, R2.10 | **BOTH — central concern** |
+| T2 statistics (deterministic-vs-stochastic; magnitude over p) | ✅ R1.6 | ✅ R2.3 | **BOTH** |
+| T3 τ/r divergence | ✅ R1.3 | ✅ R2.4 ("one of the most important findings") | **BOTH** |
+| T4 memory scaling not empirical | ✅ R1.13 | ✅ R2.5 | **BOTH** |
+| T5 real data limited / conservative | ✅ R1.4 | ✅ R2.6 | **BOTH** |
+| T6 target function / proxy target-independent | — | ✅ R2.9 (+ Count-Min R2.8) | R2 |
+| T7 C/δ sensitivity | ✅ R1.5 | — | R1 |
+| T8 figures | ✅ R1.12 | — (R2 rated figures "Yes") | R1 |
+| T9 threats to validity | ✅ R1.10 | — | R1 |
+| T10 conclusion | ✅ R1.15 | ✅ R2.10 | **BOTH** |
+| NEW: proxy-vs-framework relationship | ✅ R1.2 | ✅ R2.1 (key issue) | **BOTH** |
+| NEW: baseline justification | ✅ R1.7 | — | R1 |
+| NEW: τ/r sufficiency limits | ✅ R1.8 | — | R1 |
+| NEW: regime realism | ✅ R1.9 | — | R1 |
+| NEW: estimator complexity/scalability | ✅ R1.11 | — | R1 |
+| NEW: other domains | ✅ R1.14 | — | R1 |
+| NEW: percentile-target look-ahead | — | ✅ R2.7 | R2 |
 
 ## Phase 2 — Claim-language audit (all applied)
 

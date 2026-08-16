@@ -27,13 +27,20 @@ response_to_reviewers.*    Combined letter, both reviewers in one document
                            (15 + 10 points). 9 pp.
 response_to_editor.*       Reply to the Academic Editor's comment asking that
                            preprints not be cited: reports the reference audit
-                           (54 refs; one preprint replaced by its published
-                           SOSA 2025 version; 51/51 DOIs verified; one wrong
-                           DOI corrected), explains why the one remaining
-                           preprint is the framework the paper studies and
-                           cannot be substituted without misattribution, and
-                           records the footnote now added at its first
-                           citation. 3 pp.
+                           (54 refs audited; one preprint replaced by its
+                           published SOSA 2025 version; 51/51 DOIs verified;
+                           one wrong DOI corrected) plus a 2026-08-16
+                           re-verification across registries, 2026 venue
+                           accepted-lists and author pages; explains why the
+                           one remaining preprint is the framework the paper
+                           studies and cannot be substituted without
+                           misattribution; and records the changes made in
+                           response: citations of it reduced 8 -> 6, a status
+                           footnote at first citation, and a new published
+                           anchor (Kallaugher-Parekh-Voronova, STOC 2024,
+                           DOI 10.1145/3618260.3649709) co-cited, which also
+                           corrects a Related-Work attribution (bibliography
+                           now 55 entries). 3 pp.
 
 Each per-reviewer letter repeats the shared header, the summary of principal
 changes, and the verification note, so it stands alone; every point-by-point

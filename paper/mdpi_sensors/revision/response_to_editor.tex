@@ -110,7 +110,7 @@ Outcome & Count \\
 \endhead
 \bottomrule\noalign{}
 \endlastfoot
-References in the bibliography & 54 \\
+References audited & 54 \\
 Preprints present before the audit & 2 \\
 \textbf{Preprints replaced with the published version} & \textbf{1} \\
 Preprints remaining (no published version exists) & 1 \\
@@ -141,10 +141,17 @@ The remaining entry is Zhao et al., \emph{Exponential quantum advantage
 in processing massive classical data} (arXiv:2604.07639), labelled
 ``Preprint'' in the bibliography.
 
-We confirmed that no peer-reviewed version exists to substitute: the
-arXiv record carries no journal reference, the authors' own
-institutional listing still describes the work as a preprint, and a
-Crossref registry query on the exact title returns no publisher DOI.
+We confirmed --- and, in preparing this reply, re-confirmed --- that no
+peer-reviewed version exists to substitute. As of 16 August 2026: the
+arXiv record remains at version 1 with no journal reference and no
+related DOI; Crossref, Semantic Scholar, dblp, INSPIRE-HEP, Google
+Scholar, and OpenReview all record the work as arXiv-only; it appears in
+none of the accepted-papers lists of FOCS 2026, STOC 2026, QIP 2026, TQC
+2026, CCC 2026, or SODA 2026, and on no publisher page of
+\emph{Quantum}, \emph{PRX Quantum}, \emph{npj Quantum Information},
+\emph{Nature}, or \emph{Science}; the publication pages of all seven
+authors list it as arXiv-only; and none of the works citing it records a
+venue or an in-press status for it.
 
 We respectfully submit that this entry is a different case from the one
 the Editor's comment is aimed at. It is not cited as supporting evidence
@@ -208,11 +215,47 @@ propagate into this paper's findings:
   streaming separations wherever such claims are made.
 \end{enumerate}
 
-\subsection{4. What we have added in response to this
-comment}\label{what-we-have-added-in-response-to-this-comment}
+\subsection{4. What we have changed in response to this
+comment}\label{what-we-have-changed-in-response-to-this-comment}
 
-At the first citation of the preprint in the Introduction we have added
-a footnote making its status explicit to every reader:
+Beyond the audit, we have reduced the manuscript's reliance on the
+preprint to the minimum that honest attribution permits, and
+strengthened the published anchors around it:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Citation reduction (eight occurrences → six).} Two repeat
+  citations carried no independent attribution and were consolidated: a
+  second citation within the same paragraph of Section 3.3 now reads
+  ``the originating framework'', and the quantum-memory bullet in
+  Section 5.3 now points to Section 3.3, where the provenance is
+  established. The preprint is now cited only where attributing its
+  specific results requires it.
+\item
+  \textbf{A stronger published anchor added.} We added Kallaugher,
+  Parekh and Voronova, \emph{Exponential quantum space advantage for
+  approximating maximum directed cut in the streaming model}
+  (Proceedings of the 56th Annual ACM Symposium on Theory of Computing,
+  STOC 2024, pp.~1805--1815, DOI 10.1145/3618260.3649709) --- the first
+  exponential quantum--classical space separation for a natural
+  streaming problem, and the strongest peer-reviewed result of the kind
+  the preprint extends. It is co-cited in the Related Work and in the
+  disclosure footnote (bibliography now 55 entries;
+  citation--bibliography consistency re-verified).
+\item
+  \textbf{A corrected attribution.} In verifying the anchors we found
+  that our Related Work sentence credited Kallaugher's 2021 FOCS paper
+  with the \emph{first exponential} separation; that paper's advantage
+  is polynomial (the exponential result for a natural streaming problem
+  is the STOC 2024 paper above). The sentence now attributes each result
+  correctly --- a further accuracy improvement prompted directly by the
+  Editor's comment.
+\end{enumerate}
+
+At the first citation of the preprint in the Introduction we have also
+added a footnote making its status explicit to every reader:
 
 \begin{quote}
 ``This reference is a preprint (arXiv:2604.07639) and, at the time of

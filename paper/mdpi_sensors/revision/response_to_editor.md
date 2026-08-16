@@ -15,7 +15,7 @@ Every one of the 54 references was classified by publication type (journal artic
 
 | Outcome | Count |
 |---|---|
-| References in the bibliography | 54 |
+| References audited | 54 |
 | Preprints present before the audit | 2 |
 | **Preprints replaced with the published version** | **1** |
 | Preprints remaining (no published version exists) | 1 |
@@ -30,7 +30,7 @@ Every one of the 54 references was classified by publication type (journal artic
 
 The remaining entry is Zhao et al., *Exponential quantum advantage in processing massive classical data* (arXiv:2604.07639), labelled "Preprint" in the bibliography.
 
-We confirmed that no peer-reviewed version exists to substitute: the arXiv record carries no journal reference, the authors' own institutional listing still describes the work as a preprint, and a Crossref registry query on the exact title returns no publisher DOI.
+We confirmed — and, in preparing this reply, re-confirmed — that no peer-reviewed version exists to substitute. As of 16 August 2026: the arXiv record remains at version 1 with no journal reference and no related DOI; Crossref, Semantic Scholar, dblp, INSPIRE-HEP, Google Scholar, and OpenReview all record the work as arXiv-only; it appears in none of the accepted-papers lists of FOCS 2026, STOC 2026, QIP 2026, TQC 2026, CCC 2026, or SODA 2026, and on no publisher page of *Quantum*, *PRX Quantum*, *npj Quantum Information*, *Nature*, or *Science*; the publication pages of all seven authors list it as arXiv-only; and none of the works citing it records a venue or an in-press status for it.
 
 We respectfully submit that this entry is a different case from the one the Editor's comment is aimed at. It is not cited as supporting evidence for a claim of ours, where a related published work could stand in its place. **It is the object of study.** This paper examines how the correlation assumptions of that specific framework — its refreshing time and repetition number, its ×R sample overhead, its task-specific classical hardness results — behave when the data stream is not IID. Substituting a related published work would attribute those particular theorems to authors who did not prove them, and removing the citation would leave the framework we analyse unattributed. Either course would introduce a citation-integrity problem more serious than the one the instruction is intended to prevent.
 
@@ -44,9 +44,15 @@ The Editor's concern is that a preprint's content may change before publication.
 4. **The revision already removed any dependence on the framework's claims being settled.** Following the reviewers' recommendations, the manuscript was repositioned as a proxy-based diagnostic and hypothesis-generation framework; it treats the framework's results as premises to be stress-tested, not as established facts to be relied upon, and states plainly that it "demonstrates no quantum advantage and implements no quantum algorithm".
 5. **Its theorems are never invoked alone.** Each invocation is accompanied by peer-reviewed anchors: Kallaugher, *A quantum advantage for a natural streaming problem* (IEEE FOCS 2021, pp. 897–908); Kallaugher, Parekh and Voronova (SOSA 2025, pp. 9–45); and Huang et al., *Quantum advantage in learning from experiments* (*Science* **376**, 1182–1186, 2022). These are precisely the "related works already published" the Editor suggests, and they now carry the general claims about quantum streaming separations wherever such claims are made.
 
-## 4. What we have added in response to this comment
+## 4. What we have changed in response to this comment
 
-At the first citation of the preprint in the Introduction we have added a footnote making its status explicit to every reader:
+Beyond the audit, we have reduced the manuscript's reliance on the preprint to the minimum that honest attribution permits, and strengthened the published anchors around it:
+
+1. **Citation reduction (eight occurrences → six).** Two repeat citations carried no independent attribution and were consolidated: a second citation within the same paragraph of Section 3.3 now reads "the originating framework", and the quantum-memory bullet in Section 5.3 now points to Section 3.3, where the provenance is established. The preprint is now cited only where attributing its specific results requires it.
+2. **A stronger published anchor added.** We added Kallaugher, Parekh and Voronova, *Exponential quantum space advantage for approximating maximum directed cut in the streaming model* (Proceedings of the 56th Annual ACM Symposium on Theory of Computing, STOC 2024, pp. 1805–1815, DOI 10.1145/3618260.3649709) — the first exponential quantum–classical space separation for a natural streaming problem, and the strongest peer-reviewed result of the kind the preprint extends. It is co-cited in the Related Work and in the disclosure footnote (bibliography now 55 entries; citation–bibliography consistency re-verified).
+3. **A corrected attribution.** In verifying the anchors we found that our Related Work sentence credited Kallaugher's 2021 FOCS paper with the *first exponential* separation; that paper's advantage is polynomial (the exponential result for a natural streaming problem is the STOC 2024 paper above). The sentence now attributes each result correctly — a further accuracy improvement prompted directly by the Editor's comment.
+
+At the first citation of the preprint in the Introduction we have also added a footnote making its status explicit to every reader:
 
 > "This reference is a preprint (arXiv:2604.07639) and, at the time of writing, had not appeared in a peer-reviewed venue; it is labelled as such in the bibliography. It is cited because it is the specific framework whose robustness under correlated data this paper examines, so no already-published work can stand in for it without misattributing its results. No conclusion of this paper depends on its final published form: no quantum algorithm is implemented or simulated here, every quantity inherited from the framework is listed with its provenance and epistemic status in Table 1, and its theorems are invoked alongside peer-reviewed results on quantum streaming separations and on experimentally demonstrated quantum advantage."
 

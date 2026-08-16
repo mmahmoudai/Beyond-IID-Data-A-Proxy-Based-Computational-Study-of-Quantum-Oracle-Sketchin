@@ -12,12 +12,27 @@ tracked_changes.pdf      Highlighted version (built with latexdiff against
                          latexdiff cannot mark - both are fully rewritten
                          (stated in the response letter).
 tracked_changes.tex      Its LaTeX source.
-response_to_reviewers.pdf  Point-by-point response (Reviewer 1: 15 points;
-                           Reviewer 2: 10 points; verbatim quotes;
-                           manuscript ID sensors-4470240). 9 pp.
-response_to_reviewers.docx Same letter as an editable Word document.
-response_to_reviewers.tex  Its standalone LaTeX source (compiles alone
-                           with xelatex; Times New Roman).
+RESPONSE LETTERS - three files, same content, two packagings. Upload the
+per-reviewer pair if the system asks for one response per reviewer; upload
+the combined letter if it asks for a single response document. Each exists
+as .pdf, .docx (editable Word) and .tex (standalone, xelatex, Times New
+Roman). All carry manuscript ID sensors-4470240 and no date.
+
+response_to_reviewer_1.*   Self-contained response to Reviewer 1
+                           (15 points, verbatim quotes). 6 pp.
+response_to_reviewer_2.*   Self-contained response to Reviewer 2
+                           (10 points, verbatim quotes). 5 pp.
+response_to_reviewers.*    Combined letter, both reviewers in one document
+                           (15 + 10 points) - convenient for the academic
+                           editor. 9 pp.
+
+Each per-reviewer letter repeats the shared header, the summary of principal
+changes, and the verification note, so it stands alone; every point-by-point
+response is identical to the combined letter word for word. The one wording
+difference: in R1.10 the combined letter says "the look-ahead point raised by
+Reviewer 2", which the Reviewer-1 letter states directly as "the full-series
+threshold look-ahead raised in review", since that reviewer does not see the
+other report.
 source_package.zip       Complete self-contained source: main.tex,
                          Definitions/ (official MDPI class), all figure
                          PDFs, cover letter, revision materials
@@ -27,5 +42,5 @@ source_package.zip       Complete self-contained source: main.tex,
 
 To compile manuscript_revised.tex or tracked_changes.tex, place the file
 in the root of the unpacked source_package.zip (they expect Definitions/
-and the figure PDFs beside them); response_to_reviewers.tex compiles
+and the figure PDFs beside them); the response-letter .tex files compile
 anywhere with xelatex.

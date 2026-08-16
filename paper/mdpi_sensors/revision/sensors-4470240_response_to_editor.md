@@ -1,0 +1,21 @@
+# Response to the Academic Editor
+
+**Manuscript:** *Proxy-Based Diagnostics of Quantum Oracle Sketching Robustness for Non-IID Sensor and Telemetry Streams*\
+**Journal:** *Sensors* (MDPI) · **Manuscript ID:** sensors-4470240
+
+**Editor's comment.** *"I strongly invite the Authors to not include preprints among references. These works are still undergoing the peer-review process, thus meaning that their content may change prior to publication (if they will be finally published). The Authors can substitute them with related works already published."*
+
+**Response.** We thank the Academic Editor for this helpful recommendation. In accordance with the Editor's request, we have removed the Zhao et al. (2026) preprint, "Exponential quantum advantage in processing massive classical data" (arXiv:2604.07639), from the revised manuscript and from the reference list. The revised bibliography contains 54 references and no preprints.
+
+Before editing, we audited every in-text use of the preprint together with the directly dependent clauses. We also examined the published works already cited in the manuscript — Kallaugher (FOCS 2021), Kallaugher, Parekh and Voronova (STOC 2024 and SOSA 2025), and Huang et al. (*Science* 2022). These establish important but different results: problem-specific quantum-streaming space advantages, a black-box quantum-sketch construction, and quantum advantage for learning properties of quantum systems. None of them establishes the framework-specific classification, dimension-reduction, correlated-data, repetition-overhead, refreshing-time, or classical-hardness claims for which the preprint had been cited. We therefore did not substitute any of them for it, since doing so would attribute results to authors who did not obtain them.
+
+Instead, only the affected statements were revised. Framework-specific theorem and provenance claims were removed; each remaining reference is now cited only for the result it actually establishes; and the operational quantities τ, r, T\_eff, ε and the accuracy proxy are stated unambiguously as constructs of the present paper. Section 3.3 accordingly separates published theory and its boundary, this paper's assumptions, its heuristic constructions, its illustrative memory references, and its scope limitations, and states explicitly that the published quantum-streaming results do not establish the operational model used here and that this paper adds no quantum theorem. Table 1's provenance row and the associated memory-reference descriptions are relabelled as paper-defined illustrative scaling references. The remaining Zhao-dependent clauses in the abstract and introduction were minimally corrected.
+
+The reference audit that accompanied this revision also confirmed the published form of the Kallaugher, Parekh and Voronova work (SOSA 2025, pp. 9–45, DOI 10.1137/1.9781611978315.2), added the published STOC 2024 result (DOI 10.1145/3618260.3649709) for the exponential quantum–classical space separation — which corrected a Related Work sentence that would otherwise have credited the 2021 FOCS paper with an exponential separation, whereas the advantage established there is polynomial — and corrected a transposed article number in the Su, Guo and Wang (2024) entry, now *Information Sciences* **676**, article 120799, DOI 10.1016/j.ins.2024.120799.
+
+No replacement reference was added to preserve the citation count, and no experimental data, methodology, equations, proxy definitions, datasets, seeds, numerical results, figure artwork or conclusions were changed. All reviewer-requested revisions remain in place, every in-text citation was re-checked against the bibliography, and the manuscript compiles with no unresolved citations or references.
+
+On behalf of all authors,
+
+**AbdelMoniem Helmy** (corresponding author)
+[abdelmoniem.hafez@cu.edu.eg](mailto:abdelmoniem.hafez@cu.edu.eg) · ORCID 0000-0001-5996-6019

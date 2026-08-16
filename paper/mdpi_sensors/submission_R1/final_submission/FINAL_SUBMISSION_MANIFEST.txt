@@ -1,127 +1,135 @@
 FINAL SUBMISSION MANIFEST
-Sensors (MDPI) - Manuscript ID sensors-4470240 - Revision R1
-Title: Proxy-Based Diagnostics of Quantum Oracle Sketching Robustness
-       for Non-IID Sensor and Telemetry Streams
+Sensors (MDPI)  |  Manuscript ID: sensors-4470240  |  Revision R1
+Proxy-Based Diagnostics of Quantum Oracle Sketching Robustness
+for Non-IID Sensor and Telemetry Streams
 ==============================================================================
 
 UPLOAD SET
 ------------------------------------------------------------------------------
-File     : manuscript_remove_zhao_minimal.pdf
-Purpose  : Final revised manuscript (clean)
+
+File     : sensors-4470240_manuscript_clean.pdf
+Type     : PDF
 Pages    : 29
 Size     : 1,083,244 bytes
 SHA-256  : A644D548E2A5DAE11DEA370C8D452D6AEE2D194F741699E2AC69566A0510534A
+Purpose  : Revised manuscript, clean version
 Status   : VALIDATED
 
-File     : tracked_changes_remove_zhao.pdf
-Purpose  : Highlighted version: changes vs the reviewed manuscript
+File     : sensors-4470240_manuscript_marked.pdf
+Type     : PDF
 Pages    : 29
 Size     : 1,086,204 bytes
 SHA-256  : 06E7072F94788E6AB281DD85203A5CBDEA92EC03F99EA15CDFC69E57C54DFDF9
+Purpose  : Revised manuscript, marked version showing all changes
 Status   : VALIDATED
 
-File     : response_to_reviewer_1_final.pdf
-Purpose  : Response to Reviewer 1 (15 points)
-Pages    : 6
-Size     : 132,485 bytes
-SHA-256  : D3CFD7C33B9EF389F252398937E67AD5F80BB449BF4DDA707E385B518F8C2706
+File     : sensors-4470240_response_to_reviewer_1.pdf
+Type     : PDF
+Pages    : 5
+Size     : 108,860 bytes
+SHA-256  : 969FEFAA01E88EAE26273A5E3BDA0F80C3C532460557FEB25487E759BAE1C12A
+Purpose  : Point-by-point response to Reviewer 1 (15 comments)
 Status   : VALIDATED
 
-File     : response_to_reviewer_1_final.docx
-Purpose  : Response to Reviewer 1 (editable)
+File     : sensors-4470240_response_to_reviewer_1.docx
+Type     : DOCX
 Pages    : n/a
-Size     : 21,167 bytes
-SHA-256  : B736EEC3C50EBEE437C21989C682C981C48DA80AE57984F867D798448AF57207
+Size     : 18,131 bytes
+SHA-256  : 22F12E639ABA0F4E4EB0F66379429E95E21745724C9104F816FBF05FE6FDB296
+Purpose  : Point-by-point response to Reviewer 1, editable
 Status   : VALIDATED
 
-File     : response_to_reviewer_2_final.pdf
-Purpose  : Response to Reviewer 2 (10 points)
-Pages    : 6
-Size     : 127,721 bytes
-SHA-256  : 9B5311139B738D835CBF3CA4924D5D87FFFBBD1BF801D92E76660B19A0E1BD12
+File     : sensors-4470240_response_to_reviewer_2.pdf
+Type     : PDF
+Pages    : 4
+Size     : 106,480 bytes
+SHA-256  : 894154F3A4880BD567BE32A7FB5CF0E819455EFA558D5ABBF3804A9BE6ACFFD3
+Purpose  : Point-by-point response to Reviewer 2 (10 comments)
 Status   : VALIDATED
 
-File     : response_to_reviewer_2_final.docx
-Purpose  : Response to Reviewer 2 (editable)
+File     : sensors-4470240_response_to_reviewer_2.docx
+Type     : DOCX
 Pages    : n/a
-Size     : 19,697 bytes
-SHA-256  : DFD7217F30BC38FF1B36B99489E33397F7E6D882A47D3C28EC5D2DA8F6405289
+Size     : 17,208 bytes
+SHA-256  : 7370388EE2BD0EA231F3E54FA62E22FA4A18E2A24B38F538A274BC084BBE048E
+Purpose  : Point-by-point response to Reviewer 2, editable
 Status   : VALIDATED
 
-File     : response_to_reviewers_final.pdf
-Purpose  : Combined reviewer response (both reviewers)
-Pages    : 10
-Size     : 149,033 bytes
-SHA-256  : 383AF1D35B1A00E5DCF209ED354E8042878A8135D49DB93DD67B6915DDAF7521
+File     : sensors-4470240_response_to_reviewers.pdf
+Type     : PDF
+Pages    : 8
+Size     : 124,872 bytes
+SHA-256  : 46D4BBE85E883E00E714F71838F976C05796392CEF2CE4C6EBE1502A59FC9BB8
+Purpose  : Combined response to both reviewers
 Status   : VALIDATED
 
-File     : response_to_reviewers_final.docx
-Purpose  : Combined reviewer response (editable)
+File     : sensors-4470240_response_to_reviewers.docx
+Type     : DOCX
 Pages    : n/a
-Size     : 26,281 bytes
-SHA-256  : 9D02FA2EC30ED5D2A1C656EBA82C1662DF9610CA39D1E672AA08106A09EEEC8A
+Size     : 22,473 bytes
+SHA-256  : 098916092BAE91DC176A5F15B09AD1098DD9B2BD4FFF3AF211755BDC2562B0C6
+Purpose  : Combined response to both reviewers, editable
 Status   : VALIDATED
 
-File     : response_to_editor_removal_final.pdf
-Purpose  : Response to the Academic Editor (preprint removal)
+File     : sensors-4470240_response_to_editor.pdf
+Type     : PDF
 Pages    : 1
-Size     : 90,153 bytes
-SHA-256  : 16D0E92C9D65E75E7B9B8610963B2A0AE244FD8054D9670B22AD0C26DF00B7EE
+Size     : 90,154 bytes
+SHA-256  : 8F66FA1569CCC874B9F0E3CD75BF5EF06E06C4096359B6374F9D32ABA3D51BB8
+Purpose  : Response to the Academic Editor
 Status   : VALIDATED
 
-File     : response_to_editor_removal_final.docx
-Purpose  : Response to the Academic Editor (editable)
+File     : sensors-4470240_response_to_editor.docx
+Type     : DOCX
 Pages    : n/a
-Size     : 12,651 bytes
-SHA-256  : C613A42527C10D8CCBDB9F341AE4AD8C6644164818D866543171B11D302F2BC6
+Size     : 12,650 bytes
+SHA-256  : 2E3749B9B082DF725C98FCBD0BC3B21DBF5AFD2AA9B9534C6211AC15EEC9DEB1
+Purpose  : Response to the Academic Editor, editable
 Status   : VALIDATED
 
 PRODUCTION SOURCE (latex_source/)
 ------------------------------------------------------------------------------
-19 files: manuscript LaTeX source (unmodified), the official MDPI
-class and style files, and the nine figure PDFs (unchanged artwork).
+19 files: the unmodified manuscript LaTeX source, the official MDPI
+class and style files, and the nine figure PDFs (artwork unchanged).
 
-  latex_source/manuscript_remove_zhao_minimal.tex            D11D0EF98C947C4C...
-  latex_source/Definitions/chicago2.bst                      C16818F2B37B6EDC...
-  latex_source/Definitions/journalnames.tex                  3239496B5506DA30...
-  latex_source/Definitions/logo-ccby.eps                     916C3193AF3C50E0...
-  latex_source/Definitions/logo-mdpi-eps-converted-to.pdf    7CFCECE300DA2318...
-  latex_source/Definitions/logo-mdpi.eps                     F02D31469C6B2666...
-  latex_source/Definitions/logo-orcid.pdf                    0558A0097DC4D1FF...
-  latex_source/Definitions/logo-updates.eps                  B84B986524FF2E47...
-  latex_source/Definitions/mdpi.bst                          BE33433988799BE0...
-  latex_source/Definitions/mdpi.cls                          965E69342723E163...
-  latex_source/fig1_accuracy_vs_samples.pdf                  D203095059550EB1...
-  latex_source/fig2_accuracy_vs_memory.pdf                   1914A9B2C9C21FA8...
-  latex_source/fig3_tau_r_landscape.pdf                      EF310C48B2CE11CF...
-  latex_source/fig4_correlation_characterization.pdf         131F151941956AF6...
-  latex_source/fig5_markov_sweep.pdf                         EAE01C2DA0869AFC...
-  latex_source/fig6_dimension_scaling.pdf                    9E08DD5698F20BF1...
-  latex_source/fig7_rolling_accuracy.pdf                     F581196FB4589BC3...
-  latex_source/fig8_real_stream_validation.pdf               0BD498E24D71E087...
-  latex_source/fig9_ablations.pdf                            2EAA94CD28419D8B...
+  latex_source/sensors-4470240_manuscript.tex              TEX    D11D0EF98C947C4C...
+  latex_source/Definitions/chicago2.bst                    STYLE  C16818F2B37B6EDC...
+  latex_source/Definitions/journalnames.tex                STYLE  3239496B5506DA30...
+  latex_source/Definitions/logo-ccby.eps                   STYLE  916C3193AF3C50E0...
+  latex_source/Definitions/logo-mdpi-eps-converted-to.pdf  STYLE  7CFCECE300DA2318...
+  latex_source/Definitions/logo-mdpi.eps                   STYLE  F02D31469C6B2666...
+  latex_source/Definitions/logo-orcid.pdf                  STYLE  0558A0097DC4D1FF...
+  latex_source/Definitions/logo-updates.eps                STYLE  B84B986524FF2E47...
+  latex_source/Definitions/mdpi.bst                        STYLE  BE33433988799BE0...
+  latex_source/Definitions/mdpi.cls                        STYLE  965E69342723E163...
+  latex_source/fig1_accuracy_vs_samples.pdf                PDF    D203095059550EB1...
+  latex_source/fig2_accuracy_vs_memory.pdf                 PDF    1914A9B2C9C21FA8...
+  latex_source/fig3_tau_r_landscape.pdf                    PDF    EF310C48B2CE11CF...
+  latex_source/fig4_correlation_characterization.pdf       PDF    131F151941956AF6...
+  latex_source/fig5_markov_sweep.pdf                       PDF    EAE01C2DA0869AFC...
+  latex_source/fig6_dimension_scaling.pdf                  PDF    9E08DD5698F20BF1...
+  latex_source/fig7_rolling_accuracy.pdf                   PDF    F581196FB4589BC3...
+  latex_source/fig8_real_stream_validation.pdf             PDF    0BD498E24D71E087...
+  latex_source/fig9_ablations.pdf                          PDF    2EAA94CD28419D8B...
 
 VALIDATION SUMMARY
 ------------------------------------------------------------------------------
-  Bibliography                         54 references
+  Bibliography                       54 references
   Zhao et al. (2026) / arXiv:2604.07639  absent from manuscript source and PDF
-  Unresolved citations                 none (all cite keys resolve to bibitems)
-  Uncited bibliography entries         none
-  Manuscript                           29 pages
-  Highlighted manuscript               29 pages, 356 marked additions;
-                                       removed text suppressed, no Zhao in PDF
-  Reviewer comments                    25/25 verbatim, unaltered
-  Reviewer responses                   R1 15 points, R2 10 points; all consistent
-                                       with the final manuscript
-  Editor response                      states removal; no replacement claimed;
-                                       54 references; no retention argument
-  Pre-assembly checks                  35/35 PASS
-  File integrity                       every file SHA-256 verified after copying
+  Unresolved citations               none; uncited entries none
+  Manuscript (clean)                 29 pages
+  Manuscript (marked)                29 pages; removed text suppressed,
+                                     no Zhao text rendered
+  Reviewer comments                  25/25 reproduced verbatim
+  Responses                          Reviewer 1: 15, Reviewer 2: 10
+  Editor response                    states removal; no replacement claimed;
+                                     54 references
+  All documents                      compiled without errors
+  File integrity                     SHA-256 verified after every copy
 
-EXCLUDED FROM THIS PACKAGE (deliberately)
+NOT INCLUDED (superseded working files)
 ------------------------------------------------------------------------------
-  response_to_editor_final.*      earlier letter arguing to retain the preprint
-  response_to_reviewer*_final     superseded drafts (non-_final versions)
-  manuscript_revised.*            earlier manuscript containing Zhao et al.
-  tracked_changes.*               highlighted version of the earlier manuscript
-  source_package.zip              earlier 55-reference source archive
+  earlier manuscript containing the preprint, and its marked version
+  earlier editor letter that argued for retaining the preprint
+  superseded response-letter drafts
+  internal audit reports, scratch and build files

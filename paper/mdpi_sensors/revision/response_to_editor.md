@@ -11,25 +11,11 @@
 
 ## 1. Audit and re-verification
 
-Every one of the 54 references in the reviewed manuscript was classified by publication type (journal article, conference paper, monograph, book, preprint) and verified at the metadata level: all 51 entries carrying a DOI were resolved through doi.org content negotiation and machine-compared against the cited title, first author, venue, and year; the three entries without a DOI were checked against their publisher's own record.
+Before answering the substance of the comment, we audited the reference list in full. Each of the 54 references in the reviewed manuscript was classified by publication type, and every entry was then checked against the publisher's own metadata. For the 51 entries that carry a DOI, we resolved the DOI itself and compared the registered title, first author, venue, and year with what we cite; the three entries without a DOI were checked directly against the publisher's records. All 51 DOIs resolved and matched. The audit found two preprints among the 54 references.
 
-| Outcome | Result |
-|---|---|
-| References audited | 54 |
-| Preprints found | 2 |
-| Replaced with the published version | 1 |
-| Remaining preprints — no published version exists (re-verified 16 Aug 2026) | 1 |
-| DOIs resolved and metadata-matched | 51 / 51 |
-| Metadata errors found and corrected | 1 |
-| In-text citations of the remaining preprint | reduced 8 → 6 |
-| Published anchors now co-cited with it | FOCS 2021 · STOC 2024 · SOSA 2025 · *Science* 2022 |
-| Bibliography after this revision | 55 entries · citation–bibliography consistency 55 ↔ 55 |
+The first of the two had in fact been published already, and we have replaced it. The Kallaugher, Parekh and Voronova paper on designing quantum streaming algorithms, previously cited through its arXiv posting, now points to its published version in the *Proceedings of the 2025 Symposium on Simplicity in Algorithms (SOSA)*, pp. 9–45, DOI 10.1137/1.9781611978315.2, and we confirmed the author order against the publisher's article page and table of contents. The same sweep caught one further defect, unrelated to preprints, that would otherwise have reached print: the entry for Su, Guo and Wang (2024) carried a transposed article number whose DOI led to a different paper altogether. That entry now reads *Information Sciences* **676**, article 120799, DOI 10.1016/j.ins.2024.120799, again verified against the publisher's record.
 
-**Replaced.** Kallaugher, Parekh and Voronova, *How to design a quantum streaming algorithm without knowing anything about quantum computing*, previously cited via its arXiv posting, now carries its published version in the *Proceedings of the 2025 Symposium on Simplicity in Algorithms (SOSA)*, pp. 9–45, publisher DOI 10.1137/1.9781611978315.2, with the byline order confirmed against the publisher's article page and table of contents.
-
-**Corrected.** The audit also caught a defect unrelated to preprints that would otherwise have reached print: the entry for Su, Guo and Wang (2024) carried a transposed article number whose DOI resolved to a different paper. It now reads *Information Sciences* **676**, article 120799, DOI 10.1016/j.ins.2024.120799, verified against the publisher's record.
-
-**Re-verified.** On 16 August 2026 we checked again, specifically for this reply, whether the remaining preprint has been published or accepted anywhere. As of that date: its arXiv record remains at version 1 with no journal reference and no related DOI; Crossref, Semantic Scholar, dblp, INSPIRE-HEP, Google Scholar, and OpenReview all record the work as arXiv-only; it appears in none of the accepted-papers lists of FOCS 2026, STOC 2026, QIP 2026, TQC 2026, CCC 2026, or SODA 2026, and on no publisher page of *Quantum*, *PRX Quantum*, *npj Quantum Information*, *Nature*, or *Science*; the publication pages of all seven of its authors list it as arXiv-only; and none of the works citing it records a venue or an in-press status for it.
+The second preprint is the Zhao et al. reference discussed below. Before writing this reply we checked once more, on 16 August 2026, whether it has been published or accepted anywhere in the meantime. It has not. The arXiv record is still at version 1, with no journal reference and no related DOI. Crossref, Semantic Scholar, dblp, INSPIRE-HEP, Google Scholar and OpenReview all list the work as arXiv-only. It does not appear in the accepted-paper lists of FOCS, STOC, QIP, TQC, CCC or SODA for 2026, nor on any page of *Quantum*, *PRX Quantum*, *npj Quantum Information*, *Nature* or *Science*. The publication pages of all seven of its authors give only the arXiv posting, and none of the papers citing it names a venue or an in-press version. After the changes described in this reply, the bibliography contains 55 entries, of which this is the only preprint, and we have re-checked that every in-text citation matches exactly one bibliography entry.
 
 ## 2. The one preprint that remains — and why substitution is not available
 

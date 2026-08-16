@@ -1,5 +1,6 @@
-Sensors (MDPI) revision R1 - upload set (2026-08-11)
-=====================================================
+Sensors (MDPI) revision R1 - upload set
+Manuscript ID: sensors-4470240
+=======================================
 
 manuscript_revised.pdf   Clean revised manuscript (29 pp).
 manuscript_revised.tex   Its LaTeX source.

@@ -182,3 +182,21 @@ Final question tested: could the work have been published under a **different ti
 **Honest gap:** the ORCID/author-identity sweep agent forwarded its task and returned no findings, so ORCID records were not directly enumerated. This does not affect the conclusion — the five arXiv-ID-keyed systems above would surface a retitled publication regardless of author-record completeness, and the citation forensics provide independent confirmation.
 
 **Consequence: no manuscript change.** The retain-and-disclose configuration stands, unchanged.
+
+## MDPI citation-rule verification (2026-08-16) — text-only citation is NOT permitted
+
+Before implementing a proposed "remove from reference list, cite in text/footnote only" option, MDPI's actual rules were checked against the authoritative style guide for the style this manuscript uses (Chicago author–date, `Definitions/chicago2.bst`). **The option is prohibited.** Five independent rules, quoted verbatim:
+
+1. **§16, "Agreement of Text Citation":** "For each author-date citation in the text, there must be a corresponding entry in the reference list under the same name and date."
+2. **Preface, Part II:** "Each source you cite in the paper must appear in your reference list; likewise, each entry in the reference list must be cited in your text."
+3. **§2, "The Author-Date System — Overview":** "All the references mentioned in the text should be cited in the '(Author Date)' format, and be listed separately as the last section at the end of the manuscript, including references in text and those in tables, figures, and other non-text components."
+4. **§17, "Notes Section"** — closes the footnote route explicitly: "Notes should ... never include the bibliographic details of a reference."
+5. **MDPI Instructions for Authors** (identical across journals): "'Unpublished data' intended for publication in a manuscript that is either planned, 'in preparation' or 'submitted' but not yet accepted, should be cited in the text **and a reference should be added in the References section**."
+
+The only category MDPI exempts is **§15.9 Personal Communications** ("rarely listed in a bibliography") — inapplicable: a publicly posted arXiv preprint with a registered DataCite DOI is not a personal communication, and presenting it as one would misrepresent it.
+
+**Positive finding — the current entry already follows MDPI's prescribed form.** §15.8, "Unpublished Manuscripts and Working Papers", gives the template: *"Author 1, and Author 2. Year. Title of Unpublished Work. Journal Title, phrase indicating stage of publication."* The manuscript's entry — "Zhao, H., … 2026. Exponential quantum advantage in processing massive classical data. arXiv:2604.07639. **Preprint; not peer-reviewed as of August 2026**." — is exactly this pattern, with the stage-of-publication phrase supplied. MDPI's own style guide therefore prescribes precisely the configuration the manuscript already has.
+
+**Conclusion: no manuscript change is possible or needed.** Removing the entry from the reference list while citing the work in text or in a note would violate rules 1–4; removing it entirely would leave the studied framework unattributed. The retain-and-disclose configuration is both the honest option and the MDPI-compliant one. Branch `zhao-preprint-replacement` was created for the option and left empty; no edits were made.
+
+Sources: MDPI Reference List and Citations Style Guide for Chicago Journals (mdpi-res.com/data/mdpi_references_chicago_guide-update-v6.pdf); MDPI Instructions for Authors (www.mdpi.com/journal/*/instructions); MDPI Reference List and Citations Style Guide (www.mdpi.com/authors/references).

@@ -18,7 +18,7 @@ We thank both reviewers for careful, constructive reviews that have materially i
 8. **Figures**: the Experiment-5 legend entry "Proxy-model advantage" renamed "Proxy-estimated separation"; in-image labels "n = 10 qubits" / "Quantum O(n)" removed from Figures 1, 2, 6; captions aligned with the proxy framing; Figure 8(d)'s synthetic markers disclosed as schematic; typographic and overfull fixes throughout.
 9. **Reference audit (preprints and metadata)**: all 54 references were classified, and every entry was then verified at the metadata level — all 51 DOIs were resolved through doi.org content negotiation and machine-compared against the cited title, first author, venue, and year, with the non-DOI entries checked at source. Two corrections resulted: (i) Kallaugher, Parekh and Voronova (SOSA 2025) now carries the SIAM proceedings DOI (10.1137/1.9781611978315.2) instead of its arXiv link, with the printed byline order confirmed on the publisher's pages; and (ii) a transposed article number in the Su, Guo and Wang (2024) entry was corrected (Information Sciences 676, article 120799, DOI 10.1016/j.ins.2024.120799 — the previously cited 120783 resolves to an unrelated article). One preprint is retained and explicitly flagged: Zhao et al. (arXiv:2604.07639) is the framework this paper studies; we verified via the arXiv record, the authors' official listing, and a Crossref registry query that no peer-reviewed version exists to date, the entry is labelled "Preprint", and every invocation of its theorems is co-cited with peer-reviewed anchors (Kallaugher, FOCS 2021; Huang et al., Science 2022; Kallaugher et al., SOSA 2025). A citation–bibliography consistency check confirms all 54 in-text keys map one-to-one onto the 54 entries.
 
-A tracked-changes PDF (`main_tracked_changes.pdf`, latexdiff against the reviewed version) accompanies this letter.
+A tracked-changes PDF (`tracked_changes.pdf`, latexdiff against the reviewed version) accompanies this letter.
 
 ---
 
@@ -105,7 +105,7 @@ We thank the reviewer for the structured list of fifteen recommendations; every 
 
 ## Note on verification
 
-Before making any statistical change we reproduced the published Experiment-5 per-seed results bit-exactly from the pinned seeds (all five Wilcoxon p-values match the published values to six significant digits), and all figure regenerations are rendering-only (numerical outputs byte-identical). The re-analysis and sensitivity scripts, with their outputs, are included in the revision package (`revision/exp5_reanalysis.py`, `revision/encoder_sensitivity.py`, and `code/exp5_effectsizes.py` in the repository), and the reproducibility documentation was corrected and extended (exact seed indices per experiment; the previously missing Machine-Temperature download step).
+Before making any statistical change we reproduced the published Experiment-5 per-seed results bit-exactly from the pinned seeds (all five Wilcoxon p-values match the published values to six significant digits), and all figure regenerations are rendering-only (numerical outputs byte-identical). The re-analysis and sensitivity scripts, with their outputs, are included in the accompanying package (`verification_scripts/exp5_reanalysis.py` and `verification_scripts/encoder_sensitivity.py`; `code/exp5_effectsizes.py` in the public repository), and the reproducibility documentation was corrected and extended (exact seed indices per experiment; the previously missing Machine-Temperature download step).
 
 On behalf of all authors,
 

@@ -34,6 +34,13 @@ difference: in R1.10 the combined letter says "the look-ahead point raised by
 Reviewer 2", which the Reviewer-1 letter states directly as "the full-series
 threshold look-ahead raised in review", since that reviewer does not see the
 other report.
+NOTE: a ready-to-send, journal-only package is built alongside this folder as
+  paper/mdpi_sensors/sensors-4470240_R1.zip
+It contains just the files the journal needs - revised manuscript PDF,
+tracked-changes PDF, the three response letters (PDF + DOCX), latex_source/
+for production, and the two verification scripts cited in the letter - with
+all internal working material (audits, frozen snapshots) left out.
+
 source_package.zip       Complete self-contained source: main.tex,
                          Definitions/ (official MDPI class), all figure
                          PDFs, cover letter, revision materials

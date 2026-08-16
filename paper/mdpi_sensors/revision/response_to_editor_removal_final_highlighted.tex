@@ -1,0 +1,232 @@
+% Options for packages loaded elsewhere
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL D:\research\quantum_paper\paper\mdpi_sensors\revision\response_to_editor_final.tex           Sun Aug 16 17:29:56 2026
+%DIF ADD D:\research\quantum_paper\paper\mdpi_sensors\revision\response_to_editor_removal_final.tex   Sun Aug 16 18:27:23 2026
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{\hl{#1}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{} %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF AMSMATHULEM PREAMBLE %DIF PREAMBLE
+\makeatletter %DIF PREAMBLE
+\let\sout@orig\sout %DIF PREAMBLE
+\renewcommand{\sout}[1]{\ifmmode\text{\sout@orig{\ensuremath{#1}}}\else\sout@orig{#1}\fi} %DIF PREAMBLE
+\makeatother %DIF PREAMBLE
+%DIF COLORLISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}[1][]{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}[1][]{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+\lstset{extendedchars=\true,inputencoding=utf8}
+
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\usepackage{soul}
+\usepackage{xcolor}
+\sethlcolor{yellow}
+\providecommand{\DIFaddbegin}{}
+\begin{document}
+
+\section{Response to the Academic
+Editor}\label{response-to-the-academic-editor}
+
+\textbf{Manuscript:} \emph{Proxy-Based Diagnostics of Quantum Oracle
+Sketching Robustness for Non-IID Sensor and Telemetry Streams}\\
+\textbf{Journal:} \emph{Sensors} (MDPI) · \textbf{Manuscript ID:}
+sensors-4470240
+
+\textbf{Editor's comment.} \emph{``I strongly invite the Authors to not
+include preprints among references. These works are still undergoing the
+peer-review process, thus meaning that their content may change prior to
+publication (if they will be finally published). The Authors can
+substitute them with related works already published.''}
+
+\textbf{Response.} We thank the Academic Editor \DIFdelbegin \DIFdel{and agree with the principle. We audited all }\DIFdelend \DIFaddbegin \DIFadd{for this helpful
+recommendation. In accordance with the Editor's request, we have removed
+the Zhao et al.~(2026) preprint, ``Exponential quantum advantage in
+processing massive classical data'' (arXiv:2604.07639), from the revised
+manuscript and from the reference list. The revised bibliography
+contains }\DIFaddend 54 \DIFdelbegin \DIFdel{references: every entry was checked against
+the publisher's own metadata, and all 51 DOIs resolved and matched the cited title, first author, venue, and year. The audit found two
+preprints.
+
+One had in fact been published
+and has been replaced: the Kallaugher, }\DIFdelend \DIFaddbegin \DIFadd{references and no preprints.
+
+}
+
+\DIFadd{Before editing, we audited every in-text use of the preprint together
+with the directly dependent clauses. We also examined the published
+works already cited in the manuscript --- Kallaugher (FOCS 2021),
+Kallaugher, }\DIFaddend Parekh and Voronova \DIFdelbegin \DIFdel{paper now carries its published version
+(}\DIFdelend \DIFaddbegin \DIFadd{(STOC 2024 and }\DIFaddend SOSA 2025\DIFdelbegin \DIFdel{, pp.~9--45, DOI 10.1137/1.9781611978315.2). The same sweep
+also fixed a transposed article number in the Su, Guo and Wang (2024)
+entry, which now reads }\emph{\DIFdel{Information Sciences}} %DIFAUXCMD
+\textbf{\DIFdel{676}}%DIFAUXCMD
+\DIFdel{, article
+120799, DOI 10.1016/j.ins.2024.120799.
+
+}%DIFDELCMD < 
+
+%DIFDELCMD < %%%
+\DIFdel{One preprint remains: Zhao }\DIFdelend \DIFaddbegin \DIFadd{), and Huang }\DIFaddend et
+al.\DIFdelbegin \DIFdel{, ``Exponential quantum advantage in
+processing massive classical data'' (arXiv:2604.07639). On 16 August
+2026 we re-checked whether it has been published or accepted anywhere.
+It has not: the arXiv record is unchanged, no bibliographic record we
+identified indicates a
+published or in-press version, and the authors'
+own publication pages still list only the arXiv posting. We retain it
+because it is not cited as evidentiary support for a claim of ours; itis the specific framework under study. The paper examines how that
+framework's correlation assumptions behave on non-IID streams; citing a
+related published work in its place would attribute its theorems }\DIFdelend \DIFaddbegin \DIFadd{~(}\emph{\DIFadd{Science}} \DIFadd{2022). These establish important but different
+results: problem-specific quantum-streaming space advantages, a
+black-box quantum-sketch construction, and quantum advantage for
+learning properties of quantum systems. None of them establishes the
+framework-specific classification, dimension-reduction, correlated-data,
+repetition-overhead, refreshing-time, or classical-hardness claims for
+which the preprint had been cited. We therefore did not substitute any
+of them for it, since doing so would attribute results }\DIFaddend to authors who
+did not \DIFdelbegin \DIFdel{prove them, and removing it would leave the
+framework the paper analyses unattributed}\DIFdelend \DIFaddbegin \DIFadd{obtain them}\DIFaddend .
+
+\DIFdelbegin \DIFdel{We have, however, reduced the manuscript's reliance on it to the minimum
+necessary for accurate attribution. Its in-text citations were cut from
+eight to six by consolidating two repeats. The entry is labelled
+``Preprint'' and is formatted in accordance with the MDPI Chicago
+reference style for unpublished manuscripts and working papers, and a
+footnote at its first citation states this status and explains why the preprint is not used as evidentiary support for the paper's empirical
+conclusions: no quantum algorithm is implemented or simulated, and every
+inherited quantity is listed with its provenance and epistemic status in Table 1. We also added a strong peer-reviewed published anchor of the same general kind --- }\DIFdelend \DIFaddbegin \DIFadd{Instead, only the affected statements were revised. Framework-specific
+theorem and provenance claims were removed; each remaining reference is
+now cited only for the result it actually establishes; and the
+operational quantities τ, r, T\_eff, ε and the accuracy proxy are stated
+unambiguously as constructs of the present paper. Section 3.3
+accordingly separates published theory and its boundary, this paper's
+assumptions, its heuristic constructions, its illustrative memory
+references, and its scope limitations, and states explicitly that the
+published quantum-streaming results do not establish the operational
+model used here and that this paper adds no quantum theorem. Table 1's
+provenance row and the associated memory-reference descriptions are
+relabelled as paper-defined illustrative scaling references. The
+remaining Zhao-dependent clauses in the abstract and introduction were
+minimally corrected.
+
+}
+
+\DIFadd{The reference audit that accompanied this revision also confirmed the
+published form of the }\DIFaddend Kallaugher, Parekh and Voronova \DIFdelbegin \DIFdel{(STOC 2024}\DIFdelend \DIFaddbegin \DIFadd{work (SOSA 2025}\DIFaddend ,
+pp.~\DIFdelbegin \DIFdel{1805--1815, DOI }\DIFdelend \DIFaddbegin \DIFadd{9--45, DOI 10.1137/1.9781611978315.2), added the published STOC 2024
+result (DOI }\DIFaddend 10.1145/3618260.3649709) \DIFdelbegin \DIFdel{, which establishes an
+}\DIFdelend \DIFaddbegin \DIFadd{for the }\DIFaddend exponential
+quantum--classical space separation \DIFdelbegin \DIFdel{for a natural streaming
+problem }\DIFdelend --- \DIFdelbegin \DIFdel{co-cited with it in the Related Work and in the footnote. In
+doing so, we }\DIFdelend \DIFaddbegin \DIFadd{which }\DIFaddend corrected a Related Work
+sentence that \DIFdelbegin \DIFdel{had }\DIFdelend \DIFaddbegin \DIFadd{would otherwise have }\DIFaddend credited the 2021 FOCS paper with an
+exponential separation\DIFdelbegin \DIFdel{; the FOCS 2021 result
+provides a polynomial quantum advantage}\DIFdelend , whereas the \DIFdelbegin \DIFdel{STOC }\DIFdelend \DIFaddbegin \DIFadd{advantage established there is
+polynomial --- and corrected a transposed article number in the Su, Guo
+and Wang (}\DIFaddend 2024\DIFdelbegin \DIFdel{work
+establishes the exponential separation. The revised bibliography now
+contains 55 entries, including this newly added published anchor, and we
+re-checked that every in-text citation matches exactly one bibliography
+entry}\DIFdelend \DIFaddbegin \DIFadd{) entry, now }\emph{\DIFadd{Information Sciences}} \textbf{\DIFadd{676}}\DIFadd{,
+article 120799, DOI 10.1016/j.ins.2024.120799}\DIFaddend .
+
+\DIFdelbegin \DIFdel{Should the work appear in a peer-reviewed venue before this manuscript
+reaches proofs, we will substitute the published version at that stage.
+If the Editor considers the presence of even this single, explicitly
+labelled preprint unacceptable, we would be grateful for the Editor's
+preferred remedy and will follow it}\DIFdelend \DIFaddbegin \DIFadd{No replacement reference was added to preserve the citation count, and
+no experimental data, methodology, equations, proxy definitions,
+datasets, seeds, numerical results, figure artwork or conclusions were
+changed. All reviewer-requested revisions remain in place, every in-text
+citation was re-checked against the bibliography, and the manuscript
+compiles with no unresolved citations or references}\DIFaddend .
+
+On behalf of all authors,
+
+\textbf{AbdelMoniem Helmy} (corresponding author)
+\href{mailto:abdelmoniem.hafez@cu.edu.eg}{\nolinkurl{abdelmoniem.hafez@cu.edu.eg}}
+· ORCID 0000-0001-5996-6019
+
+\end{document}

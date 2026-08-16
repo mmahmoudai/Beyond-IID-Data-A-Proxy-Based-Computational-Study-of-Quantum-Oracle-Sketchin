@@ -1,0 +1,743 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Response to Reviewers}\label{response-to-reviewers}
+
+\textbf{Manuscript:} \emph{Proxy-Based Diagnostics of Quantum Oracle
+Sketching Robustness for Non-IID Sensor and Telemetry Streams}
+(submitted as \emph{Quantum Oracle Sketching for Non-IID Sensor and
+Telemetry Streams: A Proxy-Based Computational Study})\\
+\textbf{Journal:} Sensors (MDPI) · \textbf{Manuscript ID:}
+sensors-4470240
+
+We thank both reviewers for careful, constructive reviews that have
+materially improved the paper. Both reviews converge on the same central
+point, and we agree with it: the previous version, although internally
+hedged, still presented itself as evidence about quantum performance,
+when what it can honestly support is a \textbf{proxy-based diagnostic
+and hypothesis-generation framework for correlation-sensitive streaming
+analysis}. The revision repositions the manuscript accordingly ---
+title, abstract, statistics, figures, and conclusion --- without
+removing any experiment or altering any measured result: all stochastic
+outputs regenerate bit-identically from the same seeded pipeline (we
+verified this explicitly before re-analysis; the verification scripts
+ship with the revision).
+
+\textbf{Summary of the principal changes} (full detail under each point
+below):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Retitled} to \emph{Proxy-Based Diagnostics of Quantum Oracle
+  Sketching Robustness for Non-IID Sensor and Telemetry Streams}; the
+  abstract now opens ``In theory, \ldots{}'', states that no quantum
+  algorithm is implemented or simulated, and was shortened to
+  \textasciitilde220 words. \emph{(Note on the tracked-changes file: the
+  MDPI class places the title and abstract in the document preamble,
+  which latexdiff does not mark; both are completely rewritten.)}
+\item
+  \textbf{New Section 3.3, ``Relationship Between Operational Proxies
+  and Quantum Oracle-Sketching Theory''}, separating published theory
+  and its boundary / assumptions / heuristic constructions / memory
+  references / scope limitations, with a provenance table (Table 1)
+  stating per quantity what the cited literature supports, what is
+  introduced here, and what is \emph{not} theoretically guaranteed ---
+  including the explicit statement that the published quantum-streaming
+  results are problem-specific and do not establish the operational τ,
+  r, T\_eff or accuracy model used here, so the τ-penalised landscape is
+  a classical effective-sample-size stress test used for diagnosis and
+  hypothesis generation.
+\item
+  \textbf{Statistics rebuilt around estimation rather than testing}
+  (Experiment 5): Hodges--Lehmann paired-difference estimates with exact
+  signed-rank 95\% intervals, matched-pairs rank-biserial correlations
+  (interpreted as sign-concordance), p-values demoted to descriptive
+  companions, disclosure that no comparison survives Holm correction at
+  n = 10 (with the reason), the τ-estimator lattice sensitivity, and an
+  explicit statement that the crossover location is a deterministic
+  solution whose uncertainty comes from the τ estimator and the
+  constants, not from tests.
+\item
+  \textbf{New sensitivity analyses from existing data} (no new
+  stochastic runs): a C--δ grid for the crossover (Table 8: rho* moves
+  from 0.38 to beyond the sweep; ordinal reading is the robust one) and
+  an encoder/resolution sensitivity table for the real streams (Table:
+  10 re-encodings; the NYC-above-Machine-Temperature ordering holds in
+  all 10).
+\item
+  \textbf{New Discussion subsections} on why analytic and empirical
+  correlation estimates diverge, and on what the landscape can and
+  cannot predict --- including three \textbf{falsifiable hypotheses
+  (H1--H3) with explicit refutation criteria}.
+\item
+  \textbf{New ``Threats to Validity'' section} (construct / internal /
+  external / statistical-conclusion) and a promoted, expanded
+  \textbf{Future Work} section.
+\item
+  \textbf{Conclusion rewritten}: primary contribution = the (τ, r)
+  landscape; secondary = proxy-based hypothesis generation; the sentence
+  ``The paper demonstrates no quantum advantage and implements no
+  quantum algorithm'' appears verbatim.
+\item
+  \textbf{Figures}: the Experiment-5 legend entry ``Proxy-model
+  advantage'' renamed ``Proxy-estimated separation''; in-image labels
+  ``n = 10 qubits'' / ``Quantum O(n)'' removed from Figures 1, 2, 6;
+  captions aligned with the proxy framing; Figure 8(d)'s synthetic
+  markers disclosed as schematic; typographic and overfull fixes
+  throughout.
+\item
+  \textbf{Reference audit}: the reference list was audited entry by
+  entry and verified against publisher metadata; every DOI was resolved
+  and machine-compared against the cited title, first author, venue and
+  year. Three outcomes followed. (i) In accordance with the Academic
+  Editor's request that preprints not be cited, the Zhao et al.~(2026)
+  preprint (arXiv:2604.07639) was removed from the manuscript and the
+  reference list; no other published work was substituted for it,
+  because none establishes the framework-specific results it had been
+  cited for, and the affected statements were instead revised so that
+  each remaining reference is used only for what it actually supports.
+  (ii) Kallaugher, Parekh and Voronova is cited in its published form
+  (SOSA 2025, pp.~9--45, DOI 10.1137/1.9781611978315.2), and the
+  published STOC 2024 result (DOI 10.1145/3618260.3649709) is cited for
+  the exponential quantum--classical space separation, which also
+  corrects a Related Work sentence that would otherwise have credited
+  the 2021 FOCS paper with an exponential separation (the advantage
+  established there is polynomial). (iii) A transposed article number in
+  the Su, Guo and Wang (2024) entry was corrected (\emph{Information
+  Sciences} \textbf{676}, article 120799, DOI
+  10.1016/j.ins.2024.120799). The final bibliography contains 54
+  references, and every in-text citation was re-checked against it.
+\end{enumerate}
+
+A tracked-changes PDF (\texttt{tracked\_changes.pdf}, latexdiff against
+the reviewed version) accompanies this letter.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Reviewer 1}\label{reviewer-1}
+
+We thank the reviewer for the structured list of fifteen
+recommendations; every one is addressed below.
+
+\textbf{R1.1 --- ``I strongly recommend to reduce the emphasis on
+quantum advantage and instead presenting the τ,r landscape primarily as
+a diagnostic framework to identify scenarios where future quantum
+implementations is most promising.''}
+
+\emph{Response.} Adopted as the organising principle of the revision.
+The title now leads with ``Proxy-Based Diagnostics''; the Introduction
+states the paper ``is best read as a diagnostic and
+hypothesis-generation framework \ldots{} it neither demonstrates nor
+claims a realised quantum--classical separation'' (§1); the Conclusion
+names the landscape as the primary contribution and hypothesis
+generation as the secondary one; and §7.4 now states three falsifiable
+hypotheses (H1--H3) that make ``where future implementations are most
+promising'' concrete and testable. \emph{Changes:} Title; Abstract; §1
+(scope paragraph, contributions 3--4); §7.4 (Scope of the Diagnostic,
+incl.~H1--H3); §10 (Conclusions, rewritten); every
+``quantum-favourable'' replaced by ``proxy-favourable''/``hypothesized
+favourable''.
+
+\textbf{R1.2 --- ``Please clarify the relationship between the heuristic
+proxy model and the original theoretical framework.''}
+
+\emph{Response.} A dedicated subsection now does exactly this, and draws
+the boundary explicitly. §3.3 separates (i) \emph{published theory and
+boundary} --- the peer-reviewed quantum-streaming results that provide
+the general context (a polynomial quantum space advantage for one-pass
+triangle counting; an exponential quantum space advantage for
+approximating maximum directed cut; a black-box route from certain
+classical sketches to quantum streaming algorithms), together with the
+explicit statement that these are problem-specific results which do
+\textbf{not} establish the operational τ, r, T\_eff or accuracy model
+used here, and that this paper adds no quantum theorem; (ii)
+\emph{assumptions} --- two-scalar summarisability, binarised-stream
+fidelity, and the task-rate-as-pipeline stand-in, all stated as
+modelling choices of this paper; (iii) \emph{heuristic constructions
+introduced in this paper} --- the T\_eff division by τ and r, in the
+manner of a classical effective-sample-size correction, and the VC-type
+task rate, neither of which is a published quantum guarantee; (iv)
+\emph{memory references}, retained solely as paper-defined illustrative
+scaling curves; and (v) \emph{scope limitations}. Table 1 tabulates the
+provenance and epistemic status of every model-level quantity, with a
+``not guaranteed'' column. The relationship is therefore stated as one
+of motivation and analogy, not of derivation. \emph{Changes:} New §3.3
+with four labelled paragraphs and Table 1; §3.2 proxy-status paragraph.
+
+\textbf{R1.3 --- ``The analytic Markov τ proxy differs substantially
+from the empirical measurements. I recommend to discuss this discrepancy
+in greater detail and explain whether it reflects limitations of the
+proxy model or the synthetic data generation process.''}
+
+\emph{Response.} A dedicated subsection (§7.3, ``Why Analytic and
+Empirical Correlation Estimates Diverge'') now answers the question
+directly. For Markov switching the two quantities answer different
+questions: each \emph{bit's} marginal autocorrelation decays as ρ\^{}k
+and crosses 1/e at ≈2.8 lags (ρ = 0.7), while the \emph{joint} n-bit
+chain takes Θ(n log n/(1−ρ)) steps to mix --- both numbers are correct
+answers to different questions. The divergence is therefore partly
+expected behaviour and partly a limitation of single-scalar proxies; it
+is \textbf{not} a data-generation defect: the generators reproduce their
+intended statistics, and the gap persists under all four alternative τ
+estimators of Experiment 9, isolating the estimator family as the cause.
+The subsection also derives the practical implications (empirical τ as
+the operational input; analytic τ as a conservative envelope; their
+ratio as a long-memory diagnostic). \emph{Changes:} New §7.3 (three
+labelled paragraphs: technical explanation / interpretation /
+implications); Experiment 4 cross-reference; Conclusion RQ1.
+
+\textbf{R1.4 --- ``I recommend to validate the proposed framework on
+additional real-world datasets. It will help to better demonstrate its
+generalizability.''}
+
+\emph{Response.} We agree this is the most valuable extension, and we
+are explicit that we have not done it within this revision: adding
+datasets would have been a new experimental campaign, and we preferred
+to keep this revision strictly re-analysis-based so that every published
+number remains bit-reproducible. What we did add, from the same raw
+data, is an \textbf{encoder/resolution sensitivity analysis} (new table
+in §6.8): the two streams were re-encoded across ten sampling-resolution
+and bucket-width configurations, and the
+NYC-Taxi-above-Machine-Temperature proxy ordering holds in all ten ---
+so the existing two-stream placement is at least not an artefact of one
+encoder setting. The manuscript now states plainly that the real-stream
+experiment ``is illustrative rather than statistically representative''
+(§6.8), the Threats section records the n = 2 limitation, and Future
+Work item (iii) commits to network telemetry, cybersecurity event
+streams, financial series, and IoT fleets, with hypothesis H1's protocol
+(rank correlation between placement and outcome over a ≥6-stream corpus)
+defining exactly how generalisability will be tested. \emph{Changes:}
+§6.8 (illustrative statement; encoder/resolution table and paragraph);
+§8 External validity; §9 Future Work (iii); §7.4 H1--H2.
+
+\textbf{R1.5 --- ``Please include a more comprehensive sensitivity
+analysis of the selected proxy parameters, particularly C and δ, by this
+you will show how they influence the reported results.''}
+
+\emph{Response.} Done, quantitatively. Because the proxy is a
+closed-form function of the measured (τ, r), we re-evaluated it on the
+same per-seed empirical τ values across C in \{1, 1.5, 2, 2.5\} crossed
+with δ in \{0.01, 0.05, 0.1\}. New Table 8 reports the induced movement
+of the proxy--baseline crossover: regime \emph{ordering} is invariant (C
+and δ enter only through the monotone factor κ = C²log(1/δ)), but the
+crossover location moves from ρ* ≈ 0.38 at (C = 2.5, δ = 0.01) to beyond
+the sweep range at C = 1, with ρ* ≈ 0.82 at the operating point. The
+text now instructs that the landscape be read \textbf{ordinally}, the
+abstract carries the conditionality explicitly, and we additionally
+state that C = 2 is a conventional order-unity choice not fixed by any
+constant in the cited theory (§5.3). \emph{Changes:} New ``Proxy
+constants C and δ'' paragraph + Table 8 in §6.9; §3.2 and §5.3 updated;
+Abstract; §8 Statistical-conclusion validity.
+
+\textbf{R1.6 --- ``The comparison between deterministic quantum proxies
+and stochastic classical baselines should be presented more cautiously.
+The current statistical analysis may unintentionally suggest a
+comparison between implemented algorithms rather than between empirical
+results and theoretical proxies.''}
+
+\emph{Response.} We rebuilt the statistical presentation around this
+point. Table 4 now reports Hodges--Lehmann estimates of the paired
+(proxy − classical) difference with \textbf{exact} signed-rank 95\%
+intervals and rank-biserial correlations; p-values are retained only as
+descriptive companions. A dedicated paragraph (``What these tests do and
+do not establish'', §6.5) states that the pairing is
+stochastic-learner-versus-model-prediction, that the proxy's seed
+variability comes solely from the per-seed τ estimate, that r\_rb here
+indexes \emph{sign concordance across seeds} rather than magnitude, and
+--- verbatim --- that the tests ``do not, and cannot, establish that one
+algorithm outperforms another, and no quantum algorithm is implemented
+anywhere in this comparison''. We further disclose that none of the five
+comparisons survives Holm correction at n = 10 (smallest adjusted p =
+0.098; an outcome of one-to-two discordant seeds, not a design ceiling),
+that the ρ = 0.48 interval is not robust to a single step of the
+integer-valued τ estimator, and that the crossover location is the
+deterministic solution of acc\_proxy(τ̂(ρ)) = mean classical accuracy,
+with uncertainty inherited from τ̂ and (C, δ), not from tests.
+\emph{Changes:} Table 4 (rebuilt, incl.~caption stating the five
+pre-specified test points); §6.5 body and interpretation paragraph;
+Abstract (p-value removed); §7.1; §8 Statistical-conclusion validity.
+
+\textbf{R1.7 --- ``I recommend to provide a stronger justification for
+the selected classical baselines and discussing if additional streaming
+methods can offer a more informative comparison.''}
+
+\emph{Response.} §5.2 now justifies the trio explicitly: the three
+baselines span complementary axes of bounded-memory streaming learning
+--- gradient-based (online SGD), variance-reduced gradient-based
+(averaged SGD), and non-gradient hash-count-based (Count-Min) --- while
+sharing the single-pass, fixed-memory regime that the proxy models. We
+also explain why drift-adaptive methods (ADWIN-equipped learners,
+adaptive random forests) are deliberately excluded from the primary
+comparison --- they respond to non-stationarity by discarding history,
+which would confound the correlation-budget question the proxy isolates
+--- and we name benchmarking them on the same landscape as an extension.
+\emph{Changes:} §5.2 (new justification passage with citations); §9
+Future Work.
+
+\textbf{R1.8 --- ``Please explain more clearly why the proposed
+operational proxies, τ and r, are sufficient to characterize the
+correlation properties of the studied data streams, and discuss any
+limitations of relying only on these two measures.''}
+
+\emph{Response.} The revision treats two-scalar sufficiency as an
+explicit \emph{assumption}, not a fact: §3.3 (``Assumptions'', item (a))
+states it as a modelling choice of this paper, and §7.3 shows its
+precise failure mode --- for non-mixing (long-range-dependent) processes
+no single scalar exists that the analytic and empirical estimators could
+agree on, so a single-number τ is intrinsically lossy there. The
+mitigations are stated: the analytic-to-empirical τ \emph{ratio} is
+itself a useful third diagnostic flagging long-memory content, and
+multi-scale refinements of τ (integrated-autocorrelation estimates at
+several horizons) are named as follow-on work. The Threats section
+(Construct validity) records the residual risk. \emph{Changes:} §3.3
+Assumptions; §7.3 Interpretation and Implications; §8 Construct
+validity; §9 Future Work (ii).
+
+\textbf{R1.9 --- ``I recommend to expand the discussion of the
+assumptions behind each synthetic correlation regime and to please
+explain how closely these settings represent practical sensor and
+telemetry environments.''}
+
+\emph{Response.} §4 already carried per-regime provenance notes; the
+Summary (§4.6) now adds the realism mapping: Markov switching idealises
+short-range state persistence in sensor readouts; seasonal drift the
+diurnal/weekly cycles of telemetry and demand series; burst repetition
+the duplicate-heavy event bursts of monitoring and logging pipelines;
+and long-range dependence the self-similar traffic behaviour first
+measured on Ethernet --- with the explicit caveat that these are
+idealisations, that real streams mix the mechanisms (as the two NAB
+cases show), and that the mapping to any concrete deployment is
+qualitative (Table 9). \emph{Changes:} §4.6 (new passage with
+citations); Table 9 caption (analytic-convention statement).
+
+\textbf{R1.10 --- ``The manuscript would benefit from a dedicated
+discussion of threats to validity, include the assumptions introduced by
+the heuristic proxy model, synthetic data generation and feature
+binarization.''}
+
+\emph{Response.} Added as a dedicated section. §8 (``Threats to
+Validity'') is organised by construct, internal, external, and
+statistical-conclusion validity and covers exactly the requested items:
+the heuristic proxy constructs (with pointers to the provenance table),
+synthetic-generator selection, feature binarisation (arcsine shrinkage
+makes real-stream (τ, r) estimates lower bounds on the
+continuous-process correlation), the deterministic-vs-stochastic
+comparison design, dataset selection, target definition (including the
+look-ahead point raised by Reviewer 2), fixed hyperparameters, and the n
+= 10 seed budget. \emph{Changes:} New §8 replacing the former
+limitations list.
+
+\textbf{R1.11 --- ``I recommend to discuss the computational complexity
+of estimating τ and r and the scalability of the proposed framework for
+high-volume streaming systems.''}
+
+\emph{Response.} Added. §5.1 now contains an ``Estimator cost and
+scalability'' paragraph: the τ estimator needs the bitwise
+autocorrelation up to lag K --- O(nTK) time naively, O(nK) memory with a
+ring buffer per feature --- and the r estimator scans a W-length forward
+window --- O(TW) comparisons, expected O(T) with hashing, O(Wn) memory.
+Both are linear in T, independent of the alphabet size N = 2\^{}n,
+single-pass friendly, and embarrassingly parallel across features; on
+the longest stream studied (T = 22,695) they complete in well under a
+second, so the diagnostic adds negligible overhead for high-volume
+deployments. \emph{Changes:} §5.1 (new paragraph).
+
+\textbf{R1.12 --- ``Some figures contain many overlapping curves and
+annotations, I recommend to simplify the visual presentation and enlarge
+labels to improve readability.''}
+
+\emph{Response.} All nine figures were re-audited. Concretely: the
+Figure 5 legend entry ``Proxy-model advantage'' was renamed
+``Proxy-estimated separation'' and stray typographic backslashes were
+removed from five panel titles (Figures 4--6 regenerated); in-image
+labels ``n = 10 qubits'', ``Quantum proxy (IID, 10 qubits)'', and
+``Quantum O(n)'' were replaced with neutral proxy/cited-theory labels
+(Figures 1, 2, 6 regenerated); Figure 8(d)'s synthetic markers are now
+labelled as schematic orientation marks and the caption gives the
+numeric stream coordinates instead of a visual-adjacency claim; caption
+CI statements were scoped to the stochastic panels only; and four tables
+that previously overran the text width were reformatted. All
+regenerations are rendering-only --- the numerical outputs are
+byte-identical. (The landscape figures already use colour-blind-safe
+palettes with direct contour labelling from the previous revision
+cycle.) \emph{Changes:} Figures 1, 2, 4, 5, 6 regenerated; captions of
+Figures 1, 3, 5, 6, 7, 8, 9; Tables 2--9 formatting.
+
+\textbf{R1.13 --- ``The discussion could better distinguish theoretical
+quantum memory advantages from the practical observations obtained
+through the proxy-based evaluation.''}
+
+\emph{Response.} This distinction is now enforced at every occurrence.
+Experiment 6 opens: ``No memory lower bound is measured empirically in
+this experiment'', and states that no result constitutes an empirical
+memory floor for online SGD, averaged SGD, or Count-Min; §3.3 (``Memory
+references'') makes the same statement structurally, and records that
+the published quantum-streaming papers do not establish the O(n)/Ω(√N)
+pair for the diagnostic task studied here; the provenance table lists
+that pair as ``introduced here (illustrative scaling reference)'', with
+``a proven separation for this diagnostic task'' in the not-guaranteed
+column; Figure 6's caption labels panel (a) ``illustrative
+memory-scaling reference (paper-defined; no measured content)''; and
+§7.1 closes its three structural factors with ``All three factors are
+properties of the proxy model or its illustrative references; none is a
+measured quantum result'', with the n ≥ 20 statement marked as an
+extrapolation beyond the tested range. \emph{Changes:} §3.3; §6.6
+(opening and panel text); Figure 6 caption; §7.1; Table 1 row.
+
+\textbf{R1.14 --- ``Please discuss the applicability of the proposed
+framework to other streaming domains beyond sensor telemetry, such as
+network traffic, financial streams, or cybersecurity monitoring.''}
+
+\emph{Response.} Table 9 maps network backbone traffic, financial
+returns, sensor/IoT, and concept-drifted streams onto the landscape from
+published measurement ranges (now recomputed from the paper's own
+formula, with verdicts given as ranges and the estimator convention
+stated), and Future Work item (iii) commits to exactly the requested
+domains: network telemetry (flow and latency series), cybersecurity
+event streams (intrusion and log-anomaly feeds), financial tick and
+returns series, and large-scale IoT monitoring fleets. \emph{Changes:}
+Table 9 (recomputed labels and caption); §7.2; §9 Future Work (iii).
+
+\textbf{R1.15 --- ``strengthen the conclusion, for this emphasize the
+practical contributions of the study, clearly summarize its limitations,
+and please outline the most important directions for future research.''}
+
+\emph{Response.} The Conclusion is rewritten to exactly this structure:
+a ``Practical contribution'' paragraph (the landscape as a cheap
+pre-screening step --- estimate (τ, r), place the stream, read off
+whether correlation alone erodes the budget below the
+rare-event-learning level, as it does for Machine Temperature at T\_eff
+= 52); a ``Limitations and required validation'' paragraph pointing to
+the Threats section and naming the decisive missing step (an implemented
+or simulated oracle-sketching pipeline evaluated at predicted-favourable
+and predicted-unfavourable coordinates); and research-question answers
+restated in effect-size terms with estimator conventions bound.
+\emph{Changes:} §10 (full rewrite); §9 Future Work.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Reviewer 2}\label{reviewer-2}
+
+We thank the reviewer for an unusually thorough review; the closing
+recommendation --- make the (τ, r) landscape-as-hypothesis-generator the
+paper's main message --- is precisely the repositioning this revision
+performs.
+
+\textbf{R2.1 --- ``The key issue is the relationship between τ and r and
+the quantities in the framework of quantum oracle-sketching. \ldots{}
+They have to strengthen the theoretical basis for the chosen proxy
+construction and distinguish the results from the original from the
+assumptions that are used in this paper.''}
+
+\emph{Response.} New §3.3 does this separation explicitly, and states
+the boundary rather than assuming an equivalence. It has five labelled
+parts: \emph{Published theory and boundary} --- the peer-reviewed
+quantum-streaming results that motivate the study (polynomial quantum
+space advantage for one-pass triangle counting; exponential quantum
+space advantage for approximating maximum directed cut; a black-box
+route from certain classical sketches to quantum streaming algorithms),
+with the explicit statement that these are problem-specific and do
+\textbf{not} establish the operational τ, r, T\_eff or accuracy model
+used here, and that this paper adds no quantum theorem;
+\emph{Assumptions} (two-scalar summarisability, binarised-stream
+fidelity, task-rate-as-pipeline stand-in --- all modelling choices of
+this paper); \emph{Heuristic constructions introduced in this paper}
+(the T\_eff division by τ and r, following the classical
+effective-sample-size correction long standard in Markov-chain output
+analysis, and the VC-type task rate --- neither a published quantum
+guarantee); \emph{Memory references}, retained solely as paper-defined
+illustrative scaling curves; and \emph{Scope limitations}, which states
+that τ and r are measurement conventions, not formally equivalent to a
+universal mixing time, effective-sample count or quantum sample-overhead
+parameter. Table 1 gives per-quantity provenance with an explicit ``not
+guaranteed'' column. Directly on the reviewer's question: τ and r are
+operational summaries defined in this paper for the proxy-based
+diagnostic; the manuscript neither implements the quantum
+oracle-sketching framework nor claims to prove or reproduce any quantum
+result, and the τ-penalised landscape is presented as a classical
+effective-sample-size stress test used for diagnosis and hypothesis
+generation. \emph{Changes:} New §3.3 + Table 1; §3.2;
+effective-sample-size lineage now cited (Geyer 1992).
+
+\textbf{R2.2 --- ``The terminology of quantum performance should be
+moderated throughout the paper. \ldots{} we will refer to them as
+proxy-based predictions instead of the actual quantum performance. This
+is particularly relevant in the Abstract, Results, Discussion, figure
+captions and Conclusion.''}
+
+\emph{Response.} A systematic terminology pass was made over exactly
+those surfaces. ``Quantum-favourable'' no longer appears (now
+``proxy-favourable''/``hypothesized favourable''); ``quantum performance
+proxy crosses below classical performance'' and similar constructions
+were rewritten (``the accuracy proxy computed with the analytic τ lies
+below the measured classical baseline''); Table 6's column is ``Proxy
+hypothesis''; and --- because captions alone cannot fix text baked into
+images --- Figures 1, 2, and 6 were regenerated to remove the in-image
+labels ``n = 10 qubits'', ``Quantum proxy (IID, 10 qubits)'', and
+``Quantum O(n)''. Explicit ``no quantum algorithm is implemented''
+statements now appear in the Abstract, §3.3, §6.5, §6.6, §6.8, §7.4, §8,
+and the Conclusion. \emph{Changes:} Global; Figures 1, 2, 6 regenerated;
+all captions audited.
+
+\textbf{R2.3 --- ``The statistical comparison between classical
+baselines and the proxy model is still not resolved. Our Wilcoxon tests
+compare stochastic classical results for seeds to a proxy value that is
+deterministic for a given value of parameters. \ldots{} We believe the
+magnitude of the classical minus proxy difference and the uncertainty
+may be a better gauge than simply p-values.''}
+
+\emph{Response.} Adopted in full --- magnitude and uncertainty now lead,
+and the tests are re-scoped to the one thing they can support. Table 4
+reports, per sweep point, the Hodges--Lehmann estimate of the paired
+difference with its exact signed-rank 95\% interval (e.g., +0.042
+{[}+0.011, +0.087{]} at ρ = 0; −0.046 {[}−0.079, −0.003{]} at ρ = 0.88)
+and the rank-biserial correlation, which we interpret explicitly as
+sign-concordance across seeds (scale-free against a near-constant
+reference; all magnitude information lives in the difference estimate).
+The p-values are descriptive companions only; we disclose that none
+survives Holm correction at n = 10 and why; we disclose the integer-τ
+lattice sensitivity (one lag step = 0.012, enough to move the ρ = 0.48
+interval across zero); and the interpretation paragraph states that the
+crossover is the deterministic solution of acc\_proxy(τ̂(ρ)) = mean
+classical accuracy, with uncertainty inherited from the estimator and
+the constants (C, δ), not from the tests. The full re-analysis (which
+first reproduced the published per-seed results bit-exactly --- all five
+p-values to six digits) ships with the revision. \emph{Changes:} Table 4
++ caption; §6.5 (rewritten body and interpretation paragraphs);
+Abstract; §7.1; §8; \texttt{verification\_scripts/exp5\_reanalysis.py} +
+output.
+
+\textbf{R2.4 --- ``The huge discrepancy between the analytic and
+empirical refreshing time is one of the most important findings in the
+paper, especially for the long-range dependence regime. \ldots{} The
+authors should discuss this in more detail and discuss its implications
+for the interpretation of the central (τ,r) sensitivity landscape.''}
+
+\emph{Response.} We agree it is one of the paper's most important
+findings and have promoted it accordingly. New §7.3 gives the mechanism
+(the analytic proxies target model-level worst-case scales ---
+joint-chain mixing; tail-dominated integrated autocorrelation --- while
+the empirical estimator measures the short-lag marginal decorrelation of
+the binarised stream; for a non-mixing process there is no scalar the
+two could agree on), and the implications for the landscape are now
+carried through the whole paper: verdicts are bound to their estimator
+convention everywhere, and we state openly that the burst and
+long-memory extremes \emph{exchange places} between the analytic and
+empirical conventions (burst saturates through its measured duplication;
+long-memory's high empirical value is the short-lag artefact) --- in
+Experiment 9, §7.3, the RQ2/RQ3 answers, and the Figure 3/7 captions.
+The abstract now says the two estimates ``diverge'' (not
+``overestimate'', which presupposed the empirical value as ground truth)
+and adds that they answer different questions. \emph{Changes:} New §7.3;
+§6.9; §6.3; Figures 3, 7 captions; Conclusion RQ1--RQ3; Abstract.
+
+\textbf{R2.5 --- ``The classical-memory comparison needs to be taken
+with care. The classical lower bound curve \ldots{} is not actually an
+empirical lower bound for the SGD, averaged-SGD, or Count-Min tools used
+in our experiments. \ldots{} we should make it more prominent in the
+dimension-scaling discussion.''}
+
+\emph{Response.} Made prominent exactly there, and the curves are no
+longer presented as cited bounds at all. Experiment 6 now opens with:
+``No memory lower bound is measured empirically in this experiment: the
+curves in panel (a) are illustrative quantities, and no result here
+constitutes an empirical memory floor for online SGD, averaged SGD, or
+Count-Min.'' Figure 6's caption labels panel (a) ``illustrative
+memory-scaling reference (paper-defined; no measured content)'' and
+states that their exponential divergence is a visual scaling contrast,
+not an established separation. §3.3's ``Memory references'' paragraph
+records that the published quantum-streaming papers do not establish the
+O(n)/Ω(√N) pair for this diagnostic task and that the pair is retained
+solely as a paper-defined illustrative scaling reference; the provenance
+table carries the same status, and §7.1 states that none of its
+structural factors is a measured quantum result. \emph{Changes:} §6.6;
+Figure 6 (caption and regenerated labels); §3.3; Table 1; §7.1.
+
+\textbf{R2.6 --- ``The real-stream analysis is useful as a sanity check
+but it is limited to two NAB datasets. The conclusions on the sensor and
+telemetry applications should therefore be conservative.''}
+
+\emph{Response.} The conclusions are now explicitly conservative: §6.8
+states the experiment ``is illustrative rather than statistically
+representative'', the External-validity paragraph records that
+generalisation is unverified, and the abstract claims placement only.
+Additionally, a new encoder/resolution sensitivity table strengthens
+what \emph{can} be said from two streams: across ten re-encodings of the
+same raw series (three sampling resolutions × three bucket widths), the
+NYC-above-Machine-Temperature ordering holds in every configuration, so
+the reported placement is at least encoder-stable. Broader corpora are
+committed in Future Work with a concrete test protocol (H1).
+\emph{Changes:} §6.8; new encoder-sensitivity paragraph + table; §8; §9;
+§7.4 H1.
+
+\textbf{R2.7 --- ``the target defined based on a percentile of the full
+time series should also be reconsidered in the context of streaming
+analysis, since using the full series to set the target threshold can
+take into account future observations. A threshold set from a first
+calibration interval or updated only from previously observed samples
+would provide a more rigorous prequential design.''}
+
+\emph{Response.} This is an excellent catch, and we now disclose it
+explicitly rather than leave it implicit. §6.8 (``Binarisation choice'')
+states that the threshold is computed from the full series and therefore
+uses information not available prequentially at each step; that the
+feature stream and the (τ, r) estimates involve no such look-ahead ---
+so the landscape placement, the paper's central output for these
+streams, is unaffected, the leakage touching only the classical-baseline
+reference numbers; and that a threshold calibrated on an initial
+interval, or updated from previously observed samples only, is the
+rigorous prequential design, which we adopt as future work. The Threats
+section (Internal validity, item (v)) records it as a residual risk. We
+chose disclosure over re-running the baselines in this revision to keep
+every published number bit-reproducible; we are happy to re-run with a
+calibration-interval threshold in a further round if the reviewer
+prefers. \emph{Changes:} §6.8 Binarisation paragraph; §8 Internal
+validity (v); §9.
+
+\textbf{R2.8 --- ``The interpretation of the NYC Taxi Count-Min result
+also needs to be qualified. The six-bit representation gives a
+relatively small number of possible feature vectors and hence memorising
+the same feature patterns is relatively easy. \ldots{} I would like to
+give more weight to the implications when we think about the apparent
+agreement between the Count-Min performance and our proxy prediction.''}
+
+\emph{Response.} The qualification now carries real weight in three
+places. The dedicated ``Why Count-Min looks strong'' paragraph is
+retained; the interpretation adds, plainly: ``the favourable-side
+separation between the two streams rests on Count-Min alone; the
+hashed-linear learners do not corroborate it'' --- and we additionally
+report that both SGD variants fall \emph{below} the majority baseline on
+accuracy and that Averaged-SGD's balanced accuracy straddles chance, so
+the apparent proxy--Count-Min agreement is explicitly not read as
+validation. §7.4 lists representation-specific effects like this
+memorisation route among the things the landscape \emph{cannot}
+anticipate, and --- going further in the reviewer's direction --- the
+same section now concedes that, read strictly as an accuracy projection,
+the proxy is falsified on Machine Temperature (0.500 predicted vs
+0.72--0.80 observed), with the rare-class diagnostic reading offered as
+interpretation, not confirmation. Table 6 now carries the
+ordering-to-ordering intervals (Count-Min F1 = 0.644 ± 0.062,
+per-ordering range 0.43--0.72), which tempers the headline number.
+\emph{Changes:} §6.8 (findings bullets, Count-Min paragraph,
+interpretation (ii)--(iii)); Table 6 (intervals restored); §7.4.
+
+\textbf{R2.9 --- ``In particular, the target function ablation should be
+highlighted because it shows that our classical performance can change
+dramatically with the classification task in question and that our proxy
+is in fact target independent. A correlation-based proxy that is
+insensitive to the target function cannot necessarily predict the
+performance of algorithms for different kinds of decision problems.''}
+
+\emph{Response.} Highlighted and stated as a scope boundary in the
+reviewer's own terms. §6.9 (Target function) now reads: ``classical
+learner performance is strongly target-dependent, while the proxy
+depends only on (τ, r, T) and is target-independent by construction. The
+proxy therefore cannot universally predict downstream classifier
+performance; it characterises the correlation structure of the stream
+--- the effective sample budget available to any bounded-memory learner
+--- not task-specific learnability.'' §7.4 elevates this to the
+``cannot'' list (with the further empirical point that measured
+classical accuracy is flat while T\_eff falls fivefold, so the budget
+model does not predict even the classical arm's accuracy), the Figure 9
+caption states the proxy ``does not track task-specific learnability'',
+and RQ2's answer now says τ and r are budget summaries, not accuracy
+predictors. The ablation's protocol (prequential, lr = 0.01, T = 4096)
+is also now stated so its absolute levels are not misread against the
+main experiments. \emph{Changes:} §6.9; §7.4; Figure 9 caption;
+Conclusion RQ2.
+
+\textbf{R2.10 --- ``the strongest contribution of the paper is the (τ,r)
+sensitivity landscape proposed as a hypothesis-generating tool \ldots{}
+The paper would be better off having this methodological contribution as
+the main message rather than the separation of quantum-classical
+performance.''}
+
+\emph{Response.} This is now the paper's stated identity, end to end:
+the title leads with ``Proxy-Based Diagnostics''; the abstract announces
+``a proxy-based diagnostic and hypothesis-generation framework''; the
+contribution list names the landscape ``the paper's central diagnostic
+and hypothesis-generation artifact''; §7.4 states the falsifiable
+hypotheses it generates; and the Conclusion opens by declaring the
+landscape the primary contribution and hypothesis generation the
+secondary one, followed by: ``The paper demonstrates no quantum
+advantage and implements no quantum algorithm.'' \emph{Changes:} Title;
+Abstract; §1; §7.4; §10.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Note on verification}\label{note-on-verification}
+
+Before making any statistical change we reproduced the published
+Experiment-5 per-seed results bit-exactly from the pinned seeds (all
+five Wilcoxon p-values match the published values to six significant
+digits), and all figure regenerations are rendering-only (numerical
+outputs byte-identical). The re-analysis and sensitivity scripts, with
+their outputs, are included in the accompanying package
+(\texttt{verification\_scripts/exp5\_reanalysis.py} and
+\texttt{verification\_scripts/encoder\_sensitivity.py};
+\texttt{code/exp5\_effectsizes.py} in the public repository), and the
+reproducibility documentation was corrected and extended (exact seed
+indices per experiment; the previously missing Machine-Temperature
+download step).
+
+On behalf of all authors,
+
+\textbf{AbdelMoniem Helmy} (corresponding author)
+abdelmoniem.hafez@cu.edu.eg · ORCID 0000-0001-5996-6019
+
+\end{document}

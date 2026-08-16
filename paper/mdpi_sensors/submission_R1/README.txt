@@ -40,7 +40,7 @@ response_to_editor.*       Reply to the Academic Editor's comment asking that
                            anchor (Kallaugher-Parekh-Voronova, STOC 2024,
                            DOI 10.1145/3618260.3649709) co-cited, which also
                            corrects a Related-Work attribution (bibliography
-                           now 55 entries). 3 pp.
+                           now 55 entries). 1 p.
 
 Each per-reviewer letter repeats the shared header, the summary of principal
 changes, and the verification note, so it stands alone; every point-by-point
